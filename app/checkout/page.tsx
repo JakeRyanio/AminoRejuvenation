@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
 import { ShoppingCart, CreditCard, Truck, Shield, ArrowLeft, Wallet } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -68,6 +69,7 @@ function CheckoutForm() {
   const [error, setError] = useState<string | null>(null)
   const [isStripeReady, setIsStripeReady] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<"card" | "crypto">("card")
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
 
   useEffect(() => {
     if (stripe && elements) {
@@ -86,6 +88,11 @@ function CheckoutForm() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+
+    if (!disclaimerAccepted) {
+      setError("Please accept the research disclaimer to continue")
+      return
+    }
 
     if (!stripe || !elements) {
       setError("Payment processing is not available. Please refresh the page and try again.")
@@ -476,9 +483,27 @@ function CheckoutForm() {
                   </div>
                 )}
 
+                {/* Research Disclaimer */}
+                <div className="mb-6 p-4 bg-[#2a2624] border border-[#403c3a] rounded-lg">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="disclaimer"
+                      checked={disclaimerAccepted}
+                      onCheckedChange={(checked) => setDisclaimerAccepted(checked as boolean)}
+                      className="mt-1 border-[#d2c6b8] data-[state=checked]:bg-[#d2c6b8] data-[state=checked]:border-[#d2c6b8]"
+                    />
+                    <label 
+                      htmlFor="disclaimer" 
+                      className="text-sm text-[#ebe7e4] leading-relaxed cursor-pointer"
+                    >
+                      By purchasing, the buyer acknowledges that all peptides are sold strictly for research purposes only, and Precision Peptides assumes no liability for any unauthorized use, including at-home research.
+                    </label>
+                  </div>
+                </div>
+
                 <Button
                   type="submit"
-                  disabled={!isStripeReady || isProcessing}
+                  disabled={!isStripeReady || isProcessing || !disclaimerAccepted}
                   className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing ? (

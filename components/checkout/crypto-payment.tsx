@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Copy, Check, Wallet, AlertCircle } from "lucide-react"
 import { useCart } from "@/components/cart/cart-context"
 
@@ -73,6 +74,7 @@ export function CryptoPayment({ formData, total, onSuccess }: CryptoPaymentProps
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
 
   const selectedWallet = CRYPTO_WALLETS.find(wallet => wallet.symbol === selectedCrypto)
 
@@ -89,6 +91,11 @@ export function CryptoPayment({ formData, total, onSuccess }: CryptoPaymentProps
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+
+    if (!disclaimerAccepted) {
+      setError("Please accept the research disclaimer to continue")
+      return
+    }
 
     if (!selectedCrypto || !transactionId.trim()) {
       setError("Please select a cryptocurrency and provide a transaction ID")
@@ -259,10 +266,28 @@ export function CryptoPayment({ formData, total, onSuccess }: CryptoPaymentProps
           </div>
         )}
 
+        {/* Research Disclaimer */}
+        <div className="p-4 bg-[#2a2624] border border-[#403c3a] rounded-lg">
+          <div className="flex items-start space-x-3">
+            <Checkbox
+              id="crypto-disclaimer"
+              checked={disclaimerAccepted}
+              onCheckedChange={(checked) => setDisclaimerAccepted(checked as boolean)}
+              className="mt-1 border-[#d2c6b8] data-[state=checked]:bg-[#d2c6b8] data-[state=checked]:border-[#d2c6b8]"
+            />
+            <label 
+              htmlFor="crypto-disclaimer" 
+              className="text-sm text-[#ebe7e4] leading-relaxed cursor-pointer"
+            >
+              By purchasing, the buyer acknowledges that all peptides are sold strictly for research purposes only, and Precision Peptides assumes no liability for any unauthorized use, including at-home research.
+            </label>
+          </div>
+        </div>
+
         {/* Submit Button */}
         <Button
           type="submit"
-          disabled={!selectedWallet || !transactionId.trim() || isSubmitting}
+          disabled={!selectedWallet || !transactionId.trim() || isSubmitting || !disclaimerAccepted}
           className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
