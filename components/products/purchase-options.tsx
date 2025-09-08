@@ -19,7 +19,7 @@ export function PurchaseOptions({ product, quantity = 1 }: PurchaseOptionsProps)
   const effectiveOption = !product.subscriptionPrice ? "one-time" : selectedOption
 
   const handleAddToCart = () => {
-    const price = effectiveOption === "subscription" ? product.subscriptionPrice : product.price
+    const price = effectiveOption === "subscription" ? (product.subscriptionPrice || 0) : product.price
 
     for (let i = 0; i < quantity; i++) {
       addItem({
@@ -155,7 +155,7 @@ export function PurchaseOptions({ product, quantity = 1 }: PurchaseOptionsProps)
       >
         <ShoppingCart className="h-5 w-5 mr-2" />
         {selectedOption === "subscription"
-          ? `Subscribe & Save - $${(product.subscriptionPrice * quantity).toFixed(2)}/month`
+          ? `Subscribe & Save - $${((product.subscriptionPrice || 0) * quantity).toFixed(2)}/month`
           : `Add to Cart - $${(product.price * quantity).toFixed(2)}`}
       </Button>
 

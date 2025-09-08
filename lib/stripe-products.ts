@@ -99,7 +99,9 @@ export const STRIPE_PRICE_MAP = {
 }
 
 export async function getStripeProductInfo(productId: string, purchaseType: "one-time" | "subscription") {
-  const stripePriceId = STRIPE_PRICE_MAP[purchaseType][productId]
+  const priceMapKey = purchaseType === "one-time" ? "oneTime" : "subscription"
+  const priceMap = STRIPE_PRICE_MAP[priceMapKey]
+  const stripePriceId = (priceMap as any)[productId]
 
   if (!stripePriceId) {
     console.warn(`No Stripe price ID found for product: ${productId} (${purchaseType})`)
@@ -127,7 +129,8 @@ export function createLineItemsFromCart(cartItems: any[]) {
   return cartItems.map((item) => {
     const purchaseType = item.purchaseType || "one-time"
     const priceMapKey = purchaseType === "one-time" ? "oneTime" : "subscription"
-    const stripePriceId = STRIPE_PRICE_MAP[priceMapKey][item.id]
+    const priceMap = STRIPE_PRICE_MAP[priceMapKey]
+    const stripePriceId = (priceMap as any)[item.id]
 
     if (!stripePriceId) {
       throw new Error(`No Stripe price ID found for product: ${item.id} (${purchaseType})`)
@@ -142,5 +145,6 @@ export function createLineItemsFromCart(cartItems: any[]) {
 
 export function getProductPriceId(productId: string, purchaseType: "one-time" | "subscription") {
   const priceMapKey = purchaseType === "one-time" ? "oneTime" : "subscription"
-  return STRIPE_PRICE_MAP[priceMapKey][productId]
+  const priceMap = STRIPE_PRICE_MAP[priceMapKey]
+  return (priceMap as any)[productId]
 }

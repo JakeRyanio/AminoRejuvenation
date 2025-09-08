@@ -13,7 +13,7 @@ export function QuickPurchaseOptions({ product }: QuickPurchaseOptionsProps) {
   const { addItem } = useCart()
 
   const handleAddToCart = (purchaseType: "one-time" | "subscription") => {
-    const price = purchaseType === "subscription" ? product.subscriptionPrice : product.price
+    const price = purchaseType === "subscription" ? (product.subscriptionPrice || 0) : product.price
     const name = purchaseType === "subscription" ? `${product.name} (Monthly)` : product.name
 
     addItem({

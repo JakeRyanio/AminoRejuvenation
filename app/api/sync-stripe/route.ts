@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
             },
             body: new URLSearchParams({
               product: stripeProduct.id,
-              unit_amount: Math.round(product.subscriptionPrice * 100).toString(),
+              unit_amount: Math.round((product.subscriptionPrice || 0) * 100).toString(),
               currency: "usd",
               "recurring[interval]": "month",
               "metadata[local_id]": product.id,
