@@ -14,6 +14,13 @@ import { ShoppingCart, CreditCard, Truck, Shield, ArrowLeft } from "lucide-react
 import Link from "next/link"
 import Image from "next/image"
 
+// Crypto wallet addresses
+const CRYPTO_WALLETS = {
+  USDT: "0x8626B0C7C26f8Aa6Ba1AbE77Ae3dD14AA7698a61",
+  ETH: "0x8626B0C7C26f8Aa6Ba1AbE77Ae3dD14AA7698a61", 
+  BTC: "bc1phe9xfm9a5xan9ak6ns0qutq73mz7r9q27h3qjgpvn8sx83qsqausg9v6fc"
+}
+
 // Initialize Stripe with proper error handling
 const getStripePromise = () => {
   try {
@@ -63,6 +70,9 @@ function CheckoutForm() {
     specialInstructions: "",
   })
 
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "crypto">("card")
+  const [selectedCrypto, setSelectedCrypto] = useState<"USDT" | "BTC" | "ETH">("USDT")
+  const [transactionId, setTransactionId] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isStripeReady, setIsStripeReady] = useState(false)
@@ -77,21 +87,72 @@ function CheckoutForm() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
+  const handleCryptoPayment = async () => {
+    // Validate transaction ID
+    if (!transactionId.trim()) {
+      setError("Please enter your transaction ID.")
+      return
+    }
+
+    try {
+      const response = await fetch("/api/crypto-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderData: {
+            items,
+            customerInfo: formData,
+            total,
+            paymentMethod: "crypto",
+            cryptocurrency: selectedCrypto,
+            walletAddress: CRYPTO_WALLETS[selectedCrypto],
+            transactionId: transactionId.trim(),
+          },
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Server error: ${response.status}`)
+      }
+
+      const result = await response.json()
+      
+      // Clear cart and redirect to success page
+      clearCart()
+      router.push(`/checkout/success?payment_method=crypto&crypto=${selectedCrypto}&tx_id=${transactionId}`)
+    } catch (error) {
+      console.error("Crypto payment error:", error)
+      setError(error instanceof Error ? error.message : "Failed to process crypto payment")
+    }
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+    setIsProcessing(true)
+    setError(null)
 
+    // Handle crypto payment
+    if (paymentMethod === "crypto") {
+      await handleCryptoPayment()
+      setIsProcessing(false)
+      return
+    }
+
+    // Handle card payment
     if (!stripe || !elements) {
       setError("Payment processing is not available. Please refresh the page and try again.")
+      setIsProcessing(false)
       return
     }
 
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === "pk_test_placeholder") {
       setError("Payment processing is not configured. Please contact support.")
+      setIsProcessing(false)
       return
     }
-
-    setIsProcessing(true)
-    setError(null)
 
     try {
       const response = await fetch("/api/create-payment-intent", {
@@ -397,30 +458,141 @@ function CheckoutForm() {
             <div className="elegant-card p-6">
               <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Payment Information</h3>
 
-              {!isStripeReady ? (
-                <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-md">
-                  <p className="text-yellow-400 text-sm">Loading payment system...</p>
+              {/* Payment Method Selector */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium mb-3 text-[#ebe7e4]">Payment Method *</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("card")}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      paymentMethod === "card"
+                        ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
+                        : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
+                    }`}
+                  >
+                    <CreditCard className="h-6 w-6 mx-auto mb-2 text-[#ebe7e4]" />
+                    <div className="text-sm font-medium text-[#ebe7e4]">Pay by Card</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod("crypto")}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      paymentMethod === "crypto"
+                        ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
+                        : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
+                    }`}
+                  >
+                    <div className="h-6 w-6 mx-auto mb-2 text-[#ebe7e4] font-bold text-lg">₿</div>
+                    <div className="text-sm font-medium text-[#ebe7e4]">Pay by Crypto</div>
+                  </button>
                 </div>
-              ) : (
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Card Details *</label>
-                  <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
-                    <CardElement
-                      options={{
-                        style: {
-                          base: {
-                            fontSize: "16px",
-                            color: "#ebe7e4",
-                            "::placeholder": {
-                              color: "#beb2a4",
+              </div>
+
+              {/* Card Payment Section */}
+              {paymentMethod === "card" && (
+                <>
+                  {!isStripeReady ? (
+                    <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-md">
+                      <p className="text-yellow-400 text-sm">Loading payment system...</p>
+                    </div>
+                  ) : (
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Card Details *</label>
+                      <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
+                        <CardElement
+                          options={{
+                            style: {
+                              base: {
+                                fontSize: "16px",
+                                color: "#ebe7e4",
+                                "::placeholder": {
+                                  color: "#beb2a4",
+                                },
+                              },
+                              invalid: {
+                                color: "#ef4444",
+                              },
                             },
-                          },
-                          invalid: {
-                            color: "#ef4444",
-                          },
-                        },
-                      }}
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* Crypto Payment Section */}
+              {paymentMethod === "crypto" && (
+                <div className="space-y-6">
+                  {/* Cryptocurrency Selection */}
+                  <div>
+                    <label className="block text-sm font-medium mb-3 text-[#ebe7e4]">Select Cryptocurrency *</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {(["USDT", "BTC", "ETH"] as const).map((crypto) => (
+                        <button
+                          key={crypto}
+                          type="button"
+                          onClick={() => setSelectedCrypto(crypto)}
+                          className={`p-3 rounded-lg border-2 transition-all ${
+                            selectedCrypto === crypto
+                              ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
+                              : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
+                          }`}
+                        >
+                          <div className="text-sm font-medium text-[#ebe7e4]">{crypto}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Wallet Address Display */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">
+                      Send {selectedCrypto} to this address:
+                    </label>
+                    <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
+                      <div className="font-mono text-sm text-[#ebe7e4] break-all">
+                        {CRYPTO_WALLETS[selectedCrypto]}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => navigator.clipboard.writeText(CRYPTO_WALLETS[selectedCrypto])}
+                        className="mt-2 text-xs text-[#d2c6b8] hover:text-[#beb2a4] underline"
+                      >
+                        Click to copy address
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Transaction ID Input */}
+                  <div>
+                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">
+                      Transaction ID *
+                    </label>
+                    <Input
+                      type="text"
+                      value={transactionId}
+                      onChange={(e) => setTransactionId(e.target.value)}
+                      placeholder="Paste your transaction ID here"
+                      className="bg-[#2a2624] border-[#403c3a] text-[#ebe7e4] placeholder:text-[#beb2a4]"
+                      required
                     />
+                    <p className="mt-1 text-xs text-[#beb2a4]">
+                      After sending {selectedCrypto} to the address above, paste your transaction ID here.
+                    </p>
+                  </div>
+
+                  {/* Crypto Payment Instructions */}
+                  <div className="p-4 bg-blue-900/20 border border-blue-500/30 rounded-md">
+                    <h4 className="text-sm font-medium text-blue-400 mb-2">Payment Instructions:</h4>
+                    <ol className="text-xs text-blue-300 space-y-1">
+                      <li>1. Copy the {selectedCrypto} wallet address above</li>
+                      <li>2. Send exactly ${total.toFixed(2)} worth of {selectedCrypto} to that address</li>
+                      <li>3. Copy your transaction ID from your wallet</li>
+                      <li>4. Paste the transaction ID in the field above</li>
+                      <li>5. Click "Complete Payment" to finish your order</li>
+                    </ol>
                   </div>
                 </div>
               )}
@@ -433,16 +605,20 @@ function CheckoutForm() {
 
               <Button
                 type="submit"
-                disabled={!isStripeReady || isProcessing}
+                disabled={
+                  (paymentMethod === "card" && !isStripeReady) || 
+                  (paymentMethod === "crypto" && !transactionId.trim()) ||
+                  isProcessing
+                }
                 className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isProcessing ? (
                   <div className="flex items-center">
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#201c1a] mr-2"></div>
-                    Processing Payment...
+                    {paymentMethod === "card" ? "Processing Payment..." : "Processing Crypto Payment..."}
                   </div>
                 ) : (
-                  `Complete Order - $${total.toFixed(2)}`
+                  `Complete ${paymentMethod === "card" ? "Card" : "Crypto"} Payment - $${total.toFixed(2)}`
                 )}
               </Button>
 

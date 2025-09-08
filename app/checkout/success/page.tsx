@@ -9,10 +9,20 @@ import { CheckCircle, Package, Mail, ArrowRight } from "lucide-react"
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams()
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null)
+  const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
+  const [cryptoType, setCryptoType] = useState<string | null>(null)
+  const [transactionId, setTransactionId] = useState<string | null>(null)
 
   useEffect(() => {
     const pi = searchParams.get("payment_intent")
+    const pm = searchParams.get("payment_method")
+    const crypto = searchParams.get("crypto")
+    const txId = searchParams.get("tx_id")
+    
     setPaymentIntent(pi)
+    setPaymentMethod(pm)
+    setCryptoType(crypto)
+    setTransactionId(txId)
   }, [searchParams])
 
   return (
@@ -25,9 +35,14 @@ export default function CheckoutSuccessPage() {
           </div>
 
           {/* Success Message */}
-          <h1 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">Order Confirmed!</h1>
+          <h1 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">
+            {paymentMethod === "crypto" ? "Crypto Payment Received!" : "Order Confirmed!"}
+          </h1>
           <p className="text-xl text-[#beb2a4] mb-8">
-            Thank you for your purchase. Your order has been successfully processed.
+            {paymentMethod === "crypto" 
+              ? "Thank you for your crypto payment. Your order will be processed once the transaction is verified on the blockchain."
+              : "Thank you for your purchase. Your order has been successfully processed."
+            }
           </p>
 
           {/* Telegram Join Notice - TOP PRIORITY */}
@@ -50,21 +65,55 @@ export default function CheckoutSuccessPage() {
           </div>
 
           {/* Order Details */}
-          {paymentIntent && (
+          {(paymentIntent || transactionId) && (
             <div className="elegant-card p-6 mb-8 text-left">
               <h2 className="text-xl font-medium mb-4 text-[#ebe7e4]">Order Details</h2>
               <div className="space-y-2 text-[#beb2a4]">
-                <p>
-                  <strong className="text-[#ebe7e4]">Order ID:</strong> {paymentIntent}
-                </p>
-                <p>
-                  <strong className="text-[#ebe7e4]">Status:</strong>{" "}
-                  <span className="text-emerald-400">Confirmed</span>
-                </p>
-                <p>
-                  <strong className="text-[#ebe7e4]">Processing Time:</strong> 24-48 hours
-                </p>
+                {paymentMethod === "crypto" ? (
+                  <>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Payment Method:</strong> {cryptoType} Cryptocurrency
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Transaction ID:</strong> {transactionId}
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Status:</strong>{" "}
+                      <span className="text-yellow-400">Pending Verification</span>
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Processing Time:</strong> 2-4 hours after verification
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Order ID:</strong> {paymentIntent}
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Payment Method:</strong> Credit Card
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Status:</strong>{" "}
+                      <span className="text-emerald-400">Confirmed</span>
+                    </p>
+                    <p>
+                      <strong className="text-[#ebe7e4]">Processing Time:</strong> 24-48 hours
+                    </p>
+                  </>
+                )}
               </div>
+            </div>
+          )}
+
+          {/* Crypto Verification Notice */}
+          {paymentMethod === "crypto" && (
+            <div className="elegant-card p-6 mb-8 bg-blue-900/20 border border-blue-500/30">
+              <h3 className="text-lg font-medium mb-3 text-blue-300">Crypto Payment Verification</h3>
+              <p className="text-blue-200 text-sm leading-relaxed">
+                Your {cryptoType} payment is being verified on the blockchain. Once confirmed, we'll process your order immediately. 
+                You'll receive an email confirmation once verification is complete. This typically takes 10-30 minutes depending on network congestion.
+              </p>
             </div>
           )}
 
