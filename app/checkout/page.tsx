@@ -73,6 +73,7 @@ function CheckoutForm() {
   const [paymentMethod, setPaymentMethod] = useState<"card" | "crypto">("card")
   const [selectedCrypto, setSelectedCrypto] = useState<"USDT" | "BTC" | "ETH">("USDT")
   const [transactionId, setTransactionId] = useState("")
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isStripeReady, setIsStripeReady] = useState(false)
@@ -133,6 +134,13 @@ function CheckoutForm() {
     event.preventDefault()
     setIsProcessing(true)
     setError(null)
+
+    // Validate disclaimer acceptance for all payments
+    if (!disclaimerAccepted) {
+      setError("Please accept the research disclaimer to complete your purchase.")
+      setIsProcessing(false)
+      return
+    }
 
     // Handle crypto payment
     if (paymentMethod === "crypto") {
@@ -597,6 +605,23 @@ function CheckoutForm() {
                 </div>
               )}
 
+              {/* Research Disclaimer Checkbox */}
+              <div className="mb-6 p-6 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+                <div className="flex items-start space-x-3">
+                  <input
+                    type="checkbox"
+                    id="disclaimer"
+                    checked={disclaimerAccepted}
+                    onChange={(e) => setDisclaimerAccepted(e.target.checked)}
+                    className="mt-1 h-4 w-4 text-[#d2c6b8] bg-[#2a2624] border-[#403c3a] rounded focus:ring-[#d2c6b8] focus:ring-2"
+                    required
+                  />
+                  <label htmlFor="disclaimer" className="text-sm text-amber-200 leading-relaxed">
+                    <span className="font-medium text-amber-300">Required:</span> By checking this box I acknowledge that all products sold by Precision Peptides are intended for laboratory and research purposes only. They are not for human consumption, medical use, or diagnostic purposes. By purchasing, you acknowledge that you assume full responsibility for your own research practices. Precision Peptides shall not be held liable for any misuse, handling, or application of these products outside of their intended research use.
+                  </label>
+                </div>
+              </div>
+
               {error && (
                 <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
                   <p className="text-red-400 text-sm">{error}</p>
@@ -606,6 +631,7 @@ function CheckoutForm() {
               <Button
                 type="submit"
                 disabled={
+                  !disclaimerAccepted ||
                   (paymentMethod === "card" && !isStripeReady) || 
                   (paymentMethod === "crypto" && !transactionId.trim()) ||
                   isProcessing
