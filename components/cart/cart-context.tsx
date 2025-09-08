@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useReducer, type ReactNode } from "react"
+import React, { createContext, useContext, useReducer, useState, type ReactNode } from "react"
 
 export interface CartItem {
   id: string
@@ -31,6 +31,11 @@ const CartContext = createContext<{
   updateQuantity: (productId: string, purchaseType: string, quantity: number) => void
   clearCart: () => void
   total: number
+  // Popup state
+  isPopupOpen: boolean
+  popupItem: CartItem | null
+  showPopup: (item: CartItem) => void
+  hidePopup: () => void
 } | null>(null)
 
 function cartReducer(state: CartState, action: CartAction): CartState {
@@ -102,6 +107,8 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0 })
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
+  const [popupItem, setPopupItem] = useState<CartItem | null>(null)
 
   const addItem = (item: Omit<CartItem, "quantity">) => {
     // Validate item data
@@ -111,6 +118,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
     
     dispatch({ type: "ADD_ITEM", payload: item })
+    
+    // Show popup with the added item
+    const cartItem: CartItem = { ...item, quantity: 1 }
+    showPopup(cartItem)
+  }
+
+  const showPopup = (item: CartItem) => {
+    setPopupItem(item)
+    setIsPopupOpen(true)
+  }
+
+  const hidePopup = () => {
+    setIsPopupOpen(false)
+    setPopupItem(null)
   }
 
   const removeItem = (productId: string, purchaseType: string) => {
@@ -146,6 +167,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         updateQuantity,
         clearCart,
         total: state.total,
+        // Popup state
+        isPopupOpen,
+        popupItem,
+        showPopup,
+        hidePopup,
       }}
     >
       {children}

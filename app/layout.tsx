@@ -5,6 +5,7 @@ import "./globals.css"
 import { CartProvider } from "@/components/cart/cart-context"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
+import { CartPopupWrapper } from "@/components/cart/cart-popup-wrapper"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -110,6 +111,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <CartPopupWrapper />
         </CartProvider>
         {/* PromoteKit Affiliate Tracking Script */}
         <script 
