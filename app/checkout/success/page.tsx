@@ -9,13 +9,10 @@ import { CheckCircle, Package, Mail, ArrowRight } from "lucide-react"
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams()
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null)
-  const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
 
   useEffect(() => {
     const pi = searchParams.get("payment_intent")
-    const pm = searchParams.get("payment_method")
     setPaymentIntent(pi)
-    setPaymentMethod(pm)
   }, [searchParams])
 
   return (
@@ -30,10 +27,7 @@ export default function CheckoutSuccessPage() {
           {/* Success Message */}
           <h1 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">Order Confirmed!</h1>
           <p className="text-xl text-[#beb2a4] mb-8">
-            {paymentMethod === "crypto" 
-              ? "Thank you for your purchase. Your cryptocurrency payment has been submitted for verification."
-              : "Thank you for your purchase. Your order has been successfully processed."
-            }
+            Thank you for your purchase. Your order has been successfully processed.
           </p>
 
           {/* Telegram Join Notice - TOP PRIORITY */}
@@ -56,44 +50,21 @@ export default function CheckoutSuccessPage() {
           </div>
 
           {/* Order Details */}
-          {(paymentIntent || paymentMethod) && (
+          {paymentIntent && (
             <div className="elegant-card p-6 mb-8 text-left">
               <h2 className="text-xl font-medium mb-4 text-[#ebe7e4]">Order Details</h2>
               <div className="space-y-2 text-[#beb2a4]">
-                {paymentIntent && (
-                  <p>
-                    <strong className="text-[#ebe7e4]">Order ID:</strong> {paymentIntent}
-                  </p>
-                )}
                 <p>
-                  <strong className="text-[#ebe7e4]">Payment Method:</strong>{" "}
-                  <span className="text-emerald-400">
-                    {paymentMethod === "crypto" ? "Cryptocurrency" : "Credit Card"}
-                  </span>
+                  <strong className="text-[#ebe7e4]">Order ID:</strong> {paymentIntent}
                 </p>
                 <p>
                   <strong className="text-[#ebe7e4]">Status:</strong>{" "}
-                  <span className="text-emerald-400">
-                    {paymentMethod === "crypto" ? "Pending Verification" : "Confirmed"}
-                  </span>
+                  <span className="text-emerald-400">Confirmed</span>
                 </p>
                 <p>
-                  <strong className="text-[#ebe7e4]">Processing Time:</strong>{" "}
-                  {paymentMethod === "crypto" ? "1-24 hours (after verification)" : "24-48 hours"}
+                  <strong className="text-[#ebe7e4]">Processing Time:</strong> 24-48 hours
                 </p>
               </div>
-            </div>
-          )}
-
-          {/* Crypto Payment Notice */}
-          {paymentMethod === "crypto" && (
-            <div className="elegant-card p-6 mb-8 bg-blue-900/20 border border-blue-500/30">
-              <h3 className="text-lg font-medium mb-3 text-blue-300">Cryptocurrency Payment Verification</h3>
-              <p className="text-blue-200 text-sm leading-relaxed">
-                Your cryptocurrency payment is being verified on the blockchain. You will receive an email 
-                confirmation once the payment is verified and your order is processed. This typically takes 
-                1-24 hours depending on network congestion.
-              </p>
             </div>
           )}
 

@@ -10,11 +10,9 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ShoppingCart, CreditCard, Truck, Shield, ArrowLeft, Wallet } from "lucide-react"
+import { ShoppingCart, CreditCard, Truck, Shield, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { CryptoPayment } from "@/components/checkout/crypto-payment"
 
 // Initialize Stripe with proper error handling
 const getStripePromise = () => {
@@ -68,8 +66,6 @@ function CheckoutForm() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isStripeReady, setIsStripeReady] = useState(false)
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "crypto">("card")
-  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
 
   useEffect(() => {
     if (stripe && elements) {
@@ -81,18 +77,8 @@ function CheckoutForm() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleCryptoSuccess = () => {
-    clearCart()
-    router.push("/checkout/success?payment_method=crypto")
-  }
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-
-    if (!disclaimerAccepted) {
-      setError("Please accept the research disclaimer to continue")
-      return
-    }
 
     if (!stripe || !elements) {
       setError("Payment processing is not available. Please refresh the page and try again.")
@@ -407,129 +393,63 @@ function CheckoutForm() {
               </div>
             </div>
 
-            {/* Payment Method Selection */}
+            {/* Payment Information */}
             <div className="elegant-card p-6">
-              <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Payment Method</h3>
-              
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("card")}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    paymentMethod === "card"
-                      ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
-                      : "border-[#403c3a] hover:border-[#504c4a]"
-                  }`}
-                >
-                  <div className="flex flex-col items-center space-y-2">
-                    <CreditCard className="h-6 w-6 text-[#d2c6b8]" />
-                    <span className="text-sm font-medium text-[#ebe7e4]">Credit/Debit Card</span>
-                  </div>
-                </button>
+              <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Payment Information</h3>
 
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("crypto")}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    paymentMethod === "crypto"
-                      ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
-                      : "border-[#403c3a] hover:border-[#504c4a]"
-                  }`}
-                >
-                  <div className="flex flex-col items-center space-y-2">
-                    <Wallet className="h-6 w-6 text-[#d2c6b8]" />
-                    <span className="text-sm font-medium text-[#ebe7e4]">Cryptocurrency</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            {/* Card Payment */}
-            {paymentMethod === "card" && (
-              <div className="elegant-card p-6">
-                <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Card Payment</h3>
-
-                {!isStripeReady ? (
-                  <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-md">
-                    <p className="text-yellow-400 text-sm">Loading payment system...</p>
-                  </div>
-                ) : (
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Card Details *</label>
-                    <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
-                      <CardElement
-                        options={{
-                          style: {
-                            base: {
-                              fontSize: "16px",
-                              color: "#ebe7e4",
-                              "::placeholder": {
-                                color: "#beb2a4",
-                              },
-                            },
-                            invalid: {
-                              color: "#ef4444",
+              {!isStripeReady ? (
+                <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-md">
+                  <p className="text-yellow-400 text-sm">Loading payment system...</p>
+                </div>
+              ) : (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Card Details *</label>
+                  <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
+                    <CardElement
+                      options={{
+                        style: {
+                          base: {
+                            fontSize: "16px",
+                            color: "#ebe7e4",
+                            "::placeholder": {
+                              color: "#beb2a4",
                             },
                           },
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
-                    <p className="text-red-400 text-sm">{error}</p>
-                  </div>
-                )}
-
-                {/* Research Disclaimer */}
-                <div className="mb-6 p-4 bg-[#2a2624] border border-[#403c3a] rounded-lg">
-                  <div className="flex items-start space-x-3">
-                    <Checkbox
-                      id="disclaimer"
-                      checked={disclaimerAccepted}
-                      onCheckedChange={(checked) => setDisclaimerAccepted(checked as boolean)}
-                      className="mt-1 border-[#d2c6b8] data-[state=checked]:bg-[#d2c6b8] data-[state=checked]:border-[#d2c6b8]"
+                          invalid: {
+                            color: "#ef4444",
+                          },
+                        },
+                      }}
                     />
-                    <label 
-                      htmlFor="disclaimer" 
-                      className="text-sm text-[#ebe7e4] leading-relaxed cursor-pointer"
-                    >
-                      By purchasing, the buyer acknowledges that all peptides are sold strictly for research purposes only, and Precision Peptides assumes no liability for any unauthorized use, including at-home research.
-                    </label>
                   </div>
                 </div>
+              )}
 
-                <Button
-                  type="submit"
-                  disabled={!isStripeReady || isProcessing || !disclaimerAccepted}
-                  className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#201c1a] mr-2"></div>
-                      Processing Payment...
-                    </div>
-                  ) : (
-                    `Complete Order - $${total.toFixed(2)}`
-                  )}
-                </Button>
+              {error && (
+                <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
+                  <p className="text-red-400 text-sm">{error}</p>
+                </div>
+              )}
 
-                <p className="text-xs text-[#beb2a4] text-center mt-4">
-                  Your payment information is secure and encrypted. We never store your card details.
-                </p>
-              </div>
-            )}
+              <Button
+                type="submit"
+                disabled={!isStripeReady || isProcessing}
+                className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isProcessing ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#201c1a] mr-2"></div>
+                    Processing Payment...
+                  </div>
+                ) : (
+                  `Complete Order - $${total.toFixed(2)}`
+                )}
+              </Button>
 
-            {/* Crypto Payment */}
-            {paymentMethod === "crypto" && (
-              <CryptoPayment
-                formData={formData}
-                total={total}
-                onSuccess={handleCryptoSuccess}
-              />
-            )}
+              <p className="text-xs text-[#beb2a4] text-center mt-4">
+                Your payment information is secure and encrypted. We never store your card details.
+              </p>
+            </div>
           </form>
         </div>
       </div>
