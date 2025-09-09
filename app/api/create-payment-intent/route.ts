@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-06-30.basil",
+  apiVersion: "2024-06-20",
 })
 
 export async function POST(request: NextRequest) {
@@ -47,6 +47,21 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error("Error creating payment intent:", error)
+    
+    // Check for specific Stripe API key errors
+    if (error instanceof Error) {
+      if (error.message.includes("Invalid API Key")) {
+        return NextResponse.json({ 
+          error: "Payment system configuration error. Please contact support." 
+        }, { status: 500 })
+      }
+      if (error.message.includes("No such price")) {
+        return NextResponse.json({ 
+          error: "Product pricing error. Please refresh and try again." 
+        }, { status: 400 })
+      }
+    }
+    
     return NextResponse.json({ 
       error: error instanceof Error ? error.message : "Failed to create payment intent" 
     }, { status: 500 })

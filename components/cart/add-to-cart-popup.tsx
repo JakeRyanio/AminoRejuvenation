@@ -108,3 +108,5 @@ export function AddToCartPopup({ isOpen, onClose, item }: AddToCartPopupProps) {
     </>
   )
 }
+
+
