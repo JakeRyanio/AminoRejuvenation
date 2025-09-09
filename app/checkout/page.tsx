@@ -25,7 +25,7 @@ const CRYPTO_WALLETS = {
 const getStripePromise = () => {
   try {
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    if (!publishableKey || publishableKey === "pk_test_placeholder") {
+    if (!publishableKey) {
       console.warn("Stripe publishable key not configured")
       return null
     }
