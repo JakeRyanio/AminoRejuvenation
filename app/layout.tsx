@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/cart/cart-context"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { CartPopupWrapper } from "@/components/cart/cart-popup-wrapper"
+import { SafariAutofillFix } from "./safari-fix"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -116,6 +117,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <CartPopupWrapper />
+          <SafariAutofillFix />
         </CartProvider>
       </body>
     </html>
