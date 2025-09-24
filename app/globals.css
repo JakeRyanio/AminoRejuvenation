@@ -281,7 +281,11 @@
     animation-play-state: paused;
   }
 
-  /* NUCLEAR OPTION: Complete Safari autofill override */
+  /* ULTIMATE SAFARI AUTOFILL DESTROYER */
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
   input,
   select,
   textarea {
@@ -290,22 +294,32 @@
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: text !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
+    background-image: none !important;
+    transition: none !important;
   }
 
-  /* Override Safari's autofill with multiple techniques */
+  /* DESTROY Safari autofill with extreme prejudice */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
+  input:-webkit-autofill:active,
+  input:-webkit-autofill:focus-visible,
+  input:-webkit-autofill:focus-within {
     background-color: #E1EDEC !important;
     color: #3A423B !important;
     -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
     -webkit-text-fill-color: #3A423B !important;
     background-image: none !important;
-    transition: background-color 5000s ease-in-out 0s !important;
+    transition: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
   }
 
-  /* Force all input types */
+  /* Force ALL input types */
   input[type="text"],
   input[type="email"],
   input[type="tel"],
@@ -314,19 +328,28 @@
   input[type="url"],
   input[type="number"],
   input[type="date"],
-  input[type="time"] {
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"] {
     background-color: #E1EDEC !important;
     color: #3A423B !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
   }
 
-  /* Search input specific */
+  /* Search input nuclear option */
   input[type="search"] {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
   }
 
   input[type="search"]::-webkit-search-decoration,
@@ -334,6 +357,7 @@
   input[type="search"]::-webkit-search-results-button,
   input[type="search"]::-webkit-search-results-decoration {
     -webkit-appearance: none !important;
+    display: none !important;
   }
 
   /* Select elements */
@@ -343,6 +367,8 @@
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
   }
 
   /* Textarea elements */
@@ -352,15 +378,22 @@
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
   }
 
-  /* Force override classes */
+  /* Force override classes - NUCLEAR */
   .safari-autofill-fix,
-  .force-safari-styling {
+  .force-safari-styling,
+  .safari-destroyer {
     background-color: #E1EDEC !important;
     color: #3A423B !important;
     -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
     -webkit-text-fill-color: #3A423B !important;
+    background-image: none !important;
+    transition: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
   }
 
   .safari-autofill-fix:-webkit-autofill,
@@ -370,12 +403,42 @@
   .force-safari-styling:-webkit-autofill,
   .force-safari-styling:-webkit-autofill:hover,
   .force-safari-styling:-webkit-autofill:focus,
-  .force-safari-styling:-webkit-autofill:active {
+  .force-safari-styling:-webkit-autofill:active,
+  .safari-destroyer:-webkit-autofill,
+  .safari-destroyer:-webkit-autofill:hover,
+  .safari-destroyer:-webkit-autofill:focus,
+  .safari-destroyer:-webkit-autofill:active {
     background-color: #E1EDEC !important;
     color: #3A423B !important;
     -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
     -webkit-text-fill-color: #3A423B !important;
     background-image: none !important;
-    transition: background-color 5000s ease-in-out 0s !important;
+    transition: none !important;
+    -webkit-animation: none !important;
+    animation: none !important;
+  }
+
+  /* Mobile Safari specific nuclear option */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    input,
+    select,
+    textarea {
+      background-color: #E1EDEC !important;
+      color: #3A423B !important;
+      -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+      -webkit-text-fill-color: #3A423B !important;
+    }
+    
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      background-color: #E1EDEC !important;
+      color: #3A423B !important;
+      -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+      -webkit-text-fill-color: #3A423B !important;
+      background-image: none !important;
+      transition: none !important;
+    }
   }
 }
