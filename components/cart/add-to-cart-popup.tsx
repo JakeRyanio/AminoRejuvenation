@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, Check, X } from "lucide-react"
 import Image from "next/image"
-import type { CartItem } from "./cart-context"
+import type { CartItem } from "@/lib/types"
 
 interface AddToCartPopupProps {
   isOpen: boolean
@@ -69,7 +69,7 @@ export function AddToCartPopup({ isOpen, onClose, item }: AddToCartPopupProps) {
               <div className="flex-1">
                 <h3 className="font-medium text-[#ebe7e4] mb-1">{item.name}</h3>
                 <p className="text-[#beb2a4] text-sm capitalize mb-1">
-                  {item.purchaseType === "subscription" ? "Monthly Subscription" : "One-time Purchase"}
+                  One-time Purchase
                 </p>
                 <p className="text-[#d2c6b8] font-semibold">
                   ${item.price.toFixed(2)} × {item.quantity}

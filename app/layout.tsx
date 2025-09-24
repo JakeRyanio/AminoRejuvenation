@@ -10,31 +10,35 @@ import { CartPopupWrapper } from "@/components/cart/cart-popup-wrapper"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://precisionpeptides.store'),
-  title: "Buy Research Peptides Online | 99.9% Pure Lab-Tested | Precision Peptides USA",
-  description: "Shop premium research peptides with guaranteed 99.9% purity. Lab-tested, USA-made peptides for scientific research. Fast shipping, COA included. Order now!",
-  keywords: "buy peptides online, research peptides USA, lab tested peptides, BPC-157 for sale, peptides research grade, pure peptides, HPLC tested peptides, lyophilized peptides, amino acids research, peptide synthesis",
+  metadataBase: new URL('https://aminorejuvenation.com'),
+  title: "Amino Rejuvenation | Premium Health & Wellness Solutions",
+  description: "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+  keywords: "health wellness, amino acids, rejuvenation, wellness solutions, health products, premium supplements, wellness journey",
   generator: 'v0.dev',
+  icons: {
+    apple: '/images/transparent-logo.png',
+    icon: '/images/transparent-logo.png',
+  },
   openGraph: {
-    title: "Buy Research Peptides Online | 99.9% Pure Lab-Tested | Precision Peptides USA",
-    description: "Shop premium research peptides with guaranteed 99.9% purity. Lab-tested, USA-made peptides for scientific research. Fast shipping, COA included.",
-    url: "https://precisionpeptides.store",
-    siteName: "Precision Peptides",
+    title: "Amino Rejuvenation | Premium Health & Wellness Solutions",
+    description: "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+    url: "https://aminorejuvenation.com",
+    siteName: "Amino Rejuvenation",
     type: "website",
     images: [
       {
-        url: "/images/precision-peptides-vial.png",
+        url: "/images/transparent-logo.png",
         width: 1200,
         height: 630,
-        alt: "Premium Research Peptides - Lab Tested & USA Made"
+        alt: "Amino Rejuvenation - Premium Health & Wellness Solutions"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Buy Research Peptides Online | 99.9% Pure Lab-Tested | Precision Peptides USA",
-    description: "Shop premium research peptides with guaranteed 99.9% purity. Lab-tested, USA-made peptides for scientific research.",
-    images: ["/images/precision-peptides-vial.png"]
+    title: "Amino Rejuvenation | Premium Health & Wellness Solutions",
+    description: "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+    images: ["/images/transparent-logo.png"]
   },
   robots: {
     index: true,
@@ -67,10 +71,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Precision Peptides",
-              "url": "https://precisionpeptides.store",
-              "logo": "https://precisionpeptides.store/images/logo.jpg",
-              "description": "Premium research peptides with guaranteed 99.9% purity. Lab-tested, USA-made peptides for scientific research applications.",
+              "name": "Amino Rejuvenation",
+              "url": "https://aminorejuvenation.com",
+              "logo": "https://aminorejuvenation.com/images/transparent-logo.png",
+              "description": "Premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "US"
@@ -79,7 +83,7 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 "telephone": "+1-XXX-XXX-XXXX",
                 "contactType": "customer service",
-                "email": "precisionpeptides@proton.me"
+                "email": "aminorejuvenation@gmail.com"
               },
               "sameAs": []
             })
@@ -92,19 +96,19 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "Precision Peptides",
-              "url": "https://precisionpeptides.store",
-              "description": "Premium research peptides for scientific applications",
+              "name": "Amino Rejuvenation",
+              "url": "https://aminorejuvenation.com",
+              "description": "Premium health and wellness solutions for optimal well-being",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://precisionpeptides.store/shop?search={search_term_string}",
+                "target": "https://aminorejuvenation.com/shop?search={search_term_string}",
                 "query-input": "required name=search_term_string"
               }
             })
           }}
         />
       </head>
-      <body className={`${inter.className} bg-[#201c1a] text-[#ebe7e4] min-h-screen`}>
+      <body className={`${inter.className} bg-brand-50 text-brand-900 min-h-screen`}>
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
@@ -113,12 +117,6 @@ export default function RootLayout({
           </div>
           <CartPopupWrapper />
         </CartProvider>
-        {/* PromoteKit Affiliate Tracking Script */}
-        <script 
-          async 
-          src="https://cdn.promotekit.com/promotekit.js" 
-          data-promotekit="4731abc5-b68c-4eda-9722-00ba5c401bbc"
-        ></script>
       </body>
     </html>
   )

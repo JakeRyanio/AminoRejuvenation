@@ -86,8 +86,8 @@ export default function FAQPage() {
           </p>
           <p className="text-gray-400">
             For support, email us at{" "}
-            <a href="mailto:precisionpeptides@proton.me" className="text-cyan-400 hover:text-cyan-300">
-              precisionpeptides@proton.me
+            <a href="mailto:aminorejuvenation@gmail.com" className="text-cyan-400 hover:text-cyan-300">
+              aminorejuvenation@gmail.com
             </a>
           </p>
         </div>

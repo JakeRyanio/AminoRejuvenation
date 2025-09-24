@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ProductCard } from "@/components/products/product-card"
 import { products, categories } from "@/lib/products-data"
+import { searchProducts, sortProducts, getProductsByCategory } from "@/lib/product-utils"
 
 export default function ShopPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -26,26 +27,20 @@ export default function ShopPage() {
     }
   }, [])
 
-  const filteredProducts = products
-    .filter((product) => {
-      const matchesSearch =
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.overview.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === "All" || product.category === selectedCategory
-      return matchesSearch && matchesCategory
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return a.price - b.price
-        case "price-high":
-          return b.price - a.price
-        case "rating":
-          return b.reviews.rating - a.reviews.rating
-        default:
-          return a.name.localeCompare(b.name)
-      }
-    })
+  const filteredProducts = useMemo(() => {
+    let filtered = products
+    
+    // Filter by category
+    filtered = getProductsByCategory(filtered, selectedCategory)
+    
+    // Filter by search term
+    filtered = searchProducts(filtered, searchTerm)
+    
+    // Sort products
+    filtered = sortProducts(filtered, sortBy)
+    
+    return filtered
+  }, [searchTerm, selectedCategory, sortBy])
 
   return (
     <div className="container mx-auto px-4 py-8 bg-[#201c1a] min-h-screen">

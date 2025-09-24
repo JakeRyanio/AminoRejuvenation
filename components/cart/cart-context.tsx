@@ -1,26 +1,7 @@
 "use client"
 
-import React, { createContext, useContext, useReducer, useState, type ReactNode } from "react"
-
-export interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
-  purchaseType: "one-time" | "subscription" // New field to track purchase type
-}
-
-interface CartState {
-  items: CartItem[]
-  total: number
-}
-
-type CartAction =
-  | { type: "ADD_ITEM"; payload: Omit<CartItem, "quantity"> }
-  | { type: "REMOVE_ITEM"; payload: { productId: string; purchaseType: string } }
-  | { type: "UPDATE_QUANTITY"; payload: { productId: string; purchaseType: string; quantity: number } }
-  | { type: "CLEAR_CART" }
+import React, { createContext, useContext, useReducer, useState, useCallback, type ReactNode } from "react"
+import type { CartItem, CartState, CartAction } from "@/lib/types"
 
 const CartContext = createContext<{
   state: CartState
@@ -110,7 +91,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [popupItem, setPopupItem] = useState<CartItem | null>(null)
 
-  const addItem = (item: Omit<CartItem, "quantity">) => {
+  const showPopup = useCallback((item: CartItem) => {
+    setPopupItem(item)
+    setIsPopupOpen(true)
+  }, [])
+
+  const addItem = useCallback((item: Omit<CartItem, "quantity">) => {
     // Validate item data
     if (!item.id || !item.name || item.price <= 0) {
       console.error("Invalid item data:", item)
@@ -122,39 +108,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
     // Show popup with the added item
     const cartItem: CartItem = { ...item, quantity: 1 }
     showPopup(cartItem)
-  }
+  }, [showPopup])
 
-  const showPopup = (item: CartItem) => {
-    setPopupItem(item)
-    setIsPopupOpen(true)
-  }
-
-  const hidePopup = () => {
+  const hidePopup = useCallback(() => {
     setIsPopupOpen(false)
     setPopupItem(null)
-  }
+  }, [])
 
-  const removeItem = (productId: string, purchaseType: string) => {
+  const removeItem = useCallback((productId: string, purchaseType: string) => {
     if (!productId || !purchaseType) {
       console.error("Invalid remove item parameters:", { productId, purchaseType })
       return
     }
     
     dispatch({ type: "REMOVE_ITEM", payload: { productId, purchaseType } })
-  }
+  }, [])
 
-  const updateQuantity = (productId: string, purchaseType: string, quantity: number) => {
+  const updateQuantity = useCallback((productId: string, purchaseType: string, quantity: number) => {
     if (!productId || !purchaseType || quantity < 0) {
       console.error("Invalid update quantity parameters:", { productId, purchaseType, quantity })
       return
     }
     
     dispatch({ type: "UPDATE_QUANTITY", payload: { productId, purchaseType, quantity } })
-  }
+  }, [])
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     dispatch({ type: "CLEAR_CART" })
-  }
+  }, [])
 
   return (
     <CartContext.Provider

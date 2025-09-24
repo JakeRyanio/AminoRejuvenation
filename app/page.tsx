@@ -7,13 +7,13 @@ import { FloatingReviewButton } from "@/components/home/floating-review-button"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Buy Premium Research Peptides Online | 99.9% Pure Lab-Tested USA",
-  description: "Shop the best research peptides online. BPC-157, Semaglutide, Tirzepatide & more. 99.9% purity guaranteed, HPLC tested, fast USA shipping. Order research-grade peptides now!",
-  keywords: "buy peptides online, research peptides for sale, BPC-157 buy online, semaglutide research peptide, tirzepatide peptide, lab tested peptides USA, pure research peptides, HPLC tested peptides",
+  title: "Amino Rejuvenation | Premium Health & Wellness Solutions",
+  description: "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+  keywords: "health wellness, amino acids, rejuvenation, wellness solutions, health products, premium supplements, wellness journey, optimal well-being",
   openGraph: {
-    title: "Buy Premium Research Peptides Online | 99.9% Pure Lab-Tested USA",
-    description: "Shop the best research peptides online. BPC-157, Semaglutide, Tirzepatide & more. 99.9% purity guaranteed, HPLC tested, fast USA shipping.",
-    images: ["/images/website-hero-section.png"]
+    title: "Amino Rejuvenation | Premium Health & Wellness Solutions",
+    description: "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+    images: ["/placeholder-logo.svg"]
   }
 }
 
@@ -27,13 +27,13 @@ export default function HomePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Premium Research Peptides - Lab Tested & USA Made",
-            "description": "Buy premium research peptides with 99.9% purity guarantee. BPC-157, Semaglutide, Tirzepatide and more research-grade peptides.",
-            "url": "https://precisionpeptides.store",
+            "name": "Amino Rejuvenation - Premium Health & Wellness Solutions",
+            "description": "Discover premium health and wellness solutions designed to support your journey to optimal well-being. Quality products, expert guidance, and transformative results.",
+            "url": "https://aminorejuvenation.com",
             "mainEntity": {
               "@type": "ItemList",
-              "name": "Featured Research Peptides",
-              "description": "Top-selling research peptides for scientific applications",
+              "name": "Featured Wellness Products",
+              "description": "Top-selling health and wellness products for optimal well-being",
               "numberOfItems": 12
             }
           })
@@ -41,7 +41,7 @@ export default function HomePage() {
       />
       
       <header>
-        <h1 className="sr-only">Buy Premium Research Peptides Online - Lab Tested & USA Made</h1>
+        <h1 className="sr-only">Amino Rejuvenation - Premium Health & Wellness Solutions</h1>
       </header>
       
       <Hero />

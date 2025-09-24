@@ -1,58 +1,19 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/navigation"
-import { loadStripe } from "@stripe/stripe-js"
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { useCart } from "@/components/cart/cart-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { ShoppingCart, CreditCard, Truck, Shield, ArrowLeft } from "lucide-react"
+import { ShoppingCart, Truck, Shield, ArrowLeft, CreditCard, Smartphone, DollarSign, X, QrCode } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import type { CheckoutFormData } from "@/lib/types"
 
-// Crypto wallet addresses
-const CRYPTO_WALLETS = {
-  USDT: "0x8626B0C7C26f8Aa6Ba1AbE77Ae3dD14AA7698a61",
-  ETH: "0x8626B0C7C26f8Aa6Ba1AbE77Ae3dD14AA7698a61", 
-  BTC: "bc1phe9xfm9a5xan9ak6ns0qutq73mz7r9q27h3qjgpvn8sx83qsqausg9v6fc"
-}
-
-// Initialize Stripe with proper error handling
-const getStripePromise = () => {
-  try {
-    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    if (!publishableKey) {
-      console.warn("Stripe publishable key not configured")
-      return null
-    }
-    return loadStripe(publishableKey)
-  } catch (error) {
-    console.error("Failed to initialize Stripe:", error)
-    return null
-  }
-}
-
-interface CheckoutFormData {
-  email: string
-  firstName: string
-  lastName: string
-  address: string
-  address2: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
-  phone: string
-  specialInstructions: string
-}
-
-function CheckoutForm() {
-  const stripe = useStripe()
-  const elements = useElements()
+export default function CheckoutPage() {
   const router = useRouter()
   const { items, total, clearCart } = useCart()
 
@@ -68,66 +29,18 @@ function CheckoutForm() {
     country: "US",
     phone: "",
     specialInstructions: "",
+    paymentMethod: "",
   })
 
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "crypto">("card")
-  const [selectedCrypto, setSelectedCrypto] = useState<"USDT" | "BTC" | "ETH">("USDT")
-  const [transactionId, setTransactionId] = useState("")
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isStripeReady, setIsStripeReady] = useState(false)
-
-  useEffect(() => {
-    if (stripe && elements) {
-      setIsStripeReady(true)
-    }
-  }, [stripe, elements])
+  const [showCashAppQR, setShowCashAppQR] = useState(false)
+  const [showVenmoQR, setShowVenmoQR] = useState(false)
+  const [showPayPalQR, setShowPayPalQR] = useState(false)
 
   const handleInputChange = (field: keyof CheckoutFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
-  }
-
-  const handleCryptoPayment = async () => {
-    // Validate transaction ID
-    if (!transactionId.trim()) {
-      setError("Please enter your transaction ID.")
-      return
-    }
-
-    try {
-      const response = await fetch("/api/crypto-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          orderData: {
-            items,
-            customerInfo: formData,
-            total,
-            paymentMethod: "crypto",
-            cryptocurrency: selectedCrypto,
-            walletAddress: CRYPTO_WALLETS[selectedCrypto],
-            transactionId: transactionId.trim(),
-          },
-        }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || `Server error: ${response.status}`)
-      }
-
-      const result = await response.json()
-      
-      // Clear cart and redirect to success page
-      clearCart()
-      router.push(`/checkout/success?payment_method=crypto&crypto=${selectedCrypto}&tx_id=${transactionId}`)
-    } catch (error) {
-      console.error("Crypto payment error:", error)
-      setError(error instanceof Error ? error.message : "Failed to process crypto payment")
-    }
   }
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -135,100 +48,65 @@ function CheckoutForm() {
     setIsProcessing(true)
     setError(null)
 
-    // Validate disclaimer acceptance for all payments
+    // Validate payment method selection
+    if (!formData.paymentMethod) {
+      setError("Please select a payment method to complete your purchase.")
+      setIsProcessing(false)
+      return
+    }
+
+    // Validate disclaimer acceptance
     if (!disclaimerAccepted) {
-      setError("Please accept the research disclaimer to complete your purchase.")
-      setIsProcessing(false)
-      return
-    }
-
-    // Handle crypto payment
-    if (paymentMethod === "crypto") {
-      await handleCryptoPayment()
-      setIsProcessing(false)
-      return
-    }
-
-    // Handle card payment
-    if (!stripe || !elements) {
-      setError("Payment processing is not available. Please refresh the page and try again.")
-      setIsProcessing(false)
-      return
-    }
-
-    if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === "pk_test_placeholder") {
-      setError("Payment processing is not configured. Please contact support.")
+        setError("Please accept the research disclaimer to complete your purchase.")
       setIsProcessing(false)
       return
     }
 
     try {
-      const response = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: Math.round(total * 100),
-          currency: "usd",
-          orderData: {
-            items,
-            customerInfo: formData,
-            total,
-          },
-        }),
+      // Send order to Zapier
+      const orderData = {
+        orderId: Date.now().toString(),
+        customerEmail: formData.email,
+        customerFirstName: formData.firstName,
+        customerLastName: formData.lastName,
+        phone: formData.phone,
+        address: formData.address,
+        address2: formData.address2,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode,
+        country: formData.country,
+        paymentMethod: formData.paymentMethod,
+        productNames: items.map(item => item.name).join(', '),
+        totalAmount: total.toFixed(2),
+        orderDate: new Date().toISOString(),
+        specialInstructions: formData.specialInstructions
+      }
+
+      // Send to Zapier via API route (avoids CORS issues)
+      console.log('Sending order data to Zapier:', orderData)
+      
+      const apiResponse = await fetch('/api/send-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
       })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || `Server error: ${response.status}`)
+      
+      if (apiResponse.ok) {
+        console.log('✅ Order sent to Zapier successfully')
+        const responseData = await apiResponse.json()
+        console.log('Zapier response:', responseData)
+      } else {
+        console.error('❌ Failed to send order to Zapier:', apiResponse.status, apiResponse.statusText)
       }
 
-      const { clientSecret, error: serverError } = await response.json()
-
-      if (serverError) {
-        throw new Error(serverError)
-      }
-
-      if (!clientSecret) {
-        throw new Error("No payment intent received from server")
-      }
-
-      const cardElement = elements.getElement(CardElement)
-      if (!cardElement) {
-        throw new Error("Card element not found")
-      }
-
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: `${formData.firstName} ${formData.lastName}`,
-            email: formData.email,
-            phone: formData.phone,
-            address: {
-              line1: formData.address,
-              line2: formData.address2 || undefined,
-              city: formData.city,
-              state: formData.state,
-              postal_code: formData.zipCode,
-              country: formData.country,
-            },
-          },
-        },
-      })
-
-      if (stripeError) {
-        throw new Error(stripeError.message)
-      }
-
-      if (paymentIntent?.status === "succeeded") {
-        clearCart()
-        router.push(`/checkout/success?payment_intent=${paymentIntent.id}`)
-      }
+      // Continue with normal order processing
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      clearCart()
+      router.push(`/checkout/success?order_id=${Date.now()}`)
     } catch (err) {
       console.error("Checkout error:", err)
-      setError(err instanceof Error ? err.message : "An unexpected error occurred")
+      setError("An unexpected error occurred. Please try again.")
     } finally {
       setIsProcessing(false)
     }
@@ -238,11 +116,11 @@ function CheckoutForm() {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-md mx-auto">
-          <ShoppingCart className="h-16 w-16 text-[#beb2a4] mx-auto mb-6" />
-          <h2 className="text-2xl font-medium text-[#ebe7e4] mb-4">Your cart is empty</h2>
-          <p className="text-[#beb2a4] mb-8">Add some products to your cart before checking out.</p>
+          <ShoppingCart className="h-16 w-16 text-brand-600 mx-auto mb-6" />
+          <h2 className="text-2xl font-medium text-brand-900 mb-4">Your cart is empty</h2>
+          <p className="text-brand-700 mb-8">Add some products to your cart before checking out.</p>
           <Link href="/shop">
-            <Button className="bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium">Continue Shopping</Button>
+            <Button className="bg-brand-600 hover:bg-brand-700 text-white font-medium">Continue Shopping</Button>
           </Link>
         </div>
       </div>
@@ -252,18 +130,18 @@ function CheckoutForm() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <Link href="/shop" className="inline-flex items-center text-[#d2c6b8] hover:text-[#ebe7e4] transition-colors">
+        <Link href="/shop" className="inline-flex items-center text-brand-600 hover:text-brand-800 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Shop
         </Link>
-        <h1 className="text-4xl font-serif font-medium mt-4 text-[#ebe7e4]">Checkout</h1>
+        <h1 className="text-4xl font-serif font-medium mt-4 text-brand-900">Checkout</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Order Summary */}
         <div className="order-2 lg:order-1">
           <div className="elegant-card p-6 sticky top-8">
-            <h2 className="text-2xl font-medium mb-6 text-[#ebe7e4]">Order Summary</h2>
+            <h2 className="text-2xl font-medium mb-6 text-brand-900">Order Summary</h2>
 
             <div className="space-y-4 mb-6">
               {items.map((item) => (
@@ -276,39 +154,39 @@ function CheckoutForm() {
                     className="rounded-md object-cover"
                   />
                   <div className="flex-1">
-                    <h3 className="font-medium text-[#ebe7e4]">{item.name}</h3>
-                    <p className="text-[#beb2a4] text-sm">Qty: {item.quantity}</p>
+                    <h3 className="font-medium text-brand-800">{item.name}</h3>
+                    <p className="text-brand-600 text-sm">Qty: {item.quantity}</p>
                   </div>
-                  <p className="font-medium text-[#d2c6b8]">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-medium text-brand-700">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
             </div>
 
-            <Separator className="bg-[#403c3a] mb-6" />
+            <Separator className="bg-brand-200 mb-6" />
 
             <div className="space-y-3">
-              <div className="flex justify-between text-[#beb2a4]">
+              <div className="flex justify-between text-brand-700">
                 <span>Subtotal</span>
                 <span>${total.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-[#beb2a4]">
+              <div className="flex justify-between text-brand-700">
                 <span>Shipping</span>
-                <span className="text-emerald-400">FREE</span>
+                <span className="text-emerald-600 font-medium">FREE</span>
               </div>
-              <div className="flex justify-between text-[#beb2a4]">
+              <div className="flex justify-between text-brand-700">
                 <span>Tax</span>
                 <span>$0.00</span>
               </div>
-              <Separator className="bg-[#403c3a]" />
-              <div className="flex justify-between text-xl font-medium text-[#ebe7e4]">
+              <Separator className="bg-brand-200" />
+              <div className="flex justify-between text-xl font-medium text-brand-900">
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
               </div>
             </div>
 
             {/* Security Badges */}
-            <div className="mt-6 pt-6 border-t border-[#403c3a]">
-              <div className="flex items-center justify-center space-x-6 text-[#beb2a4]">
+            <div className="mt-6 pt-6 border-t border-brand-200">
+              <div className="flex items-center justify-center space-x-6 text-brand-600">
                 <div className="flex items-center space-x-2">
                   <Shield className="h-4 w-4" />
                   <span className="text-xs">Secure Payment</span>
@@ -327,11 +205,11 @@ function CheckoutForm() {
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Contact Information */}
             <div className="elegant-card p-6">
-              <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Contact Information</h3>
+              <h3 className="text-xl font-medium mb-6 text-brand-900">Contact Information</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Email Address *</label>
+                  <label className="block text-sm font-medium mb-2 text-brand-800">Email Address *</label>
                   <Input
                     type="email"
                     required
@@ -344,7 +222,7 @@ function CheckoutForm() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">First Name *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">First Name *</label>
                     <Input
                       required
                       value={formData.firstName}
@@ -353,7 +231,7 @@ function CheckoutForm() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Last Name *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">Last Name *</label>
                     <Input
                       required
                       value={formData.lastName}
@@ -364,7 +242,7 @@ function CheckoutForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Phone Number</label>
+                  <label className="block text-sm font-medium mb-2 text-brand-800">Phone Number</label>
                   <Input
                     type="tel"
                     value={formData.phone}
@@ -378,11 +256,11 @@ function CheckoutForm() {
 
             {/* Shipping Information */}
             <div className="elegant-card p-6">
-              <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Shipping Information</h3>
+              <h3 className="text-xl font-medium mb-6 text-brand-900">Shipping Information</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Address *</label>
+                  <label className="block text-sm font-medium mb-2 text-brand-800">Address *</label>
                   <Input
                     required
                     value={formData.address}
@@ -393,7 +271,7 @@ function CheckoutForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Address Line 2</label>
+                  <label className="block text-sm font-medium mb-2 text-brand-800">Address Line 2</label>
                   <Input
                     value={formData.address2}
                     onChange={(e) => handleInputChange("address2", e.target.value)}
@@ -404,7 +282,7 @@ function CheckoutForm() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">City *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">City *</label>
                     <Input
                       required
                       value={formData.city}
@@ -413,7 +291,7 @@ function CheckoutForm() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">State *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">State *</label>
                     <Input
                       required
                       value={formData.state}
@@ -425,7 +303,7 @@ function CheckoutForm() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">ZIP Code *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">ZIP Code *</label>
                     <Input
                       required
                       value={formData.zipCode}
@@ -434,7 +312,7 @@ function CheckoutForm() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Country *</label>
+                    <label className="block text-sm font-medium mb-2 text-brand-800">Country *</label>
                     <Select value={formData.country} onValueChange={(value) => handleInputChange("country", value)}>
                       <SelectTrigger className="elegant-input">
                         <SelectValue />
@@ -450,7 +328,7 @@ function CheckoutForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Special Instructions</label>
+                  <label className="block text-sm font-medium mb-2 text-brand-800">Special Instructions</label>
                   <Textarea
                     value={formData.specialInstructions}
                     onChange={(e) => handleInputChange("specialInstructions", e.target.value)}
@@ -464,255 +342,398 @@ function CheckoutForm() {
 
             {/* Payment Information */}
             <div className="elegant-card p-6">
-              <h3 className="text-xl font-medium mb-6 text-[#ebe7e4]">Payment Information</h3>
+              <h3 className="text-xl font-medium mb-6 text-brand-900">Payment Information</h3>
 
-              {/* Payment Method Selector */}
+              {/* Payment Method Selection */}
               <div className="mb-6">
-                <label className="block text-sm font-medium mb-3 text-[#ebe7e4]">Payment Method *</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("card")}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      paymentMethod === "card"
-                        ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
-                        : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
+                <label className="block text-sm font-medium mb-4 text-brand-800">Select Payment Method *</label>
+                <div className="grid grid-cols-1 gap-3">
+                  {/* PayPal Option */}
+                  <div
+                    className={`elegant-card p-4 cursor-pointer transition-all duration-200 border-2 ${
+                      formData.paymentMethod === "paypal"
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-brand-200 hover:border-brand-300"
                     }`}
+                    onClick={() => {
+                      handleInputChange("paymentMethod", "paypal")
+                      setShowPayPalQR(true)
+                    }}
                   >
-                    <CreditCard className="h-6 w-6 mx-auto mb-2 text-[#ebe7e4]" />
-                    <div className="text-sm font-medium text-[#ebe7e4]">Pay by Card</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod("crypto")}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      paymentMethod === "crypto"
-                        ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
-                        : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
+                    <div className="flex items-center space-x-3">
+                      <div
+                        className={`w-4 h-4 rounded-full border-2 ${
+                          formData.paymentMethod === "paypal" ? "border-blue-500 bg-blue-500" : "border-brand-300"
+                        }`}
+                      >
+                        {formData.paymentMethod === "paypal" && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                          <CreditCard className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <span className="font-medium text-brand-800">PayPal</span>
+                          <p className="text-sm text-brand-600">Pay securely with your PayPal account</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CashApp Option */}
+                  <div
+                    className={`elegant-card p-4 cursor-pointer transition-all duration-200 border-2 ${
+                      formData.paymentMethod === "cashapp"
+                        ? "border-green-500 bg-green-50"
+                        : "border-brand-200 hover:border-brand-300"
                     }`}
+                    onClick={() => {
+                      handleInputChange("paymentMethod", "cashapp")
+                      setShowCashAppQR(true)
+                    }}
                   >
-                    <div className="h-6 w-6 mx-auto mb-2 text-[#ebe7e4] font-bold text-lg">₿</div>
-                    <div className="text-sm font-medium text-[#ebe7e4]">Pay by Crypto</div>
-                  </button>
+                    <div className="flex items-center space-x-3">
+                      <div
+                        className={`w-4 h-4 rounded-full border-2 ${
+                          formData.paymentMethod === "cashapp" ? "border-green-500 bg-green-500" : "border-brand-300"
+                        }`}
+                      >
+                        {formData.paymentMethod === "cashapp" && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
+                          <DollarSign className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <span className="font-medium text-brand-800">CashApp</span>
+                          <p className="text-sm text-brand-600">Send payment via CashApp</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Venmo Option */}
+                  <div
+                    className={`elegant-card p-4 cursor-pointer transition-all duration-200 border-2 ${
+                      formData.paymentMethod === "venmo"
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-brand-200 hover:border-brand-300"
+                    }`}
+                    onClick={() => {
+                      handleInputChange("paymentMethod", "venmo")
+                      setShowVenmoQR(true)
+                    }}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div
+                        className={`w-4 h-4 rounded-full border-2 ${
+                          formData.paymentMethod === "venmo" ? "border-blue-500 bg-blue-500" : "border-brand-300"
+                        }`}
+                      >
+                        {formData.paymentMethod === "venmo" && <div className="w-2 h-2 bg-white rounded-full m-0.5"></div>}
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                          <Smartphone className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <span className="font-medium text-brand-800">Venmo</span>
+                          <p className="text-sm text-brand-600">Pay with Venmo</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Card Payment Section */}
-              {paymentMethod === "card" && (
-                <>
-                  {!isStripeReady ? (
-                    <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-md">
-                      <p className="text-yellow-400 text-sm">Loading payment system...</p>
-                    </div>
-                  ) : (
-                    <div className="mb-6">
-                      <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">Card Details *</label>
-                      <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
-                        <CardElement
-                          options={{
-                            style: {
-                              base: {
-                                fontSize: "16px",
-                                color: "#ebe7e4",
-                                "::placeholder": {
-                                  color: "#beb2a4",
-                                },
-                              },
-                              invalid: {
-                                color: "#ef4444",
-                              },
-                            },
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                <h4 className="text-sm font-medium text-blue-800 mb-2">Payment Processing</h4>
+                <p className="text-sm text-blue-700">
+                  After selecting your payment method, you'll be redirected to complete your payment securely.
+                </p>
+              </div>
 
-              {/* Crypto Payment Section */}
-              {paymentMethod === "crypto" && (
-                <div className="space-y-6">
-                  {/* Cryptocurrency Selection */}
-                  <div>
-                    <label className="block text-sm font-medium mb-3 text-[#ebe7e4]">Select Cryptocurrency *</label>
-                    <div className="grid grid-cols-3 gap-3">
-                      {(["USDT", "BTC", "ETH"] as const).map((crypto) => (
-                        <button
-                          key={crypto}
-                          type="button"
-                          onClick={() => setSelectedCrypto(crypto)}
-                          className={`p-3 rounded-lg border-2 transition-all ${
-                            selectedCrypto === crypto
-                              ? "border-[#d2c6b8] bg-[#d2c6b8]/10"
-                              : "border-[#403c3a] bg-[#2a2624] hover:border-[#5a5651]"
-                          }`}
-                        >
-                          <div className="text-sm font-medium text-[#ebe7e4]">{crypto}</div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Wallet Address Display */}
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">
-                      Send {selectedCrypto} to this address:
-                    </label>
-                    <div className="p-4 border border-[#403c3a] rounded-md bg-[#2a2624]">
-                      <div className="font-mono text-sm text-[#ebe7e4] break-all">
-                        {CRYPTO_WALLETS[selectedCrypto]}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => navigator.clipboard.writeText(CRYPTO_WALLETS[selectedCrypto])}
-                        className="mt-2 text-xs text-[#d2c6b8] hover:text-[#beb2a4] underline"
-                      >
-                        Click to copy address
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Transaction ID Input */}
-                  <div>
-                    <label className="block text-sm font-medium mb-2 text-[#ebe7e4]">
-                      Transaction ID *
-                    </label>
-                    <Input
-                      type="text"
-                      value={transactionId}
-                      onChange={(e) => setTransactionId(e.target.value)}
-                      placeholder="Paste your transaction ID here"
-                      className="bg-[#2a2624] border-[#403c3a] text-[#ebe7e4] placeholder:text-[#beb2a4]"
-                      required
-                    />
-                    <p className="mt-1 text-xs text-[#beb2a4]">
-                      After sending {selectedCrypto} to the address above, paste your transaction ID here.
-                    </p>
-                  </div>
-
-                  {/* Crypto Payment Instructions */}
-                  <div className="p-4 bg-blue-900/20 border border-blue-500/30 rounded-md">
-                    <h4 className="text-sm font-medium text-blue-400 mb-2">Payment Instructions:</h4>
-                    <ol className="text-xs text-blue-300 space-y-1">
-                      <li>1. Copy the {selectedCrypto} wallet address above</li>
-                      <li>2. Send exactly ${total.toFixed(2)} worth of {selectedCrypto} to that address</li>
-                      <li>3. Copy your transaction ID from your wallet</li>
-                      <li>4. Paste the transaction ID in the field above</li>
-                      <li>5. Click "Complete Payment" to finish your order</li>
-                    </ol>
-                  </div>
-                </div>
-              )}
-
-              {/* Research Disclaimer Checkbox */}
-              <div className="mb-6 p-6 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+              {/* Wellness Disclaimer Checkbox */}
+              <div className="mb-6 p-6 bg-amber-50 border border-amber-200 rounded-lg">
                 <div className="flex items-start space-x-3">
                   <input
                     type="checkbox"
                     id="disclaimer"
                     checked={disclaimerAccepted}
                     onChange={(e) => setDisclaimerAccepted(e.target.checked)}
-                    className="mt-1 h-4 w-4 text-[#d2c6b8] bg-[#2a2624] border-[#403c3a] rounded focus:ring-[#d2c6b8] focus:ring-2"
+                    className="mt-1 h-4 w-4 text-brand-600 bg-white border-brand-300 rounded focus:ring-brand-500 focus:ring-2"
                     required
                   />
-                  <label htmlFor="disclaimer" className="text-sm text-amber-200 leading-relaxed">
-                    <span className="font-medium text-amber-300">Required:</span> By checking this box I acknowledge that all products sold by Precision Peptides are intended for laboratory and research purposes only. They are not for human consumption, medical use, or diagnostic purposes. By purchasing, you acknowledge that you assume full responsibility for your own research practices. Precision Peptides shall not be held liable for any misuse, handling, or application of these products outside of their intended research use.
+                  <label htmlFor="disclaimer" className="text-sm text-amber-800 leading-relaxed">
+                    <span className="font-medium text-amber-900">Required:</span> By checking this box I acknowledge that all products sold by Amino Rejuvenation are for research purposes only. These products are not intended for human consumption, diagnosis, treatment, cure, or prevention of any disease. Not for use in humans or animals.
                   </label>
                 </div>
               </div>
 
               {error && (
-                <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-md">
-                  <p className="text-red-400 text-sm">{error}</p>
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                  <p className="text-red-700 text-sm">{error}</p>
                 </div>
               )}
 
               <Button
                 type="submit"
-                disabled={
-                  !disclaimerAccepted ||
-                  (paymentMethod === "card" && !isStripeReady) || 
-                  (paymentMethod === "crypto" && !transactionId.trim()) ||
-                  isProcessing
-                }
-                className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!disclaimerAccepted || !formData.paymentMethod || isProcessing}
+                className="w-full bg-brand-600 hover:bg-brand-700 text-white font-medium py-6 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isProcessing ? (
                   <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#201c1a] mr-2"></div>
-                    {paymentMethod === "card" ? "Processing Payment..." : "Processing Crypto Payment..."}
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Processing Order...
                   </div>
+                ) : formData.paymentMethod ? (
+                  `Pay with ${formData.paymentMethod.charAt(0).toUpperCase() + formData.paymentMethod.slice(1)} - $${total.toFixed(2)}`
                 ) : (
-                  `Complete ${paymentMethod === "card" ? "Card" : "Crypto"} Payment - $${total.toFixed(2)}`
+                  `Complete Order - $${total.toFixed(2)}`
                 )}
               </Button>
 
-              <p className="text-xs text-[#beb2a4] text-center mt-4">
-                Your payment information is secure and encrypted. We never store your card details.
+              <p className="text-xs text-brand-600 text-center mt-4">
+                Your information is secure and encrypted. We never store your payment details.
               </p>
             </div>
           </form>
         </div>
       </div>
-    </div>
-  )
-}
 
-export default function CheckoutPage() {
-  const [stripePromise, setStripePromise] = useState<any>(null)
-  const [stripeError, setStripeError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const initStripe = async () => {
-      try {
-        const promise = getStripePromise()
-        if (promise) {
-          setStripePromise(promise)
-        } else {
-          setStripeError("Payment processing is not configured")
-        }
-      } catch (error) {
-        console.error("Failed to initialize Stripe:", error)
-        setStripeError("Failed to load payment system")
-      }
-    }
-
-    initStripe()
-  }, [])
-
-  if (stripeError) {
-    return (
-      <div className="min-h-screen bg-[#201c1a] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-medium text-[#ebe7e4] mb-4">Payment System Unavailable</h1>
-          <p className="text-[#beb2a4] mb-6">{stripeError}</p>
-          <Link href="/shop">
-            <Button className="bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium">
-              Return to Shop
-            </Button>
-          </Link>
+      {/* CashApp QR Code Modal */}
+      {showCashAppQR && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setShowCashAppQR(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Scan to Pay with Cash App</h3>
+              <p className="text-gray-600 mb-6">Use your Cash App to scan the QR code below</p>
+              
+              {/* QR Code */}
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-8 mb-6 inline-block">
+                <img
+                  src={`/images/cashapp-qr.png?t=${Date.now()}`}
+                  alt="CashApp QR Code"
+                  className="w-48 h-48 object-contain rounded-lg"
+                  onError={(e) => {
+                    // Show fallback if image fails to load
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center hidden">
+                  <div className="text-center">
+                    <QrCode className="h-16 w-16 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500 mb-1">QR Code Image</p>
+                    <p className="text-xs text-red-500">Please upload cashapp-qr.png</p>
+                    <p className="text-xs text-gray-400 mt-1">File should be &gt; 0 bytes</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-2xl font-bold text-green-600 mb-6">$aminorejuvenation</p>
+                
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <h4 className="font-bold text-red-800 mb-2">⚠️ IMPORTANT NOTE:</h4>
+                  <p className="text-sm text-red-700">
+                    Please add your <strong>FULL NAME MATCHING CART CHECKOUT</strong> to the note for payment on CashApp. 
+                    This ensures we can match your payment to your order.
+                  </p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-2">Order Total:</p>
+                  <p className="text-2xl font-bold text-gray-900">${total.toFixed(2)}</p>
+                </div>
+              </div>
+              
+              <div className="mt-6 flex space-x-3">
+                <Button
+                  onClick={() => setShowCashAppQR(false)}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowCashAppQR(false)
+                    // Here you would typically redirect to CashApp or handle the payment
+                  }}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                >
+                  I've Sent Payment
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    )
-  }
+      )}
 
-  if (!stripePromise) {
-    return (
-      <div className="min-h-screen bg-[#201c1a] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#d2c6b8] mx-auto mb-4"></div>
-          <p className="text-[#beb2a4]">Loading payment system...</p>
+      {/* Venmo QR Code Modal */}
+      {showVenmoQR && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setShowVenmoQR(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Pay with Venmo</h3>
+              <p className="text-gray-600 mb-6">Use your Venmo app to scan the QR code below</p>
+              
+              {/* QR Code */}
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-8 mb-6 inline-block">
+                <img
+                  src={`/images/venmo-qr.png?t=${Date.now()}`}
+                  alt="Venmo QR Code"
+                  className="w-48 h-48 object-contain rounded-lg"
+                  onError={(e) => {
+                    // Show fallback if image fails to load
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center hidden">
+                  <div className="text-center">
+                    <QrCode className="h-16 w-16 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500 mb-1">QR Code Image</p>
+                    <p className="text-xs text-red-500">Please upload venmo-qr.png</p>
+                    <p className="text-xs text-gray-400 mt-1">File should be &gt; 0 bytes</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-2xl font-bold text-blue-600 mb-6">@aminorejuvenations</p>
+                
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <h4 className="font-bold text-red-800 mb-2">⚠️ IMPORTANT NOTE:</h4>
+                  <p className="text-sm text-red-700">
+                    Please add your <strong>FULL NAME MATCHING CART CHECKOUT</strong> to the note for payment on Venmo. 
+                    This ensures we can match your payment to your order.
+                  </p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-2">Order Total:</p>
+                  <p className="text-2xl font-bold text-gray-900">${total.toFixed(2)}</p>
+                </div>
+              </div>
+              
+              <div className="mt-6 flex space-x-3">
+                <Button
+                  onClick={() => setShowVenmoQR(false)}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowVenmoQR(false)
+                    // Here you would typically redirect to Venmo or handle the payment
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  I've Sent Payment
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    )
-  }
+      )}
 
-  return (
-    <div className="min-h-screen bg-[#201c1a]">
-      <Elements stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements>
+      {/* PayPal QR Code Modal */}
+      {showPayPalQR && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setShowPayPalQR(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Pay with PayPal</h3>
+              <p className="text-gray-600 mb-6">Use your PayPal app to scan the QR code below</p>
+              
+              {/* QR Code */}
+              <div className="bg-white border-2 border-gray-200 rounded-lg p-8 mb-6 inline-block">
+                <img
+                  src={`/images/paypal-qr.png?t=${Date.now()}`}
+                  alt="PayPal QR Code"
+                  className="w-48 h-48 object-contain rounded-lg"
+                  onError={(e) => {
+                    // Show fallback if image fails to load
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center hidden">
+                  <div className="text-center">
+                    <QrCode className="h-16 w-16 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500 mb-1">QR Code Image</p>
+                    <p className="text-xs text-red-500">Please upload paypal-qr.png</p>
+                    <p className="text-xs text-gray-400 mt-1">File should be &gt; 0 bytes</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-2xl font-bold text-blue-600 mb-6">aminorejuvenation@gmail.com</p>
+                
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <h4 className="font-bold text-red-800 mb-2">⚠️ IMPORTANT NOTE:</h4>
+                  <p className="text-sm text-red-700">
+                    Please add your <strong>FULL NAME MATCHING CART CHECKOUT</strong> to the note for payment on PayPal. 
+                    This ensures we can match your payment to your order.
+                  </p>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 mb-2">Order Total:</p>
+                  <p className="text-2xl font-bold text-gray-900">${total.toFixed(2)}</p>
+                </div>
+              </div>
+              
+              <div className="mt-6 flex space-x-3">
+                <Button
+                  onClick={() => setShowPayPalQR(false)}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Close
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowPayPalQR(false)
+                    // Here you would typically redirect to PayPal or handle the payment
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  I've Sent Payment
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

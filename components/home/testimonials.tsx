@@ -2,26 +2,18 @@
 
 import { useEffect, useState } from "react"
 import { Star } from "lucide-react"
-
-interface Review {
-  id: string
-  name: string
-  role: string
-  content: string
-  rating: number
-  date: string
-}
+import type { Review } from "@/lib/types"
 
 export function Testimonials() {
   const [userReviews, setUserReviews] = useState<Review[]>([])
 
-  // Default testimonials - research-compliant language
+  // Default testimonials - wellness-focused language
   const defaultTestimonials = [
     {
       id: "1",
       name: "Kathy",
       role: "Virginia",
-      content: "You cannot find a higher quality peptide at a better price. The packaging and documentation are excellent.",
+      content: "You cannot find a higher quality wellness product at a better price. The packaging and documentation are excellent.",
       rating: 5,
       date: "2024-01-15",
     },
@@ -29,7 +21,7 @@ export function Testimonials() {
       id: "2", 
       name: "Mike",
       role: "Texas",
-      content: "Fast shipping and excellent customer service. The quality of these research materials is outstanding.",
+      content: "Fast shipping and excellent customer service. The quality of these wellness products is outstanding.",
       rating: 5,
       date: "2024-02-20",
     },
@@ -37,7 +29,7 @@ export function Testimonials() {
       id: "3",
       name: "Sarah", 
       role: "California",
-      content: "I've been ordering from Precision Peptides for months now and the consistency is amazing. Highly recommend!",
+      content: "I've been ordering from Amino Rejuvenation for months now and the consistency is amazing. Highly recommend!",
       rating: 5,
       date: "2024-03-10",
     },
@@ -79,8 +71,8 @@ export function Testimonials() {
     <section className="py-20 content-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">Our Clients Come First</h2>
-          <p className="text-xl text-[#beb2a4] font-light">
+          <h2 className="text-4xl font-serif font-medium mb-4 text-brand-900">Our Clients Come First</h2>
+          <p className="text-xl text-brand-800 font-light">
             See what our valued customers are saying about their experience
           </p>
         </div>
@@ -100,13 +92,13 @@ export function Testimonials() {
                   ))}
                 </div>
 
-                <p className="text-[#beb2a4] mb-4 italic leading-relaxed text-sm">
+                <p className="text-brand-800 mb-4 italic leading-relaxed text-sm">
                   "{review.content}"
                 </p>
 
                 <div>
-                  <p className="font-medium text-[#ebe7e4] text-sm">{review.name}</p>
-                  <p className="text-emerald-300 text-xs">{review.role}</p>
+                  <p className="font-medium text-brand-900 text-sm">{review.name}</p>
+                  <p className="text-emerald-600 text-xs">{review.role}</p>
                 </div>
               </div>
             ))}
@@ -123,13 +115,13 @@ export function Testimonials() {
                   ))}
                 </div>
 
-                <p className="text-[#beb2a4] mb-4 italic leading-relaxed text-sm">
+                <p className="text-brand-800 mb-4 italic leading-relaxed text-sm">
                   "{review.content}"
                 </p>
 
                 <div>
-                  <p className="font-medium text-[#ebe7e4] text-sm">{review.name}</p>
-                  <p className="text-sky-300 text-xs">{review.role}</p>
+                  <p className="font-medium text-brand-900 text-sm">{review.name}</p>
+                  <p className="text-sky-600 text-xs">{review.role}</p>
                 </div>
               </div>
             ))}
@@ -146,13 +138,13 @@ export function Testimonials() {
                   ))}
                 </div>
 
-                <p className="text-[#beb2a4] mb-4 italic leading-relaxed text-sm">
+                <p className="text-brand-800 mb-4 italic leading-relaxed text-sm">
                   "{review.content}"
                 </p>
 
                 <div>
-                  <p className="font-medium text-[#ebe7e4] text-sm">{review.name}</p>
-                  <p className="text-purple-300 text-xs">{review.role}</p>
+                  <p className="font-medium text-brand-900 text-sm">{review.name}</p>
+                  <p className="text-purple-600 text-xs">{review.role}</p>
                 </div>
               </div>
             ))}

@@ -108,7 +108,7 @@ export default function ContactPage() {
                   <Mail className="h-6 w-6 text-cyan-400 mt-1" />
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-gray-400">precisionpeptides@proton.me</p>
+                    <p className="text-gray-400">aminorejuvenation@gmail.com</p>
                   </div>
                 </div>
 

@@ -6,10 +6,10 @@ export function FeaturedProducts() {
   const featuredCategories = [
     {
       name: "Weight Loss",
-      description: "Advanced GLP-1 agonists and metabolic compounds for weight management research",
+      description: "Advanced GLP-1 agonists and metabolic compounds for effective weight management",
       icon: Scale,
       href: `/shop?category=${encodeURIComponent("Weight Loss")}`,
-      productCount: 18,
+      productCount: 10,
       bgColor: "bg-gradient-to-br from-emerald-200/20 to-emerald-300/30",
       iconBg: "bg-emerald-200/30",
       iconColor: "text-emerald-300",
@@ -18,10 +18,10 @@ export function FeaturedProducts() {
     },
     {
       name: "Skin & Beauty",
-      description: "Collagen synthesis and skin regeneration peptides for dermatological research",
+      description: "Collagen synthesis and skin regeneration peptides for radiant, healthy skin",
       icon: Heart,
       href: `/shop?category=${encodeURIComponent("Skin & Beauty")}`,
-      productCount: 5,
+      productCount: 3,
       bgColor: "bg-gradient-to-br from-rose-200/20 to-rose-300/30",
       iconBg: "bg-rose-200/30",
       iconColor: "text-rose-300",
@@ -29,11 +29,11 @@ export function FeaturedProducts() {
       accentColor: "text-rose-300",
     },
     {
-      name: "Recovery / Immunity",
-      description: "Tissue repair and immune system compounds for recovery research",
+      name: "Recovery/Immunity",
+      description: "Tissue repair and immune system compounds for optimal recovery and health",
       icon: Activity,
-      href: `/shop?category=${encodeURIComponent("Recovery / Immunity")}`,
-      productCount: 5,
+      href: `/shop?category=${encodeURIComponent("Recovery/Immunity")}`,
+      productCount: 6,
       bgColor: "bg-gradient-to-br from-sky-200/20 to-sky-300/30",
       iconBg: "bg-sky-200/30",
       iconColor: "text-sky-300",
@@ -41,11 +41,11 @@ export function FeaturedProducts() {
       accentColor: "text-sky-300",
     },
     {
-      name: "Muscle Growth",
-      description: "Growth hormone secretagogues and anabolic research compounds",
+      name: "Muscle",
+      description: "Growth hormone secretagogues and compounds for muscle development",
       icon: Dumbbell,
-      href: `/shop?category=${encodeURIComponent("Muscle Growth")}`,
-      productCount: 9,
+      href: `/shop?category=${encodeURIComponent("Muscle")}`,
+      productCount: 6,
       bgColor: "bg-gradient-to-br from-orange-200/20 to-orange-300/30",
       iconBg: "bg-orange-200/30",
       iconColor: "text-orange-300",
@@ -54,10 +54,10 @@ export function FeaturedProducts() {
     },
     {
       name: "Longevity",
-      description: "Anti-aging and cellular regeneration peptides for longevity research",
+      description: "Anti-aging and cellular regeneration peptides for healthy aging",
       icon: Clock,
       href: `/shop?category=${encodeURIComponent("Longevity")}`,
-      productCount: 4,
+      productCount: 5,
       bgColor: "bg-gradient-to-br from-purple-200/20 to-purple-300/30",
       iconBg: "bg-purple-200/30",
       iconColor: "text-purple-300",
@@ -66,7 +66,7 @@ export function FeaturedProducts() {
     },
     {
       name: "Sleep",
-      description: "Sleep regulation and circadian rhythm peptides for sleep research",
+      description: "Sleep regulation peptides for restful sleep and recovery",
       icon: Moon,
       href: `/shop?category=${encodeURIComponent("Sleep")}`,
       productCount: 1,
@@ -82,9 +82,9 @@ export function FeaturedProducts() {
     <section className="py-20 content-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">Featured Categories</h2>
-          <p className="text-xl text-[#beb2a4] max-w-2xl mx-auto font-light">
-            Explore our comprehensive range of research peptides organized by application
+          <h2 className="text-4xl font-serif font-medium mb-4 text-brand-900">Featured Categories</h2>
+          <p className="text-xl text-brand-800 max-w-2xl mx-auto font-light">
+            Explore our comprehensive range of wellness products organized by category
           </p>
         </div>
 
@@ -103,18 +103,18 @@ export function FeaturedProducts() {
                   </div>
 
                   {/* Category Name */}
-                  <h3 className={`text-2xl font-medium mb-4 text-[#ebe7e4] ${category.hoverColor} transition-colors`}>
+                  <h3 className={`text-2xl font-medium mb-4 text-brand-900 ${category.hoverColor} transition-colors`}>
                     {category.name}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[#beb2a4] mb-6 flex-grow leading-relaxed">{category.description}</p>
+                  <p className="text-brand-800 mb-6 flex-grow leading-relaxed">{category.description}</p>
 
                   {/* Product Count */}
-                  <div className="flex items-center justify-between w-full pt-4 border-t border-[#403c3a]/50">
-                    <span className="text-sm text-[#beb2a4]">{category.productCount} products</span>
+                  <div className="flex items-center justify-between w-full pt-4 border-t border-brand-300/50">
+                    <span className="text-sm text-brand-700">{category.productCount} products</span>
                     <span
-                      className={`${category.accentColor} text-sm font-medium group-hover:text-[#ebe7e4] transition-colors`}
+                      className={`${category.accentColor} text-sm font-medium group-hover:text-brand-900 transition-colors`}
                     >
                       Explore →
                     </span>
@@ -127,7 +127,7 @@ export function FeaturedProducts() {
 
         <div className="text-center">
           <Link href="/shop">
-            <Button className="bg-gradient-to-r from-[#d2c6b8] to-[#c4b8a4] hover:from-[#beb2a4] hover:to-[#b2a698] text-[#201c1a] font-medium px-8 py-3 rounded-md text-lg transition-all duration-300">
+            <Button className="bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-brand-50 font-medium px-8 py-3 rounded-md text-lg transition-all duration-300">
               View All Products
             </Button>
           </Link>

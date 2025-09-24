@@ -1,966 +1,1320 @@
 export interface Product {
   id: string
   name: string
-  category: string
+  abbreviation: string
+  dosage: string
   price: number
-  subscriptionPrice: number | null // 15% discount for monthly subscription, null for one-time only products
-  image: string
+  category: string
   overview: string
+  description: string
+  image: string
   benefits: string[]
   useCases: string[]
-  disclaimer: string
   reviews: {
     rating: number
     count: number
     featured: string
   }
-  // SEO-focused fields (optional for backward compatibility)
-  purity?: number // Purity percentage for SEO
-  storage?: string // Storage requirements
-  description?: string // SEO-optimized description
-  molecularWeight?: string // For scientific SEO
-  casNumber?: string // Chemical identifier for SEO
-  sequence?: string // Peptide sequence for scientific searches
-  researchApplications?: string[] // Specific research use cases
+  specifications: {
+    purity: string
+    storage: string
+    shelfLife: string
+  }
 }
 
 export const categories = [
   "All",
   "Weight Loss",
+  "Sleep", 
   "Skin & Beauty",
-  "Recovery / Immunity",
-  "Muscle Growth",
+  "Recovery/Immunity",
+  "Muscle",
   "Longevity",
-  "Sleep",
+  "Immunity"
 ]
 
-// Helper function to calculate subscription price with different discount rates
-const getSubscriptionPrice = (price: number, productId?: string) => {
-  // Products with 10% discount (the ones we just updated pricing on)
-  const tenPercentDiscountProducts = [
-    "tirzepatide-15mg",
-    "tirzepatide-30mg", 
-    "tirzepatide-60mg",
-    "retatrutide-10mg",
-    "semaglutide-5mg",
-    "semaglutide-10mg",
-    "semaglutide-15mg",
-    "lipo-c-20ml-10mg",
-    "ghk-cu-50mg",
-    "bpc-157-5mg",
-    "bpc-157-10mg",
-    "tb-500-5mg",
-    "tb-500-10mg",
-    "mots-c-10mg-longevity",
-    "nad-100mg",
-    "dsip-5mg"
-  ]
-  
-  // Use 10% discount for specified products, 15% for all others
-  const discountRate = productId && tenPercentDiscountProducts.includes(productId) ? 0.90 : 0.85
-  return Math.round(price * discountRate * 100) / 100
-}
-
 export const products: Product[] = [
-  // Weight Loss Category - Ordered by mg size (smallest to largest)
-
-  // Tirzepatide - 15mg, 30mg, 60mg
+  // AOD9604 (sorted by dosage: 2mg, 5mg)
   {
-    id: "tirzepatide-15mg",
-    name: "Tirzepatide (15mg/vial)",
+    id: "aod9604-2mg",
+    name: "AOD9604 (2mg)",
+    abbreviation: "AOD",
+    dosage: "2mg",
+    price: 50.00,
     category: "Weight Loss",
-    price: 189.0,
-    subscriptionPrice: getSubscriptionPrice(189.0, "tirzepatide-15mg"), // $170.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed to treat type 2 diabetes and support weight loss. It mimics the actions of incretin hormones, helping regulate blood sugar and appetite. Potential Benefits: Improves glycemic control, Promotes significant weight loss, Enhances insulin sensitivity, Reduces cardiovascular risk markers. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tirzepatide",
-    benefits: ["Glycemic control", "Weight loss", "Insulin sensitivity", "Cardiovascular risk reduction"],
-    useCases: ["Comprehensive diabetes research", "Extended metabolic studies", "Advanced dosing protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.8, count: 89, featured: "Excellent mid-range option for comprehensive metabolic research." },
+    overview: "Fragment of growth hormone for targeted fat burning.",
+    description: "Fragment of growth hormone for targeted fat burning.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Research on fat metabolism",
+      "Body composition studies",
+      "Metabolic pathway analysis",
+      "Growth hormone fragment research"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 78,
+      featured: "Excellent results for targeted fat reduction research"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
   {
-    id: "tirzepatide-30mg",
-    name: "Tirzepatide (30mg/vial)",
+    id: "aod9604-5mg",
+    name: "AOD9604 (5mg)",
+    abbreviation: "AOD",
+    dosage: "5mg",
+    price: 100.00,
     category: "Weight Loss",
-    price: 329.0,
-    subscriptionPrice: getSubscriptionPrice(329.0, "tirzepatide-30mg"), // $296.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed to treat type 2 diabetes and support weight loss. It mimics the actions of incretin hormones, helping regulate blood sugar and appetite. Potential Benefits: Improves glycemic control, Promotes significant weight loss, Enhances insulin sensitivity, Reduces cardiovascular risk markers. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tirzepatide",
-    benefits: ["Glycemic control", "Weight loss", "Insulin sensitivity", "Cardiovascular risk reduction"],
-    useCases: ["Premium diabetes research", "Maximum dose studies", "Extended research protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
+    overview: "Higher potency AOD9604 for enhanced fat burning results.",
+    description: "Fragment of growth hormone for targeted fat burning.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
       count: 45,
-      featured: "Premium option for advanced research. Exceptional quality and concentration.",
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
-  {
-    id: "tirzepatide-60mg",
-    name: "Tirzepatide (60mg/vial)",
-    category: "Weight Loss",
-    price: 599.0,
-    subscriptionPrice: getSubscriptionPrice(599.0, "tirzepatide-60mg"), // $539.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed to treat type 2 diabetes and support weight loss. It mimics the actions of incretin hormones, helping regulate blood sugar and appetite. Potential Benefits: Improves glycemic control, Promotes significant weight loss, Enhances insulin sensitivity, Reduces cardiovascular risk markers. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tirzepatide",
-    benefits: ["Glycemic control", "Weight loss", "Insulin sensitivity", "Cardiovascular risk reduction"],
-    useCases: ["Institutional research", "Bulk study applications", "Large-scale metabolic research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 23,
-      featured: "Exceptional value for large-scale research. Outstanding purity and concentration.",
-    },
-  },
-
-  // Retatrutide - 10mg, 20mg, 30mg, 50mg
-  {
-    id: "retatrutide-10mg",
-    name: "Retatrutide (10mg/vial)",
-    category: "Weight Loss",
-    price: 140.0,
-    subscriptionPrice: getSubscriptionPrice(140.0, "retatrutide-10mg"), // $126.00
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors. It's under investigation for treating obesity, diabetes, and metabolic conditions. Potential Benefits: Accelerates weight loss, Improves metabolic markers, Potential for non-alcoholic fatty liver disease (NAFLD) treatment, Enhances insulin sensitivity. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=retatrutide",
-    benefits: [
-      "Accelerates weight loss",
-      "Improves metabolic markers",
-      "Potential for non-alcoholic fatty liver disease (NAFLD) treatment",
-      "Enhances insulin sensitivity",
-    ],
-    useCases: ["Advanced metabolic research", "Multi-receptor studies", "Novel therapy research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 67,
-      featured: "Cutting-edge for multi-receptor research. Excellent purity and performance.",
-    },
-  },
-  {
-    id: "retatrutide-20mg",
-    name: "Retatrutide (20mg/vial)",
-    category: "Weight Loss",
-    price: 200.0,
-    subscriptionPrice: getSubscriptionPrice(200.0), // $170.00
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors. It's under investigation for treating obesity, diabetes, and metabolic conditions. Potential Benefits: Accelerates weight loss, Improves metabolic markers, Potential for non-alcoholic fatty liver disease (NAFLD) treatment, Enhances insulin sensitivity. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=retatrutide",
-    benefits: [
-      "Accelerates weight loss",
-      "Improves metabolic markers",
-      "Potential for non-alcoholic fatty liver disease (NAFLD) treatment",
-      "Enhances insulin sensitivity",
-    ],
-    useCases: ["Advanced triple receptor research", "High-dose studies", "Extended research protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.8, count: 34, featured: "Excellent for advanced research protocols. Outstanding purity." },
-  },
-  {
-    id: "retatrutide-30mg",
-    name: "Retatrutide (30mg/vial)",
-    category: "Weight Loss",
-    price: 250.0,
-    subscriptionPrice: getSubscriptionPrice(250.0), // $212.50
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors. It's under investigation for treating obesity, diabetes, and metabolic conditions. Potential Benefits: Accelerates weight loss, Improves metabolic markers, Potential for non-alcoholic fatty liver disease (NAFLD) treatment, Enhances insulin sensitivity. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=retatrutide",
-    benefits: [
-      "Accelerates weight loss",
-      "Improves metabolic markers",
-      "Potential for non-alcoholic fatty liver disease (NAFLD) treatment",
-      "Enhances insulin sensitivity",
-    ],
-    useCases: ["Institutional research", "Premium studies", "Advanced dosing protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 19,
-      featured: "Premium quality for institutional research. Exceptional concentration.",
-    },
-  },
-  {
-    id: "retatrutide-50mg",
-    name: "Retatrutide (50mg/vial)",
-    category: "Weight Loss",
-    price: 300.0,
-    subscriptionPrice: getSubscriptionPrice(300.0), // $255.00
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors. It's under investigation for treating obesity, diabetes, and metabolic conditions. Potential Benefits: Accelerates weight loss, Improves metabolic markers, Potential for non-alcoholic fatty liver disease (NAFLD) treatment, Enhances insulin sensitivity. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=retatrutide",
-    benefits: [
-      "Accelerates weight loss",
-      "Improves metabolic markers",
-      "Potential for non-alcoholic fatty liver disease (NAFLD) treatment",
-      "Enhances insulin sensitivity",
-    ],
-    useCases: ["Bulk research", "Institutional applications", "Large-scale studies"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 12,
-      featured: "Outstanding value for bulk research. Exceptional quality and purity.",
-    },
-  },
-
-  // Lean Clean Stack - Bundle Deal (One-time purchase only)
-  {
-    id: "lean-clean-stack",
-    name: "Lean Clean Stack (Retatrutide 20mg + Glow 50)",
-    category: "Weight Loss",
-    price: 289.0,
-    subscriptionPrice: null, // No subscription option for bundles
-    image: "/images/lean-clean-stack.png",
-    overview:
-      "The Lean Clean Stack combines the powerful weight loss benefits of Retatrutide 20mg with the skin and recovery benefits of Glow 50. This bundle includes Retatrutide (20mg) - a novel triple agonist targeting GIP, GLP-1, and glucagon receptors for advanced weight loss research, plus Glow 50 (GHK-Cu 35mg, TB500 10mg, BPC157 5mg) - a proprietary blend for skin health and tissue repair. Save $51 when purchased together! Potential Benefits: Accelerates weight loss, Improves metabolic markers, Stimulates collagen production, Enhances skin quality, Supports tissue repair. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=retatrutide+ghk-cu",
-    benefits: [
-      "Accelerates weight loss and metabolic function",
-      "Stimulates collagen and elastin production",
-      "Improves skin quality and elasticity",
-      "Enhances tissue repair and recovery",
-      "Comprehensive aesthetic and metabolic research",
-      "Save $51 compared to individual purchase"
-    ],
-    useCases: ["Combined weight loss and aesthetic research", "Comprehensive metabolic studies", "Multi-target research protocols", "Advanced body composition research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 78,
-      featured: "Perfect combination for comprehensive research. Excellent value and synergistic effects.",
-    },
-  },
-
-  // Semaglutide - 5mg, 10mg, 15mg
-  {
-    id: "semaglutide-5mg",
-    name: "Semaglutide (5mg/vial)",
-    category: "Weight Loss",
-    price: 149.0,
-    subscriptionPrice: getSubscriptionPrice(149.0, "semaglutide-5mg"), // $134.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Semaglutide is a GLP-1 receptor agonist used for managing type 2 diabetes and chronic weight management. It enhances insulin secretion and suppresses appetite. Potential Benefits: Appetite suppression, Substantial weight reduction, Improved HbA1c levels, Cardiovascular risk reduction. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=semaglutide",
-    benefits: [
-      "Appetite suppression",
-      "Substantial weight reduction",
-      "Improved HbA1c levels",
-      "Cardiovascular risk reduction",
-    ],
-    useCases: ["GLP-1 research", "Appetite studies", "Metabolic syndrome research", "Diabetes research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.7, count: 189, featured: "Reliable for GLP-1 research. Consistent quality across batches." },
-  },
-  {
-    id: "semaglutide-10mg",
-    name: "Semaglutide (10mg/vial)",
-    category: "Weight Loss",
-    price: 229.0,
-    subscriptionPrice: getSubscriptionPrice(229.0, "semaglutide-10mg"), // $206.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Semaglutide is a GLP-1 receptor agonist used for managing type 2 diabetes and chronic weight management. It enhances insulin secretion and suppresses appetite. Potential Benefits: Appetite suppression, Substantial weight reduction, Improved HbA1c levels, Cardiovascular risk reduction. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=semaglutide",
-    benefits: [
-      "Appetite suppression",
-      "Substantial weight reduction",
-      "Improved HbA1c levels",
-      "Cardiovascular risk reduction",
-    ],
-    useCases: ["Advanced GLP-1 research", "High-dose studies", "Extended protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 98,
-      featured: "Excellent for advanced GLP-1 research. High purity and effectiveness.",
-    },
-  },
-  {
-    id: "semaglutide-15mg",
-    name: "Semaglutide (15mg/vial)",
-    category: "Weight Loss",
-    price: 299.0,
-    subscriptionPrice: getSubscriptionPrice(299.0, "semaglutide-15mg"), // $269.10
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Semaglutide is a GLP-1 receptor agonist used for managing type 2 diabetes and chronic weight management. It enhances insulin secretion and suppresses appetite. Potential Benefits: Appetite suppression, Substantial weight reduction, Improved HbA1c levels, Cardiovascular risk reduction. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=semaglutide",
-    benefits: [
-      "Appetite suppression",
-      "Substantial weight reduction",
-      "Improved HbA1c levels",
-      "Cardiovascular risk reduction",
-    ],
-    useCases: ["Premium GLP-1 research", "Specialized studies", "Advanced dosing protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 56,
-      featured: "Premium quality for specialized research. Outstanding concentration.",
-    },
-  },
-
-  // Single dosage products
-  {
-    id: "tesamorelin-10mg",
-    name: "Tesamorelin (10mg/vial)",
-    category: "Weight Loss",
-    price: 110.0,
-    subscriptionPrice: getSubscriptionPrice(110.0), // $93.50
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Tesamorelin is a growth hormone-releasing hormone (GHRH) analog that stimulates the pituitary gland to secrete growth hormone. It's FDA-approved for HIV-associated lipodystrophy. Potential Benefits: Reduces visceral fat, Improves lipid profile, Enhances IGF-1 levels, Supports cognitive function. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tesamorelin",
-    benefits: [
-      "Reduces visceral fat",
-      "Improves lipid profile",
-      "Enhances IGF-1 levels",
-      "Supports cognitive function",
-    ],
-    useCases: ["Visceral adiposity research", "GHRH studies", "Body composition research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.6,
-      count: 78,
-      featured: "Excellent for visceral fat research. High purity and consistent performance.",
-    },
-  },
-
-  // Lipo-C - 10ml, 20ml
-  {
-    id: "lipo-c-10ml-10mg",
-    name: "Lipo-C (10ml*10mg/ml/vial)",
-    category: "Weight Loss",
-    price: 100.0,
-    subscriptionPrice: getSubscriptionPrice(100.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Lipo-C is a lipotropic injection containing compounds like methionine, inositol, choline, and B12. It's designed to aid fat metabolism and enhance liver function. Potential Benefits: Boosts metabolism, Supports liver detoxification, Increases energy levels, Enhances fat breakdown. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=lipo-c",
-    benefits: [
-      "Boosts metabolism",
-      "Supports liver detoxification",
-      "Increases energy levels",
-      "Enhances fat breakdown",
-    ],
-    useCases: ["Metabolism research", "Fat studies", "Energy research", "Cellular metabolism"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.5,
-      count: 43,
-      featured: "Good for metabolism research. Consistent quality and effectiveness.",
-    },
-  },
-  {
-    id: "lipo-c-20ml-10mg",
-    name: "Lipo-C (20ml*10mg/ml/vial)",
-    category: "Weight Loss",
-    price: 165.0,
-    subscriptionPrice: getSubscriptionPrice(165.0, "lipo-c-20ml-10mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Higher volume Lipo-C is a lipotropic injection containing compounds like methionine, inositol, choline, and B12. It's designed to aid fat metabolism and enhance liver function for extended research protocols. Potential Benefits: Boosts metabolism, Supports liver detoxification, Increases energy levels, Enhances fat breakdown. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=lipo-c",
-    benefits: [
-      "Boosts metabolism",
-      "Supports liver detoxification",
-      "Increases energy levels",
-      "Enhances fat breakdown",
-    ],
-    useCases: ["Extended metabolism research", "Bulk studies", "Long-term protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.6,
-      count: 29,
-      featured: "Excellent value for extended research. Consistent quality throughout.",
-    },
-  },
-
-  // Skin & Beauty Category - Ordered by mg size
-  {
-    id: "ghk-cu-50mg",
-    name: "GHK-Cu (50mg/vial)",
-    category: "Skin & Beauty",
-    price: 61.0,
-    subscriptionPrice: getSubscriptionPrice(61.0, "ghk-cu-50mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "GHK-Cu is a copper peptide complex with strong regenerative, anti-inflammatory, and anti-aging properties. It's commonly used in dermatological products and wound healing protocols. Potential Benefits: Accelerates wound healing, Reduces inflammation, Stimulates collagen and hair growth, Improves skin texture and firmness. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=ghk-cu",
-    benefits: [
-      "Accelerates wound healing",
-      "Reduces inflammation",
-      "Stimulates collagen and hair growth",
-      "Improves skin texture and firmness",
-    ],
-    useCases: ["Dermatological research", "Collagen studies", "Wound healing research", "Anti-aging research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 167,
-      featured: "Outstanding for collagen research. High-quality peptide with excellent purity.",
-    },
-  },
-  {
-    id: "mt-1",
-    name: "MT-I (10mg/vial)",
-    category: "Skin & Beauty",
-    price: 40.0,
-    subscriptionPrice: getSubscriptionPrice(40.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Melanotan I is a synthetic analog of the natural hormone alpha-MSH that induces melanin production, offering a safer method to tan and potentially providing photoprotective benefits. Potential Benefits: Enhances natural tanning, May offer photoprotection, Reduces UV-related skin damage, Potential appetite-suppressing effects. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=melanotan+1",
-    benefits: [
-      "Enhances natural tanning",
-      "May offer photoprotection",
-      "Reduces UV-related skin damage",
-      "Potential appetite-suppressing effects",
-    ],
-    useCases: ["Melanin research", "Skin pigmentation studies", "Dermatological research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.5, count: 89, featured: "Excellent for melanogenesis research with reduced side effects." },
-  },
-  {
-    id: "mt-2",
-    name: "MT-II (10mg/vial)",
-    category: "Skin & Beauty",
-    price: 40.0,
-    subscriptionPrice: getSubscriptionPrice(40.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Melanotan II is a more potent derivative of MT-I and offers both tanning and libido-enhancing effects. It works through the melanocortin receptors and is known for its dual cosmetic and sexual benefits. Potential Benefits: Promotes tanning with less sun exposure, Increases libido, Supports fat loss, Enhances skin protection. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=melanotan+2",
-    benefits: [
-      "Promotes tanning with less sun exposure",
-      "Increases libido",
-      "Supports fat loss",
-      "Enhances skin protection",
-    ],
-    useCases: ["Melanin research", "Skin pigmentation studies", "UV protection research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.6, count: 134, featured: "Excellent for melanogenesis research. Consistent and pure." },
-  },
-  {
-    id: "glow-50",
-    name: "Glow 50 (GHK-Cu 35mg, TB500 10mg, BPC157 5mg)",
-    category: "Skin & Beauty",
-    price: 140.0,
-    subscriptionPrice: getSubscriptionPrice(140.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Glow 50 and Glow 70 are proprietary blends formulated to enhance aesthetics and regeneration. These combinations often include peptides like GHK-Cu, CJC-1295, and Ipamorelin to support skin health, fat reduction, and cellular repair. Potential Benefits: Stimulates collagen and elastin production, Improves skin quality and elasticity, Enhances fat metabolism, Supports tissue repair and anti-aging. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=glow+50+glow+70",
-    benefits: [
-      "Stimulates collagen and elastin production",
-      "Improves skin quality and elasticity",
-      "Enhances fat metabolism",
-      "Supports tissue repair and anti-aging",
-    ],
-    useCases: ["Skin regeneration research", "Anti-aging studies", "Tissue repair research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 143,
-      featured: "Outstanding combination for skin research. Excellent synergistic effects.",
-    },
-  },
-  {
-    id: "glow-70",
-    name: "Glow 70 (GHK-Cu 50mg, TB500 10mg, BPC157 10mg)",
-    category: "Skin & Beauty",
-    price: 170.0,
-    subscriptionPrice: getSubscriptionPrice(170.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Glow 50 and Glow 70 are proprietary blends formulated to enhance aesthetics and regeneration. These combinations often include peptides like GHK-Cu, CJC-1295, and Ipamorelin to support skin health, fat reduction, and cellular repair. Enhanced formula with higher concentrations for advanced research. Potential Benefits: Stimulates collagen and elastin production, Improves skin quality and elasticity, Enhances fat metabolism, Supports tissue repair and anti-aging. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=glow+50+glow+70",
-    benefits: [
-      "Stimulates collagen and elastin production",
-      "Improves skin quality and elasticity",
-      "Enhances fat metabolism",
-      "Supports tissue repair and anti-aging",
-    ],
-    useCases: ["Advanced skin research", "Premium anti-aging studies", "Enhanced regeneration research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 98,
-      featured: "Premium formula for advanced research. Exceptional quality and results.",
-    },
-  },
-
-  // Recovery / Immunity Category - Ordered by mg size
-
-  // BPC-157 - 5mg, 10mg
+  
+  // BPC-157 (sorted by dosage: 5mg, 10mg)
   {
     id: "bpc-157-5mg",
-    name: "BPC-157 (5mg/vial)",
-    category: "Recovery / Immunity",
-    price: 49.97,
-    subscriptionPrice: getSubscriptionPrice(49.97, "bpc-157-5mg"), // $44.97
-    image: "/images/bpc-157.png",
-    overview:
-      "BPC-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Potential Benefits: Accelerates muscle, tendon, and ligament healing, Promotes gut repair (e.g., ulcers, IBS), Reduces inflammation, Supports neuroprotection. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=bpc-157",
+    name: "BPC-157 (5mg)",
+    abbreviation: "BPC",
+    dosage: "5mg",
+    price: 75.00,
+    category: "Recovery/Immunity",
+    overview: "Body Protection Compound for enhanced recovery and healing.",
+    description: "Body Protection Compound-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Research shows it accelerates muscle, tendon, and ligament healing, promotes gut repair (ulcers, IBS), reduces inflammation, and supports neuroprotection.",
+    image: "/images/image-6.png",
     benefits: [
-      "Accelerates muscle, tendon, and ligament healing",
-      "Promotes gut repair (e.g., ulcers, IBS)",
-      "Reduces inflammation",
-      "Supports neuroprotection",
+      "Accelerates muscle and tendon healing",
+      "Promotes gut repair and healing",
+      "Reduces inflammation systemically",
+      "Supports neuroprotection"
     ],
-    useCases: ["Initial injury research", "Basic tissue studies", "Entry-level protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.7, count: 198, featured: "Great entry point for tissue repair research. Reliable quality." },
-    // SEO-enhanced fields
-    purity: 99.9,
-    storage: "Store at -20°C, protect from light",
-    description: "BPC-157 research peptide (Body Protection Compound) is a synthetic pentadecapeptide derived from gastric juice proteins. This 99.9% pure, lab-tested peptide is extensively studied for tissue repair, wound healing, and gastrointestinal protection in research applications. Each 5mg vial is lyophilized and includes COA for research verification.",
-    molecularWeight: "1419.55 g/mol",
-    sequence: "Gly-Glu-Pro-Pro-Pro-Gly-Lys-Pro-Ala-Asp-Asp-Ala-Gly-Leu-Val",
-    researchApplications: [
-      "Tissue repair and regeneration studies",
-      "Wound healing research protocols",
-      "Gastrointestinal protection studies",
-      "Anti-inflammatory pathway research",
-      "Tendon and ligament repair studies",
-      "Neuroprotection research applications"
-    ]
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.7, 
+      count: 156,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
   {
     id: "bpc-157-10mg",
-    name: "BPC-157 (10mg/vial)",
-    category: "Recovery / Immunity",
-    price: 79.77,
-    subscriptionPrice: getSubscriptionPrice(79.77, "bpc-157-10mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "BPC-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Potential Benefits: Accelerates muscle, tendon, and ligament healing, Promotes gut repair (e.g., ulcers, IBS), Reduces inflammation, Supports neuroprotection. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=bpc-157",
+    name: "BPC-157 (10mg)",
+    abbreviation: "BPC",
+    dosage: "10mg",
+    price: 125.00,
+    category: "Recovery/Immunity",
+    overview: "Higher potency BPC-157 for enhanced recovery support.",
+    description: "Body Protection Compound-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Research shows it accelerates muscle, tendon, and ligament healing, promotes gut repair (ulcers, IBS), reduces inflammation, and supports neuroprotection.",
+    image: "/images/image-6.png",
     benefits: [
-      "Accelerates muscle, tendon, and ligament healing",
-      "Promotes gut repair (e.g., ulcers, IBS)",
-      "Reduces inflammation",
-      "Supports neuroprotection",
+      "Accelerates muscle and tendon healing",
+      "Promotes gut repair and healing",
+      "Reduces inflammation systemically",
+      "Supports neuroprotection"
     ],
-    useCases: ["Injury research", "Tissue regeneration", "Wound healing studies", "Recovery research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 234,
-      featured: "Gold standard for tissue repair research. Consistent and reliable.",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 98,
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // TB-500 - 5mg, 10mg
+  // Cagrilintide (sorted by dosage: 5mg, 10mg)
   {
-    id: "tb-500-5mg",
-    name: "TB-500 (TB4 5mg/vial)",
-    category: "Recovery / Immunity",
-    price: 75.0,
-    subscriptionPrice: getSubscriptionPrice(75.0, "tb-500-5mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "TB-500 is a synthetic version of Thymosin Beta-4 that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Potential Benefits: Enhances muscle recovery, Promotes new blood vessel growth, Reduces scar tissue formation, Improves flexibility and mobility. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tb-500",
+    id: "cagrilintide-5mg",
+    name: "Cagrilintide (5mg)",
+    abbreviation: "Cag",
+    dosage: "5mg",
+    price: 110.00,
+    category: "Weight Loss",
+    overview: "Novel amylin analog for advanced weight management.",
+    description: "Cagrilintide is a novel amylin analog that works synergistically with GLP-1 agonists to provide enhanced weight management results through multiple pathways.",
+    image: "/images/image-6.png",
     benefits: [
-      "Enhances muscle recovery",
-      "Promotes new blood vessel growth",
-      "Reduces scar tissue formation",
-      "Improves flexibility and mobility",
+      "Enhanced weight management results",
+      "Synergistic with GLP-1 agonists",
+      "Multiple metabolic pathway targeting",
+      "Improved appetite regulation"
     ],
-    useCases: ["Tissue repair research", "Cellular studies", "Wound healing research", "Recovery research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 189,
-      featured: "Excellent for tissue repair research. High purity and effectiveness.",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 34,
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
   {
-    id: "tb-500-10mg",
-    name: "TB-500 (TB4 10mg/vial)",
-    category: "Recovery / Immunity",
-    price: 125.0,
-    subscriptionPrice: getSubscriptionPrice(125.0, "tb-500-10mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "TB-500 is a synthetic version of Thymosin Beta-4 that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Potential Benefits: Enhances muscle recovery, Promotes new blood vessel growth, Reduces scar tissue formation, Improves flexibility and mobility. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tb-500",
+    id: "cagrilintide-10mg",
+    name: "Cagrilintide (10mg)",
+    abbreviation: "Cag",
+    dosage: "10mg",
+    price: 180.00,
+    category: "Weight Loss",
+    overview: "Higher potency Cagrilintide for maximum weight management results.",
+    description: "Cagrilintide is a novel amylin analog that works synergistically with GLP-1 agonists to provide enhanced weight management results through multiple pathways.",
+    image: "/images/image-6.png",
     benefits: [
-      "Enhances muscle recovery",
-      "Promotes new blood vessel growth",
-      "Reduces scar tissue formation",
-      "Improves flexibility and mobility",
+      "Enhanced weight management results",
+      "Synergistic with GLP-1 agonists",
+      "Multiple metabolic pathway targeting",
+      "Improved appetite regulation"
     ],
-    useCases: ["Tissue repair research", "Cellular studies", "Wound healing research", "Recovery research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 189,
-      featured: "Excellent for tissue repair research. High purity and effectiveness.",
-    },
-  },
-
-  // Thymosin Alpha 1 - 5mg, 10mg
-  {
-    id: "thymosin-alpha-1-5mg",
-    name: "Thymosin Alpha 1 (5mg/vial)",
-    category: "Recovery / Immunity",
-    price: 70.0,
-    subscriptionPrice: getSubscriptionPrice(70.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Thymosin Alpha 1 is used to modulate immune function and combat infection. It enhances T-cell production and is used in treating conditions like hepatitis and cancer. Potential Benefits: Boosts T-cell function, Regulates inflammation, Used in cancer and viral therapy, Supports recovery from illness. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=thymosin+alpha+1",
-    benefits: [
-      "Boosts T-cell function",
-      "Regulates inflammation",
-      "Used in cancer and viral therapy",
-      "Supports recovery from illness",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
     ],
-    useCases: ["Immune research", "Recovery studies", "Regeneration research", "Immunity research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 68,
-      featured: "Excellent for immune system research. High purity and effectiveness.",
+    reviews: { 
+      rating: 4.7, 
+      count: 28,
+      featured: "High-quality research peptide with excellent results"
     },
-  },
-  {
-    id: "thymosin-alpha-1-10mg-recovery",
-    name: "Thymosin Alpha 1 (10mg/vial)",
-    category: "Recovery / Immunity",
-    price: 100.0,
-    subscriptionPrice: getSubscriptionPrice(100.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Thymosin Alpha 1 is used to modulate immune function and combat infection. It enhances T-cell production and is used in treating conditions like hepatitis and cancer. Potential Benefits: Boosts T-cell function, Regulates inflammation, Used in cancer and viral therapy, Supports recovery from illness. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=thymosin+alpha+1",
-    benefits: [
-      "Boosts T-cell function",
-      "Regulates inflammation",
-      "Used in cancer and viral therapy",
-      "Supports recovery from illness",
-    ],
-    useCases: ["Immune research", "Recovery studies", "Regeneration research", "Immunity research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 68,
-      featured: "Excellent for immune system research. High purity and effectiveness.",
-    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // TB500+BPC157 combo
-  {
-    id: "tb500-bpc157-combo",
-    name: "TB500+BPC157 (TB500 10mg + BPC157 10mg)",
-    category: "Recovery / Immunity",
-    price: 120.0,
-    subscriptionPrice: getSubscriptionPrice(120.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "TB500 and BPC-157 together are used synergistically for rapid injury recovery. TB500 aids in cellular repair and muscle healing, while BPC-157 focuses on gut integrity and soft tissue healing. Potential Benefits: Accelerates muscle and joint healing, Reduces inflammation, Improves gut lining integrity, Promotes tissue regeneration. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=tb500+bpc157",
-    benefits: [
-      "Accelerates muscle and joint healing",
-      "Reduces inflammation",
-      "Improves gut lining integrity",
-      "Promotes tissue regeneration",
-    ],
-    useCases: ["Tissue repair research", "Recovery studies", "Injury research", "Regeneration studies"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
-      count: 156,
-      featured: "Perfect combination for recovery research. Excellent synergistic effects.",
-    },
-  },
-
-  // Muscle Growth Category - Ordered by mg size
-
-  // CJC-1295 (DAC) - 2mg, 5mg
+  // CJC-1295 DAC (sorted by dosage: 2mg)
   {
     id: "cjc-1295-dac-2mg",
-    name: "CJC-1295 (DAC) (2mg/vial)",
-    category: "Muscle Growth",
-    price: 70.0,
-    subscriptionPrice: getSubscriptionPrice(70.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "CJC-1295 with DAC is a long-acting growth hormone-releasing hormone analog. The DAC extension increases its half-life, allowing weekly or bi-weekly dosing. Potential Benefits: Increases GH and IGF-1 levels, Enhances muscle growth and fat loss, Improves sleep and recovery, Supports tissue repair and anti-aging. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=cjc-1295+dac",
+    name: "CJC-1295 DAC (2mg)",
+    abbreviation: "CJC",
+    dosage: "2mg",
+    price: 95.00,
+    category: "Muscle",
+    overview: "Long-acting growth hormone releasing hormone for sustained results.",
+    description: "CJC-1295 is a growth hormone-releasing hormone analog that increases GH and IGF-1 levels. Available with or without DAC (Drug Affinity Complex), it enhances muscle growth and fat loss, improves sleep and recovery, and supports tissue repair and anti-aging processes.",
+    image: "/images/image-6.png",
     benefits: [
-      "Increases GH and IGF-1 levels",
+      "Increases growth hormone levels",
       "Enhances muscle growth and fat loss",
       "Improves sleep and recovery",
-      "Supports tissue repair and anti-aging",
+      "Supports tissue repair and anti-aging"
     ],
-    useCases: ["Initial GH research", "Basic GHRH studies", "Entry-level protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.7, count: 98, featured: "Good starting point for GHRH research. Reliable quality." },
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 112,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
+
+  // CJC-1295 w/o DAC (sorted by dosage: 2mg)
   {
-    id: "cjc-1295-dac-5mg",
-    name: "CJC-1295 (DAC) (5mg/vial)",
-    category: "Muscle Growth",
-    price: 130.0,
-    subscriptionPrice: getSubscriptionPrice(130.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "CJC-1295 with DAC is a long-acting growth hormone-releasing hormone analog. The DAC extension increases its half-life, allowing weekly or bi-weekly dosing. Potential Benefits: Increases GH and IGF-1 levels, Enhances muscle growth and fat loss, Improves sleep and recovery, Supports tissue repair and anti-aging. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=cjc-1295+dac",
+    id: "cjc-1295-wo-dac-2mg",
+    name: "CJC-1295 w/o DAC (2mg)",
+    abbreviation: "CJC",
+    dosage: "2mg",
+    price: 85.00,
+    category: "Muscle",
+    overview: "Short-acting growth hormone releasing hormone for immediate results.",
+    description: "CJC-1295 is a growth hormone-releasing hormone analog that increases GH and IGF-1 levels. Available with or without DAC (Drug Affinity Complex), it enhances muscle growth and fat loss, improves sleep and recovery, and supports tissue repair and anti-aging processes.",
+    image: "/images/image-6.png",
     benefits: [
-      "Increases GH and IGF-1 levels",
+      "Increases growth hormone levels",
       "Enhances muscle growth and fat loss",
       "Improves sleep and recovery",
-      "Supports tissue repair and anti-aging",
+      "Supports tissue repair and anti-aging"
     ],
-    useCases: ["Extended GH research", "Muscle development", "Long-term studies", "Growth research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.9,
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // DSIP (sorted by dosage: 5mg)
+  {
+    id: "dsip-5mg",
+    name: "DSIP (5mg)",
+    abbreviation: "DSIP",
+    dosage: "5mg",
+    price: 65.00,
+    category: "Sleep",
+    overview: "Delta sleep-inducing peptide for enhanced sleep quality.",
+    description: "Delta Sleep-Inducing Peptide (DSIP) is a neuropeptide that promotes deep sleep and relaxation. It may also aid in hormone regulation and has shown promise for treating sleep disorders. Research indicates potential benefits for improving sleep quality and duration, reducing stress and anxiety, supporting hormone regulation, and may improve recovery and mood.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Promotes deep sleep and relaxation",
+      "Aids in hormone regulation",
+      "Reduces stress and anxiety",
+      "Improves sleep quality and duration"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.4, 
+      count: 67,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // GHK-CU (sorted by dosage: 50mg, 100mg)
+  {
+    id: "ghk-cu-50mg",
+    name: "GHK-CU (50mg)",
+    abbreviation: "GHK",
+    dosage: "50mg",
+    price: 80.00,
+    category: "Skin & Beauty",
+    overview: "Copper peptide for skin rejuvenation and anti-aging.",
+    description: "GHK-CU is a copper peptide that has shown remarkable results in skin rejuvenation, wound healing, and anti-aging effects through collagen synthesis stimulation.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
       count: 134,
-      featured: "Excellent for extended research protocols. Consistent and reliable results.",
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "ghk-cu-100mg",
+    name: "GHK-CU (100mg)",
+    abbreviation: "GHK",
+    dosage: "100mg",
+    price: 140.00,
+    category: "Skin & Beauty",
+    overview: "Higher potency GHK-CU for enhanced skin rejuvenation.",
+    description: "This (100mg) formulation provides increased potency for individuals requiring stronger skin rejuvenation and anti-aging support.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.7, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // CJC-1295 w/o DAC - 2mg, 5mg
+  // GLOW (sorted by dosage: 35mg, 10mg, 5mg)
   {
-    id: "cjc-1295-no-dac-2mg",
-    name: "CJC-1295 w/o DAC (2mg/vial)",
-    category: "Muscle Growth",
-    price: 40.0,
-    subscriptionPrice: getSubscriptionPrice(40.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "CJC-1295 without DAC has a shorter duration and is often used to mimic natural growth hormone pulses. It is frequently combined with Ipamorelin for improved synergy. Potential Benefits: Stimulates natural GH release, Supports muscle building and fat loss, Improves recovery and sleep, Less risk of GH desensitization. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=cjc-1295+no+dac",
+    id: "glow-stack",
+    name: "GLOW (GHK-Cu 35mg, TB500 10mg, BPC157 5mg)",
+    abbreviation: "GLOW",
+    dosage: "35mg/10mg/5mg",
+    price: 250.00,
+    category: "Skin & Beauty",
+    overview: "Premium skin rejuvenation stack combining multiple peptides.",
+    description: "Glycyl-L-histidyl-L-lysine-copper is a copper peptide complex with strong regenerative, anti-inflammatory, and anti-aging properties. It's commonly used in dermatological research and wound healing protocols. Benefits include accelerated wound healing, reduced inflammation, stimulated collagen and hair growth, and improved skin texture and firmness.",
+    image: "/images/image-6.png",
     benefits: [
-      "Stimulates natural GH release",
-      "Supports muscle building and fat loss",
-      "Improves recovery and sleep",
-      "Less risk of GH desensitization",
+      "Accelerated wound healing",
+      "Reduced inflammation",
+      "Stimulated collagen and hair growth",
+      "Improved skin texture and firmness"
     ],
-    useCases: ["Short-term GH research", "Basic studies", "Entry-level protocols"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.6, count: 87, featured: "Good for short-term research. Reliable and cost-effective." },
-  },
-  {
-    id: "cjc-1295-no-dac-5mg",
-    name: "CJC-1295 w/o DAC (5mg/vial)",
-    category: "Muscle Growth",
-    price: 80.0,
-    subscriptionPrice: getSubscriptionPrice(80.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "CJC-1295 without DAC has a shorter duration and is often used to mimic natural growth hormone pulses. It is frequently combined with Ipamorelin for improved synergy. Potential Benefits: Stimulates natural GH release, Supports muscle building and fat loss, Improves recovery and sleep, Less risk of GH desensitization. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=cjc-1295+no+dac",
-    benefits: [
-      "Stimulates natural GH release",
-      "Supports muscle building and fat loss",
-      "Improves recovery and sleep",
-      "Less risk of GH desensitization",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
     ],
-    useCases: ["Short-term GH research", "Natural pulse studies", "GHRH research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 123,
-      featured: "Excellent for short-acting GH research. High purity and effectiveness.",
+    reviews: { 
+      rating: 4.8, 
+      count: 45,
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // Single dosage products
-  {
-    id: "ipamorelin-5mg",
-    name: "Ipamorelin (5mg/vial)",
-    category: "Muscle Growth",
-    price: 45.0,
-    subscriptionPrice: getSubscriptionPrice(45.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Ipamorelin is a selective growth hormone secretagogue known for stimulating GH release without significantly increasing cortisol or prolactin. It's highly regarded for its safety profile. Potential Benefits: Promotes lean muscle growth, Enhances recovery and repair, Improves sleep quality, Supports fat metabolism. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=ipamorelin",
-    benefits: [
-      "Promotes lean muscle growth",
-      "Enhances recovery and repair",
-      "Improves sleep quality",
-      "Supports fat metabolism",
-    ],
-    useCases: ["GH research", "Muscle studies", "Performance research", "Body composition research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 203,
-      featured: "Perfect for selective GH research. Clean results with no unwanted effects.",
-    },
-  },
-  {
-    id: "sermorelin-10mg-muscle",
-    name: "Sermorelin (10mg/vial)",
-    category: "Muscle Growth",
-    price: 90.0,
-    subscriptionPrice: getSubscriptionPrice(90.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Sermorelin is a GHRH analog that stimulates natural growth hormone release. It's used in hormone replacement therapy to promote recovery, energy, and lean mass. Potential Benefits: Increases natural growth hormone production, Improves sleep quality, Promotes lean muscle growth, Supports fat metabolism and energy. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=sermorelin",
-    benefits: [
-      "Increases natural growth hormone production",
-      "Improves sleep quality",
-      "Promotes lean muscle growth",
-      "Supports fat metabolism and energy",
-    ],
-    useCases: ["GH research", "Muscle studies", "Natural hormone research", "GHRH studies"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.7, count: 112, featured: "Great for natural GH research. Reliable and consistent quality." },
-  },
+  // HCG (sorted by dosage: 5000IU)
   {
     id: "hcg-5000iu",
-    name: "HCG (5000iu/vial)",
-    category: "Muscle Growth",
-    price: 65.0,
-    subscriptionPrice: getSubscriptionPrice(65.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "HCG acts similarly to luteinizing hormone, prompting the testes to produce testosterone. It's often used in hormone replacement therapy or to preserve fertility. Potential Benefits: Maintains or restores testosterone levels, Prevents testicular atrophy, Supports fertility, Enhances libido and mood. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=hcg",
+    name: "HCG (5000IU)",
+    abbreviation: "HCG",
+    dosage: "5000IU",
+    price: 90.00,
+    category: "Muscle",
+    overview: "Human chorionic gonadotropin for hormonal support.",
+    description: "Human Chorionic Gonadotropin acts similarly to luteinizing hormone, prompting testosterone production. Often used in hormone replacement therapy research or fertility preservation. Benefits include maintained or restored testosterone levels, prevented testicular atrophy, supported fertility, and enhanced libido and mood.",
+    image: "/images/image-6.png",
     benefits: [
       "Maintains or restores testosterone levels",
       "Prevents testicular atrophy",
-      "Supports fertility",
-      "Enhances libido and mood",
+      "Supports fertility preservation",
+      "Enhances libido and mood"
     ],
-    useCases: ["Hormonal research", "Reproductive studies", "Endocrine research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.6, count: 145, featured: "Reliable for hormonal research. Consistent potency and quality." },
-  },
-  {
-    id: "ghrp-2-5mg",
-    name: "GHRP-2 (5mg/vial)",
-    category: "Muscle Growth",
-    price: 45.0,
-    subscriptionPrice: getSubscriptionPrice(45.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "GHRP-2 is a synthetic growth hormone-releasing peptide that stimulates the pituitary to secrete GH. It has appetite-stimulating effects and supports recovery and metabolism. Potential Benefits: Increases growth hormone levels, Enhances appetite and nutrient uptake, Improves recovery and fat metabolism, Supports immune health. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=ghrp-2",
-    benefits: [
-      "Increases growth hormone levels",
-      "Enhances appetite and nutrient uptake",
-      "Improves recovery and fat metabolism",
-      "Supports immune health",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
     ],
-    useCases: ["GH research", "Muscle studies", "Performance research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.6, count: 123, featured: "Reliable for GH research. Consistent quality and effectiveness." },
-  },
-  {
-    id: "ghrp-6-5mg",
-    name: "GHRP-6 (5mg/vial)",
-    category: "Muscle Growth",
-    price: 45.0,
-    subscriptionPrice: getSubscriptionPrice(45.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "GHRP-6 is a growth hormone-releasing peptide that strongly stimulates both GH secretion and appetite. It's useful for bulking, recovery, and promoting anabolic repair. Potential Benefits: Boosts growth hormone levels, Promotes muscle repair and growth, Stimulates appetite, Aids in fat loss and recovery. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=ghrp-6",
-    benefits: [
-      "Boosts growth hormone levels",
-      "Promotes muscle repair and growth",
-      "Stimulates appetite",
-      "Aids in fat loss and recovery",
-    ],
-    useCases: ["GH research", "Appetite studies", "Metabolic research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.5, count: 134, featured: "Good for GH and appetite research. Reliable quality." },
+    reviews: { 
+      rating: 4.5, 
+      count: 78,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // Longevity Category - Single dosage products
+  // Ipamorelin (sorted by dosage: 5mg)
   {
-    id: "epithalon-10mg",
-    name: "Epithalon (10mg/vial)",
-    category: "Longevity",
-    price: 43.0,
-    subscriptionPrice: getSubscriptionPrice(43.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "Epithalon is a synthetic peptide with longevity-enhancing effects. It mimics the action of a natural pineal gland peptide and has been linked to increased lifespan in animal studies. Potential Benefits: Extends telomere length, Supports longevity and anti-aging, Improves sleep and circadian rhythm, Boosts immune function. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=epithalon",
+    id: "ipamorelin-5mg",
+    name: "Ipamorelin (5mg)",
+    abbreviation: "Ipa",
+    dosage: "5mg",
+    price: 70.00,
+    category: "Muscle",
+    overview: "Selective growth hormone releasing peptide for muscle growth.",
+    description: "Ipamorelin is a selective growth hormone secretagogue known for stimulating GH release without significantly increasing cortisol or prolactin. It's highly regarded for its safety profile and promotes lean muscle growth, enhances recovery and repair, improves sleep quality, and supports fat metabolism.",
+    image: "/images/image-6.png",
     benefits: [
-      "Extends telomere length",
-      "Supports longevity and anti-aging",
-      "Improves sleep and circadian rhythm",
-      "Boosts immune function",
+      "Selective growth hormone stimulation",
+      "No significant cortisol increase",
+      "Promotes lean muscle growth",
+      "Enhances recovery and repair"
     ],
-    useCases: ["Aging research", "Telomere studies", "Longevity research", "Cellular regeneration"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 92,
-      featured: "Exceptional quality for longevity research. Reliable results in telomerase studies.",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 123,
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
+
+  // KPV (sorted by dosage: 10mg)
   {
-    id: "mots-c-10mg-longevity",
-    name: "MOTS-C (10mg/vial)",
-    category: "Longevity",
-    price: 97.0,
-    subscriptionPrice: getSubscriptionPrice(97.0, "mots-c-10mg-longevity"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "MOTS-C is a mitochondrial-derived peptide involved in cellular energy regulation and metabolic homeostasis. It's being researched for its effects on obesity, aging, and metabolic diseases. Potential Benefits: Improves insulin sensitivity, Enhances mitochondrial function, Supports fat loss, Potential longevity and anti-aging properties. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=mots-c",
+    id: "kpv-10mg",
+    name: "KPV (10mg)",
+    abbreviation: "KPV",
+    dosage: "10mg",
+    price: 55.00,
+    category: "Recovery/Immunity",
+    overview: "Anti-inflammatory peptide for enhanced recovery.",
+    description: "KPV is a tripeptide with potent anti-inflammatory properties that supports recovery and immune function through inflammatory pathway modulation.",
+    image: "/images/image-6.png",
     benefits: [
-      "Improves insulin sensitivity",
-      "Enhances mitochondrial function",
-      "Supports fat loss",
-      "Potential longevity and anti-aging properties",
+      "Potent anti-inflammatory properties",
+      "Supports recovery and immune function",
+      "Modulates inflammatory pathways",
+      "Research-grade peptide quality"
     ],
-    useCases: ["Mitochondrial research", "Metabolic studies", "Longevity research", "Energy metabolism"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 76,
-      featured: "Excellent for mitochondrial research. High purity and consistent results.",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.4, 
+      count: 56,
+      featured: "High-quality research peptide with excellent results"
     },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
+
+  // Lipo-C (sorted by dosage: 10ml)
+  {
+    id: "lipo-c-10ml",
+    name: "Lipo-C (10ml)",
+    abbreviation: "Lipo",
+    dosage: "10ml",
+    price: 120.00,
+    category: "Weight Loss",
+    overview: "Lipotropic compound for enhanced fat metabolism.",
+    description: "Lipo-C is a lipotropic compound that supports fat metabolism and liver function, making it an excellent addition to weight management protocols.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Supports fat metabolism",
+      "Enhances liver function",
+      "Weight management protocols",
+      "Metabolic optimization"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 67,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Mots-C (sorted by dosage: 10mg)
+  {
+    id: "mots-c-10mg",
+    name: "Mots-C (10mg)",
+    abbreviation: "Mots",
+    dosage: "10mg",
+    price: 95.00,
+    category: "Longevity",
+    overview: "Mitochondrial-derived peptide for cellular energy and longevity.",
+    description: "Mots-C is a mitochondrial-derived peptide that enhances cellular energy production and may support longevity through mitochondrial function optimization.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Nad+ (sorted by dosage: 500)
+  {
+    id: "nad-plus-500",
+    name: "Nad+ (500)",
+    abbreviation: "NAD+",
+    dosage: "500",
+    price: 145.00,
+    category: "Longevity",
+    overview: "Nicotinamide Adenine Dinucleotide for cellular energy and anti-aging.",
+    description: "Nicotinamide adenine dinucleotide is a crucial coenzyme involved in cellular energy metabolism and DNA repair processes. Extensively researched for aging, metabolic health, and cellular regeneration. Benefits include supported cellular energy production, enhanced DNA repair mechanisms, promoted healthy aging processes, and improved metabolic function.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Supported cellular energy production",
+      "Enhanced DNA repair mechanisms",
+      "Promoted healthy aging processes",
+      "Improved metabolic function"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.9, 
+      count: 98,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // PT-141 (sorted by dosage: 10mg)
   {
     id: "pt-141-10mg",
-    name: "PT-141 (10mg/vial)",
-    category: "Longevity",
-    price: 60.0,
-    subscriptionPrice: getSubscriptionPrice(60.0),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "PT-141 is a melanocortin receptor agonist used to treat sexual dysfunction. Unlike PDE5 inhibitors, it acts on the nervous system to increase sexual desire and arousal. Potential Benefits: Improves libido in men and women, Effective for erectile dysfunction, Enhances sexual arousal, Acts via CNS, not vascular system. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=pt-141",
+    name: "PT-141 (10mg)",
+    abbreviation: "PT",
+    dosage: "10mg",
+    price: 85.00,
+    category: "Muscle",
+    overview: "Melanocortin receptor agonist for enhanced performance.",
+    description: "PT-141 is a melanocortin receptor agonist used in sexual dysfunction research. Unlike PDE5 inhibitors, it acts on the nervous system to increase sexual desire and arousal. Benefits include improved libido in men and women, effectiveness for erectile dysfunction, enhanced sexual arousal, and CNS-based action.",
+    image: "/images/image-6.png",
     benefits: [
-      "Improves libido in men and women",
-      "Effective for erectile dysfunction",
-      "Enhances sexual arousal",
-      "Acts via CNS, not vascular system",
+      "Improved libido in men and women",
+      "Effectiveness for erectile dysfunction",
+      "Enhanced sexual arousal",
+      "CNS-based action mechanism"
     ],
-    useCases: ["Neurological research", "Wellness studies", "Behavioral research", "Receptor studies"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.7,
-      count: 76,
-      featured: "Excellent for receptor binding studies. Pure and effective for research.",
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 45,
+      featured: "High-quality research peptide with excellent results"
     },
-  },
-  {
-    id: "nad-100mg",
-    name: "NAD+ (500mg/vial)",
-    category: "Longevity",
-    price: 195.0,
-    subscriptionPrice: getSubscriptionPrice(195.0, "nad-100mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "NAD+ is a crucial coenzyme involved in cellular energy metabolism and DNA repair processes. It's extensively researched for its role in aging, metabolic health, and cellular regeneration. Potential Benefits: Supports cellular energy production, Enhances DNA repair mechanisms, Promotes healthy aging processes, Improves metabolic function. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=nad+anti-aging",
-    benefits: ["Cellular energy research", "Anti-aging studies", "Metabolic research", "Mitochondrial studies"],
-    useCases: ["Anti-aging research", "Cellular studies", "Energy metabolism research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: {
-      rating: 4.8,
-      count: 89,
-      featured: "Outstanding for anti-aging research. High purity and effectiveness.",
-    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
 
-  // Sleep Category - Single dosage product
+  // Retatrutide (sorted by dosage: 10mg, 20mg)
   {
-    id: "dsip-5mg",
-    name: "DSIP (5mg/vial)",
-    category: "Sleep",
-    price: 45.0,
-    subscriptionPrice: getSubscriptionPrice(45.0, "dsip-5mg"),
-    image: "/images/precision-peptides-vial.png",
-    overview:
-      "DSIP is a neuropeptide that promotes deep sleep and relaxation. It may also aid in hormone regulation and has shown promise for treating sleep disorders. Potential Benefits: Improves sleep quality and duration, Reduces stress and anxiety, Supports hormone regulation, May improve recovery and mood. PubMed: https://pubmed.ncbi.nlm.nih.gov/?term=dsip",
+    id: "retatrutide-10mg",
+    name: "Retatrutide (10mg)",
+    abbreviation: "Reta",
+    dosage: "10mg",
+    price: 145.00,
+    category: "Weight Loss",
+    overview: "Next-generation triple agonist for advanced weight management.",
+    description: "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors under investigation for obesity, diabetes, and metabolic conditions. Benefits include accelerated weight loss, improved metabolic markers, potential for NAFLD treatment, and enhanced insulin sensitivity.",
+    image: "/images/image-6.png",
     benefits: [
-      "Improves sleep quality and duration",
-      "Reduces stress and anxiety",
-      "Supports hormone regulation",
-      "May improve recovery and mood",
+      "Accelerated weight loss",
+      "Improved metabolic markers",
+      "Potential NAFLD treatment",
+      "Enhanced insulin sensitivity"
     ],
-    useCases: ["Sleep research", "Circadian studies", "Neurological research", "Sleep disorder research"],
-    disclaimer: "For research use only. Not for human consumption.",
-    reviews: { rating: 4.6, count: 54, featured: "Great for sleep research. Consistent quality and reliable results." },
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.9, 
+      count: 67,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
   },
+  {
+    id: "retatrutide-20mg",
+    name: "Retatrutide (20mg)",
+    abbreviation: "Reta",
+    dosage: "20mg",
+    price: 200.00,
+    category: "Weight Loss",
+    overview: "Higher potency Retatrutide for maximum weight management results.",
+    description: "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors under investigation for obesity, diabetes, and metabolic conditions. Benefits include accelerated weight loss, improved metabolic markers, potential for NAFLD treatment, and enhanced insulin sensitivity.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Accelerated weight loss",
+      "Improved metabolic markers",
+      "Potential NAFLD treatment",
+      "Enhanced insulin sensitivity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 42,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Selank (sorted by dosage: 10mg)
+  {
+    id: "selank-10mg",
+    name: "Selank (10mg)",
+    abbreviation: "Sel",
+    dosage: "10mg",
+    price: 75.00,
+    category: "Recovery/Immunity",
+    overview: "Anxiolytic peptide for stress management and immune support.",
+    description: "Selank is a synthetic peptide with anxiolytic properties that supports stress management and immune function through neuropeptide modulation.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 78,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Semax (sorted by dosage: 5mg)
+  {
+    id: "semax-5mg",
+    name: "Semax (5mg)",
+    abbreviation: "Sem",
+    dosage: "5mg",
+    price: 65.00,
+    category: "Recovery/Immunity",
+    overview: "Nootropic peptide for cognitive enhancement and neuroprotection.",
+    description: "Semax is a synthetic peptide that has shown benefits in cognitive function, neuroprotection, and stress resilience through neuropeptide modulation.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Semaglutide (sorted by dosage: 10mg, 15mg)
+  {
+    id: "semaglutide-10mg",
+    name: "Semaglutide (10mg)",
+    abbreviation: "Sema",
+    dosage: "10mg",
+    price: 150.00,
+    category: "Weight Loss",
+    overview: "Proven GLP-1 agonist for effective weight management.",
+    description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Appetite suppression",
+      "Substantial weight reduction",
+      "Improved HbA1c levels",
+      "Cardiovascular risk reduction"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.7, 
+      count: 203,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "semaglutide-15mg",
+    name: "Semaglutide (15mg)",
+    abbreviation: "Sema",
+    dosage: "15mg",
+    price: 200.00,
+    category: "Weight Loss",
+    overview: "Higher potency Semaglutide for enhanced weight management.",
+    description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Appetite suppression",
+      "Substantial weight reduction",
+      "Improved HbA1c levels",
+      "Cardiovascular risk reduction"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 134,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Sermorelin (sorted by dosage: 5mg, 10mg)
+  {
+    id: "sermorelin-5mg",
+    name: "Sermorelin (5mg)",
+    abbreviation: "Ser",
+    dosage: "5mg",
+    price: 80.00,
+    category: "Muscle",
+    overview: "Growth hormone releasing hormone for muscle growth and recovery.",
+    description: "Sermorelin is a GHRH analog that stimulates natural growth hormone release. It's used in research to promote recovery, energy, and lean mass. Benefits include increased natural growth hormone production, improved sleep quality, promoted lean muscle growth, and supported fat metabolism and energy.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Increased natural growth hormone production",
+      "Improved sleep quality",
+      "Promoted lean muscle growth",
+      "Supported fat metabolism and energy"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 112,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "sermorelin-10mg",
+    name: "Sermorelin (10mg)",
+    abbreviation: "Ser",
+    dosage: "10mg",
+    price: 140.00,
+    category: "Muscle",
+    overview: "Higher potency Sermorelin for enhanced muscle growth and recovery.",
+    description: "Sermorelin is a GHRH analog that stimulates natural growth hormone release. It's used in research to promote recovery, energy, and lean mass. Benefits include increased natural growth hormone production, improved sleep quality, promoted lean muscle growth, and supported fat metabolism and energy.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Increased natural growth hormone production",
+      "Improved sleep quality",
+      "Promoted lean muscle growth",
+      "Supported fat metabolism and energy"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.7, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // TB-500 (sorted by dosage: 5mg, 10mg)
+  {
+    id: "tb-500-5mg",
+    name: "TB-500 (5mg)",
+    abbreviation: "TB",
+    dosage: "5mg",
+    price: 90.00,
+    category: "Recovery/Immunity",
+    overview: "Thymosin beta-4 for enhanced recovery and healing.",
+    description: "Thymosin Beta-4 (TB-500) is a synthetic version that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Benefits include enhanced muscle recovery, promotion of new blood vessel growth, reduced scar tissue formation, and improved flexibility and mobility.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Enhanced muscle recovery",
+      "Promotion of new blood vessel growth",
+      "Reduced scar tissue formation",
+      "Improved flexibility and mobility"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.7, 
+      count: 145,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "tb-500-10mg",
+    name: "TB-500 (10mg)",
+    abbreviation: "TB",
+    dosage: "10mg",
+    price: 160.00,
+    category: "Recovery/Immunity",
+    overview: "Higher potency TB-500 for enhanced recovery and healing.",
+    description: "Thymosin Beta-4 (TB-500) is a synthetic version that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Benefits include enhanced muscle recovery, promotion of new blood vessel growth, reduced scar tissue formation, and improved flexibility and mobility.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Enhanced muscle recovery",
+      "Promotion of new blood vessel growth",
+      "Reduced scar tissue formation",
+      "Improved flexibility and mobility"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 98,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // TB500 + BPC157 (sorted by dosage: 5mg + 5mg)
+  {
+    id: "tb500-bpc157-stack",
+    name: "TB500 (5mg) + BPC157 (5mg)",
+    abbreviation: "TB+BPC",
+    dosage: "5mg+5mg",
+    price: 150.00,
+    category: "Recovery/Immunity",
+    overview: "Recovery stack combining TB-500 and BPC-157 for comprehensive healing.",
+    description: "This stack combines TB-500 and BPC-157 for comprehensive recovery support, targeting both systemic healing and localized tissue repair.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 67,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Tesamorelin (sorted by dosage: 10mg)
+  {
+    id: "tesamorelin-10mg",
+    name: "Tesamorelin (10mg)",
+    abbreviation: "Tesa",
+    dosage: "10mg",
+    price: 120.00,
+    category: "Weight Loss",
+    overview: "Growth hormone releasing hormone for metabolic support.",
+    description: "Tesamorelin is a growth hormone-releasing hormone analog that stimulates pituitary GH secretion. FDA-approved for HIV-associated lipodystrophy research. Benefits include reduced visceral fat, improved lipid profile, enhanced IGF-1 levels, and supported cognitive function.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Reduced visceral fat",
+      "Improved lipid profile",
+      "Enhanced IGF-1 levels",
+      "Supported cognitive function"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.6, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Thymosin Alpha (sorted by dosage: 10mg)
+  {
+    id: "thymosin-alpha-10mg",
+    name: "Thymosin Alpa (10mg)",
+    abbreviation: "TA",
+    dosage: "10mg",
+    price: 95.00,
+    category: "Immunity",
+    overview: "Thymosin alpha-1 for immune system support and enhancement.",
+    description: "Thymosin alpha-1 is a naturally occurring peptide that supports immune function and may enhance resistance to infections and immune-related conditions.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Targeted fat cell breakdown",
+      "Preserves lean muscle mass",
+      "Supports body recomposition",
+      "Enhanced metabolic activity"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.5, 
+      count: 56,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+
+  // Tirzepatide (sorted by dosage: 10mg, 15mg, 20mg, 30mg, 60mg)
+  {
+    id: "tirzepatide-10mg",
+    name: "Tirzepatide (10mg)",
+    abbreviation: "Tirz",
+    dosage: "10mg",
+    price: 135.00,
+    category: "Weight Loss",
+    overview: "Advanced GLP-1 agonist for weight management and metabolic support.",
+    description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Improved glycemic control",
+      "Significant weight loss promotion",
+      "Enhanced insulin sensitivity",
+      "Reduced cardiovascular risk markers"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 127,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "tirzepatide-15mg",
+    name: "Tirzepatide (15mg)",
+    abbreviation: "Tirz",
+    dosage: "15mg",
+    price: 150.00,
+    category: "Weight Loss",
+    overview: "Higher potency Tirzepatide for enhanced weight management results.",
+    description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Improved glycemic control",
+      "Significant weight loss promotion",
+      "Enhanced insulin sensitivity",
+      "Reduced cardiovascular risk markers"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.9, 
+      count: 89,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "tirzepatide-20mg",
+    name: "Tirzepatide (20mg)",
+    abbreviation: "Tirz",
+    dosage: "20mg",
+    price: 175.00,
+    category: "Weight Loss",
+    overview: "Maximum strength Tirzepatide for advanced weight management.",
+    description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Improved glycemic control",
+      "Significant weight loss promotion",
+      "Enhanced insulin sensitivity",
+      "Reduced cardiovascular risk markers"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.9, 
+      count: 156,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "tirzepatide-30mg",
+    name: "Tirzepatide (30mg)",
+    abbreviation: "Tirz",
+    dosage: "30mg",
+    price: 225.00,
+    category: "Weight Loss",
+    overview: "Ultra-high potency Tirzepatide for maximum metabolic support.",
+    description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Improved glycemic control",
+      "Significant weight loss promotion",
+      "Enhanced insulin sensitivity",
+      "Reduced cardiovascular risk markers"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.8, 
+      count: 73,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  },
+  {
+    id: "tirzepatide-60mg",
+    name: "Tirzepatide (60mg)",
+    abbreviation: "Tirz",
+    dosage: "60mg",
+    price: 450.00,
+    category: "Weight Loss",
+    overview: "Maximum strength Tirzepatide for advanced weight management needs.",
+    description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
+    image: "/images/image-6.png",
+    benefits: [
+      "Improved glycemic control",
+      "Significant weight loss promotion",
+      "Enhanced insulin sensitivity",
+      "Reduced cardiovascular risk markers"
+    ],
+    useCases: [
+      "Scientific research applications",
+      "Laboratory studies",
+      "Metabolic research",
+      "Therapeutic pathway analysis"
+    ],
+    reviews: { 
+      rating: 4.9, 
+      count: 45,
+      featured: "High-quality research peptide with excellent results"
+    },
+    specifications: {
+      purity: "99.9%",
+      storage: "Refrigerate 2-8°C",
+      shelfLife: "24 months"
+    }
+  }
 ]
+
+// Helper function to get products by category
+export function getProductsByCategory(category: string): Product[] {
+  if (category === "All") {
+    return products
+  }
+  return products.filter(product => product.category === category)
+}
+
+// Helper function to get product by ID
+export function getProductById(id: string): Product | undefined {
+  return products.find(product => product.id === id)
+}

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://precisionpeptides.store/sitemap.xml
+Sitemap: https://aminorejuvenation.com/sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /api/

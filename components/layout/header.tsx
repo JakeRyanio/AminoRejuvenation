@@ -17,35 +17,35 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#201c1a]/95 backdrop-blur-sm border-b border-[#403c3a]">
+      <header className="sticky top-0 z-50 bg-brand-50/95 backdrop-blur-sm border-b border-brand-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3">
               <div className="relative h-10 w-10">
                 <Image
-                  src="/images/precision-peptides-monogram.png"
-                  alt="Precision Peptides"
+                  src="/images/transparent-logo.png"
+                  alt="Amino Rejuvenation"
                   width={40}
                   height={40}
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-serif font-medium text-[#ebe7e4]">PRECISION PEPTIDES</span>
+              <span className="text-xl font-serif font-medium text-brand-800">AMINO REJUVENATION</span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+              <Link href="/" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                 Home
               </Link>
-              <Link href="/shop" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+              <Link href="/shop" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                 Shop
               </Link>
-              <Link href="/explore" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
-                Explore Peptides
+              <Link href="/explore" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                Explore Products
               </Link>
-              <Link href="/faq" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+              <Link href="/faq" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                 FAQ
               </Link>
             </nav>
@@ -56,11 +56,11 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsCartOpen(true)}
-                className="relative hover:bg-[#403c3a] text-[#ebe7e4]"
+                className="relative hover:bg-brand-100 text-brand-700"
               >
                 <ShoppingCart className="h-5 w-5" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-[#d2c6b8] text-[#201c1a] text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-rose-400 text-brand-50 text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {totalItems}
                   </span>
                 )}
@@ -70,7 +70,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-[#ebe7e4] hover:bg-[#403c3a]"
+                className="md:hidden text-brand-700 hover:bg-brand-100"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -80,18 +80,18 @@ export function Header() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-[#403c3a] pt-4">
+            <nav className="md:hidden mt-4 pb-4 border-t border-brand-200 pt-4">
               <div className="flex flex-col space-y-4">
-                <Link href="/" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+                <Link href="/" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                   Home
                 </Link>
-                <Link href="/shop" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+                <Link href="/shop" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                   Shop
                 </Link>
-                <Link href="/explore" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
-                  Explore Peptides
+                <Link href="/explore" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                  Explore Products
                 </Link>
-                <Link href="/faq" className="text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors font-medium">
+                <Link href="/faq" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
                   FAQ
                 </Link>
               </div>

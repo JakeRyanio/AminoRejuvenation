@@ -20,8 +20,8 @@ export function Hero() {
             {/* Logo */}
             <div className="mb-6">
               <Image
-                src="/images/precision-peptides-monogram.png"
-                alt="Precision Peptides"
+                src="/images/transparent-logo.png"
+                alt="Amino Rejuvenation"
                 width={80}
                 height={80}
                 className="object-contain"
@@ -29,23 +29,23 @@ export function Hero() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 leading-tight text-[#ebe7e4]">
-              PRECISION
+            <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 leading-tight text-brand-deep-mauve">
+              AMINO
               <br />
-              PEPTIDES
+              REJUVENATION
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-[#d2c6b8] mb-8 max-w-2xl font-light">
-              Premium research peptides crafted for scientific excellence.
+            <p className="text-xl md:text-2xl text-brand-sage-green mb-8 max-w-2xl font-light">
+              Premium health and wellness solutions for optimal well-being.
               <br />
-              <em className="text-emerald-300">Precision. Purity. Potential.</em>
+              <em className="text-brand-deep-mauve">Wellness. Vitality. Transformation.</em>
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/shop">
-                <Button className="bg-gradient-to-r from-[#d2c6b8] to-[#c4b8a4] hover:from-[#beb2a4] hover:to-[#b2a698] text-[#201c1a] font-medium px-8 py-6 text-lg hover:scale-105 transition-all duration-300 shadow-lg">
+                <Button className="bg-gradient-to-r from-brand-sage-green to-brand-deep-mauve hover:from-brand-deep-mauve hover:to-brand-sage-green text-white font-medium px-8 py-6 text-lg hover:scale-105 transition-all duration-300 shadow-lg">
                   Explore Products
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -55,43 +55,43 @@ export function Hero() {
 
           <div className="hidden lg:block">
             <Image
-              src="/images/website-hero-section.png"
-              alt="Precision Peptides Product"
+              src="/images/image-5.png"
+              alt="Amino Rejuvenation Wellness Products"
               width={600}
               height={600}
-              className="object-contain"
+              className="object-contain rounded-lg"
             />
           </div>
         </div>
 
-        {/* Key Features with pastel colors */}
+        {/* Key Features with brand colors */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-emerald-200/10 to-emerald-300/20 border border-emerald-300/20">
-            <div className="w-16 h-16 bg-emerald-200/30 rounded-full flex items-center justify-center mb-6">
-              <Beaker className="h-8 w-8 text-emerald-300" />
+          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-rose-100/40 to-rose-200/50 border border-rose-200/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div className="w-16 h-16 bg-gradient-to-br from-rose-300 to-rose-400 rounded-full flex items-center justify-center mb-6">
+              <Beaker className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-xl font-medium mb-3 text-[#ebe7e4]">Lab-Grade Purity</h3>
-            <p className="text-[#beb2a4] text-center leading-relaxed">
-              99%+ purity guaranteed through rigorous testing protocols
+            <h3 className="text-xl font-medium mb-3 text-brand-deep-mauve">Premium Quality</h3>
+            <p className="text-brand-sage-green text-center leading-relaxed">
+              Highest quality ingredients and rigorous testing protocols
             </p>
           </div>
 
-          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-sky-200/10 to-sky-300/20 border border-sky-300/20">
-            <div className="w-16 h-16 bg-sky-200/30 rounded-full flex items-center justify-center mb-6">
-              <Shield className="h-8 w-8 text-sky-300" />
+          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-brand-100/40 to-brand-200/50 border border-brand-200/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div className="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-500 rounded-full flex items-center justify-center mb-6">
+              <Shield className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-xl font-medium mb-3 text-[#ebe7e4]">Research Compliant</h3>
-            <p className="text-[#beb2a4] text-center leading-relaxed">
-              All products meet strict research-only guidelines
+            <h3 className="text-xl font-medium mb-3 text-brand-deep-mauve">Expert Formulated</h3>
+            <p className="text-brand-sage-green text-center leading-relaxed">
+              All products are expertly formulated for optimal wellness
             </p>
           </div>
 
-          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-orange-200/10 to-orange-300/20 border border-orange-300/20">
-            <div className="w-16 h-16 bg-orange-200/30 rounded-full flex items-center justify-center mb-6">
-              <Zap className="h-8 w-8 text-orange-300" />
+          <div className="flex flex-col items-center p-8 elegant-card elegant-hover bg-gradient-to-br from-rose-100/40 to-rose-200/50 border border-rose-200/60 shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div className="w-16 h-16 bg-gradient-to-br from-rose-300 to-rose-400 rounded-full flex items-center justify-center mb-6">
+              <Zap className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-xl font-medium mb-3 text-[#ebe7e4]">Free Shipping</h3>
-            <p className="text-[#beb2a4] text-center leading-relaxed">
+            <h3 className="text-xl font-medium mb-3 text-brand-deep-mauve">Free Shipping</h3>
+            <p className="text-brand-sage-green text-center leading-relaxed">
               Complimentary shipping with 24-48 hour processing
             </p>
           </div>

@@ -15,59 +15,52 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const [quantity, setQuantity] = useState(1)
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#201c1a] min-h-screen">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="container mx-auto px-4 py-4 bg-rose-800 min-h-screen max-w-6xl">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Product Image */}
-        <div className="space-y-4">
-          <div className="relative elegant-card p-4">
+        <div className="space-y-2">
+          <div className="relative elegant-card p-2">
             <Image
               src={product.image || "/placeholder.svg"}
               alt={product.name}
-              width={600}
-              height={600}
+              width={250}
+              height={250}
               className="w-full product-image rounded-md"
-              style={{ objectFit: "contain", objectPosition: "center", minHeight: "400px" }}
+              style={{ objectFit: "contain", objectPosition: "center", maxHeight: "200px" }}
             />
-            <div className="absolute top-8 left-8">
+            <div className="absolute top-2 left-2">
               <span className="elegant-badge">{product.category}</span>
             </div>
           </div>
         </div>
 
         {/* Product Info */}
-        <div className="space-y-6">
+        <div className="space-y-3">
           <div>
-            <h1 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">{product.name}</h1>
+                <h1 className="text-xl font-serif font-medium mb-2 text-white">{product.name}</h1>
 
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-2">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`h-5 w-5 ${
+                    className={`h-3 w-3 ${
                       i < Math.floor(product.reviews.rating) ? "text-[#d2c6b8] fill-current" : "text-[#504c4a]"
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-[#beb2a4] ml-2">
-                {product.reviews.rating} ({product.reviews.count} reviews)
-              </span>
+                  <span className="text-rose-200 ml-2 text-xs">
+                    {product.reviews.rating} ({product.reviews.count} reviews)
+                  </span>
             </div>
 
             {/* Price Display */}
-            <div className="mb-6">
-              <div className="text-4xl font-medium text-[#d2c6b8] mb-2">${product.price.toFixed(2)}</div>
-              {product.subscriptionPrice && (
-                <div className="text-lg text-emerald-400">
-                  Or ${product.subscriptionPrice.toFixed(2)}/month with subscription (Save 15%)
-                </div>
-              )}
-              {!product.subscriptionPrice && (
-                <div className="text-lg text-[#beb2a4]">
-                  One-time purchase only • No subscription available
-                </div>
-              )}
+            <div className="mb-3">
+              <div className="text-xl font-medium text-white mb-1">${product.price.toFixed(2)}</div>
+              <div className="text-xs text-rose-200">
+                One-time purchase only
+              </div>
             </div>
           </div>
 
@@ -78,64 +71,64 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </div>
 
           {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-4 py-6 border-t border-[#403c3a]">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-[#403c3a] rounded-full flex items-center justify-center mx-auto mb-2">
-                <Shield className="h-6 w-6 text-[#d2c6b8]" />
+              <div className="grid grid-cols-3 gap-2 py-3 border-t border-rose-700">
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-rose-900 rounded-full flex items-center justify-center mx-auto mb-1">
+                    <Shield className="h-4 w-4 text-rose-200" />
+                  </div>
+                  <p className="text-xs text-rose-200">Lab Tested</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-rose-900 rounded-full flex items-center justify-center mx-auto mb-1">
+                    <Beaker className="h-4 w-4 text-rose-200" />
+                  </div>
+                  <p className="text-xs text-rose-200">99%+ Purity</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-rose-900 rounded-full flex items-center justify-center mx-auto mb-1">
+                    <Clock className="h-4 w-4 text-rose-200" />
+                  </div>
+                  <p className="text-xs text-rose-200">Free Shipping</p>
+                </div>
               </div>
-              <p className="text-sm text-[#beb2a4]">Lab Tested</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-[#403c3a] rounded-full flex items-center justify-center mx-auto mb-2">
-                <Beaker className="h-6 w-6 text-[#d2c6b8]" />
-              </div>
-              <p className="text-sm text-[#beb2a4]">99%+ Purity</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-[#403c3a] rounded-full flex items-center justify-center mx-auto mb-2">
-                <Clock className="h-6 w-6 text-[#d2c6b8]" />
-              </div>
-              <p className="text-sm text-[#beb2a4]">Free Shipping</p>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Product Details Tabs */}
-      <div className="mt-16">
+      <div className="mt-8">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-[#403c3a] rounded-md">
+              <TabsList className="grid w-full grid-cols-4 bg-rose-900 rounded-md">
             <TabsTrigger
               value="overview"
-              className="text-[#beb2a4] data-[state=active]:bg-[#504c4a] data-[state=active]:text-[#ebe7e4]"
+              className="text-rose-200 data-[state=active]:bg-rose-700 data-[state=active]:text-white"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="benefits"
-              className="text-[#beb2a4] data-[state=active]:bg-[#504c4a] data-[state=active]:text-[#ebe7e4]"
+              className="text-rose-200 data-[state=active]:bg-rose-700 data-[state=active]:text-white"
             >
               Benefits
             </TabsTrigger>
             <TabsTrigger
               value="research"
-              className="text-[#beb2a4] data-[state=active]:bg-[#504c4a] data-[state=active]:text-[#ebe7e4]"
+              className="text-rose-200 data-[state=active]:bg-rose-700 data-[state=active]:text-white"
             >
               Research Use
             </TabsTrigger>
             <TabsTrigger
               value="reviews"
-              className="text-[#beb2a4] data-[state=active]:bg-[#504c4a] data-[state=active]:text-[#ebe7e4]"
+              className="text-rose-200 data-[state=active]:bg-rose-700 data-[state=active]:text-white"
             >
               Reviews
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="mt-8">
-            <div className="elegant-card p-8">
-              <h3 className="text-2xl font-medium mb-4 text-[#ebe7e4]">Product Overview</h3>
-              <div className="text-[#beb2a4] text-lg leading-relaxed">
-                {product.overview.split("PubMed: ").map((part, index) => {
+          <TabsContent value="overview" className="mt-6">
+            <div className="elegant-card p-6">
+              <h3 className="text-xl font-medium mb-3 text-gray-900">Product Overview</h3>
+              <div className="text-gray-800 text-base leading-relaxed">
+                {product.description.split("PubMed: ").map((part, index) => {
                   if (index === 0) {
                     return <span key={index}>{part}</span>
                   }
@@ -162,55 +155,55 @@ export function ProductDetail({ product }: ProductDetailProps) {
             </div>
           </TabsContent>
 
-          <TabsContent value="benefits" className="mt-8">
-            <div className="elegant-card p-8">
-              <h3 className="text-2xl font-medium mb-6 text-[#ebe7e4]">Potential Benefits</h3>
-              <ul className="space-y-4">
+          <TabsContent value="benefits" className="mt-6">
+            <div className="elegant-card p-6">
+              <h3 className="text-xl font-medium mb-4 text-gray-900">Potential Benefits</h3>
+              <ul className="space-y-3">
                 {product.benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-[#d2c6b8] rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-[#beb2a4]">{benefit}</span>
+                    <div className="w-2 h-2 bg-rose-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-gray-800">{benefit}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </TabsContent>
 
-          <TabsContent value="research" className="mt-8">
-            <div className="elegant-card p-8">
-              <h3 className="text-2xl font-medium mb-6 text-[#ebe7e4]">Scientific Use Cases</h3>
-              <ul className="space-y-4 mb-8">
+          <TabsContent value="research" className="mt-6">
+            <div className="elegant-card p-6">
+              <h3 className="text-xl font-medium mb-4 text-gray-900">Scientific Use Cases</h3>
+              <ul className="space-y-3 mb-6">
                 {product.useCases.map((useCase, index) => (
                   <li key={index} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-[#d2c6b8] rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-[#beb2a4]">{useCase}</span>
+                    <div className="w-2 h-2 bg-rose-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-gray-800">{useCase}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="bg-[#403c3a] border border-[#504c4a] rounded-md p-6">
-                <h4 className="text-lg font-medium text-red-400 mb-2">Safety Disclaimer</h4>
-                <p className="text-red-300">{product.disclaimer}</p>
+              <div className="bg-rose-900 border border-rose-700 rounded-md p-4">
+                <h4 className="text-base font-medium text-red-300 mb-2">Safety Disclaimer</h4>
+                <p className="text-red-200 text-sm">DISCLAIMER: All products sold by Amino Rejuvenation are for research purposes only. These products are not intended for human consumption, diagnosis, treatment, cure, or prevention of any disease. Not for use in humans or animals.</p>
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="reviews" className="mt-8">
-            <div className="elegant-card p-8">
-              <h3 className="text-2xl font-medium mb-6 text-[#ebe7e4]">Customer Reviews</h3>
+          <TabsContent value="reviews" className="mt-6">
+            <div className="elegant-card p-6">
+              <h3 className="text-xl font-medium mb-4 text-gray-900">Customer Reviews</h3>
 
-              <div className="bg-[#403c3a] rounded-md p-6">
+              <div className="bg-rose-900 rounded-md p-4">
                 <div className="flex items-center mb-4">
                   <div className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-[#d2c6b8] fill-current" />
+                      <Star key={i} className="h-5 w-5 text-rose-300 fill-current" />
                     ))}
                   </div>
-                  <span className="ml-2 font-medium text-[#ebe7e4]">5.0</span>
+                  <span className="ml-2 font-medium text-white">5.0</span>
                 </div>
 
-                <p className="text-[#beb2a4] italic mb-4">"{product.reviews.featured}"</p>
-                <p className="text-sm text-[#beb2a4]">Verified Research Purchase</p>
+                <p className="text-rose-200 italic mb-4">"{product.reviews.featured}"</p>
+                <p className="text-sm text-rose-200">Verified Research Purchase</p>
               </div>
             </div>
           </TabsContent>

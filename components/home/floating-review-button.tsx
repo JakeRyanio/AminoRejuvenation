@@ -6,15 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-interface Review {
-  id: string
-  name: string
-  role: string
-  content: string
-  rating: number
-  date: string
-}
+import type { Review } from "@/lib/types"
 
 export function FloatingReviewButton() {
   const [isOpen, setIsOpen] = useState(false)

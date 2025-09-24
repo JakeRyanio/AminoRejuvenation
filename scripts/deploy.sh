@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 🚀 Precision Peptides Deployment Script
-# This script helps deploy your Next.js app and connect your GoDaddy domain
+# 🚀 Amino Rejuvenation Deployment Script
+# This script helps deploy your Next.js app and connect your domain
 
-echo "🚀 Starting Precision Peptides Deployment..."
+echo "🚀 Starting Amino Rejuvenation Deployment..."
 
 # Check if Node.js is installed
 if ! command -v node &> /dev/null; then

@@ -51,12 +51,12 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <div className="fixed inset-0 z-50 overflow-hidden">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
-      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-[#201c1a] border-l border-[#403c3a] shadow-xl">
+      <div className="absolute right-0 top-0 h-full w-full max-w-md bg-brand-50 border-l border-brand-200 shadow-xl">
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-[#403c3a]">
-            <h2 className="text-lg font-medium text-[#ebe7e4]">Shopping Cart</h2>
-            <Button variant="ghost" size="icon" onClick={onClose} className="text-[#ebe7e4] hover:bg-[#403c3a]">
+          <div className="flex items-center justify-between p-4 border-b border-brand-200">
+            <h2 className="text-lg font-medium text-brand-900">Shopping Cart</h2>
+            <Button variant="ghost" size="icon" onClick={onClose} className="text-brand-700 hover:bg-brand-100">
               <X className="h-5 w-5" />
             </Button>
           </div>
@@ -64,7 +64,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           {/* Cart Items */}
           <div className="flex-1 overflow-y-auto p-4">
             {items.length === 0 ? (
-              <p className="text-center text-[#beb2a4] mt-8">Your cart is empty</p>
+              <p className="text-center text-brand-700 mt-8">Your cart is empty</p>
             ) : (
               <div className="space-y-4">
                 {items.map((item) => {
@@ -82,10 +82,10 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       />
 
                       <div className="flex-1">
-                        <h3 className="font-medium text-[#ebe7e4]">{item.name}</h3>
+                        <h3 className="font-medium text-brand-900">{item.name}</h3>
                         <div className="flex items-center space-x-2">
-                          <p className="text-[#d2c6b8] font-medium">${item.price.toFixed(2)}</p>
-                          {item.purchaseType === "subscription" && (
+                          <p className="text-brand-700 font-medium">${item.price.toFixed(2)}</p>
+                          {false && (
                             <span className="text-xs bg-emerald-500 text-white px-2 py-1 rounded-full">Monthly</span>
                           )}
                         </div>
@@ -95,13 +95,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             variant="outline"
                             size="icon"
                             disabled={isUpdating}
-                            className="h-8 w-8 border-[#403c3a] text-[#ebe7e4] hover:bg-[#403c3a] bg-transparent disabled:opacity-50"
+                            className="h-8 w-8 border-brand-300 text-brand-700 hover:bg-brand-100 bg-transparent disabled:opacity-50"
                             onClick={() => handleQuantityUpdate(item.id, item.purchaseType, item.quantity - 1)}
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
 
-                          <span className="w-8 text-center text-[#ebe7e4]">
+                          <span className="w-8 text-center text-brand-900">
                             {isUpdating ? "..." : item.quantity}
                           </span>
 
@@ -109,7 +109,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             variant="outline"
                             size="icon"
                             disabled={isUpdating}
-                            className="h-8 w-8 border-[#403c3a] text-[#ebe7e4] hover:bg-[#403c3a] bg-transparent disabled:opacity-50"
+                            className="h-8 w-8 border-brand-300 text-brand-700 hover:bg-brand-100 bg-transparent disabled:opacity-50"
                             onClick={() => handleQuantityUpdate(item.id, item.purchaseType, item.quantity + 1)}
                           >
                             <Plus className="h-3 w-3" />
@@ -120,7 +120,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             size="sm"
                             disabled={isUpdating}
                             onClick={() => handleRemoveItem(item.id, item.purchaseType)}
-                            className="text-red-400 hover:text-red-300 hover:bg-[#403c3a] disabled:opacity-50"
+                            className="text-red-600 hover:text-red-700 hover:bg-brand-100 disabled:opacity-50"
                           >
                             Remove
                           </Button>
@@ -135,14 +135,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="border-t border-[#403c3a] p-4">
+            <div className="border-t border-brand-200 p-4">
               <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-medium text-[#ebe7e4]">Total:</span>
-                <span className="text-xl font-medium text-[#d2c6b8]">${total.toFixed(2)}</span>
+                <span className="text-lg font-medium text-brand-900">Total:</span>
+                <span className="text-xl font-medium text-brand-700">${total.toFixed(2)}</span>
               </div>
 
               <Link href="/checkout" onClick={onClose}>
-                <Button className="w-full bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium rounded-md py-3">
+                <Button className="w-full bg-brand-500 hover:bg-brand-600 text-brand-50 font-medium rounded-md py-3">
                   Proceed to Checkout
                 </Button>
               </Link>

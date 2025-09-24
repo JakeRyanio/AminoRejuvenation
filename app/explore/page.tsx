@@ -1,10 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Search, ExternalLink, Beaker, BookOpen, Microscope } from "lucide-react"
+import { useState, useEffect, useMemo, useCallback } from "react"
+import { Search, ExternalLink, Beaker, BookOpen, Microscope, ChevronDown, ChevronUp } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Image from "next/image"
+import Link from "next/link"
+import { products } from "@/lib/products-data"
 
 interface PeptideInfo {
   Peptide: string
@@ -144,16 +147,28 @@ const peptideData: PeptideInfo[] = [
 
 export default function ExplorePage() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [filteredPeptides, setFilteredPeptides] = useState<PeptideInfo[]>(peptideData)
+  const [expandedCard, setExpandedCard] = useState<string | null>(null)
 
-  useEffect(() => {
-    const filtered = peptideData.filter(
+  // Optimize filtering with useMemo
+  const filteredPeptides = useMemo(() => {
+    return peptideData.filter(
       (peptide) =>
         peptide.Peptide.toLowerCase().includes(searchTerm.toLowerCase()) ||
         peptide.Overview.toLowerCase().includes(searchTerm.toLowerCase()),
     )
-    setFilteredPeptides(filtered)
   }, [searchTerm])
+
+  // Function to find matching products for a peptide - optimized with useCallback
+  const findMatchingProducts = useCallback((peptideName: string) => {
+    return products.filter(product => 
+      product.name.toLowerCase().includes(peptideName.toLowerCase()) ||
+      product.abbreviation.toLowerCase().includes(peptideName.toLowerCase())
+    )
+  }, [])
+
+  const toggleExpanded = useCallback((peptideName: string) => {
+    setExpandedCard(expandedCard === peptideName ? null : peptideName)
+  }, [expandedCard])
 
   return (
     <div className="min-h-screen bg-[#201c1a]">
@@ -173,52 +188,70 @@ export default function ExplorePage() {
               </div>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 text-[#ebe7e4]">Explore Peptides</h1>
+            <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 text-brand-900">Explore Peptides</h1>
 
-            <p className="text-xl md:text-2xl text-[#beb2a4] max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-xl md:text-2xl text-brand-700 max-w-3xl mx-auto font-light leading-relaxed">
               Comprehensive research guide to peptides and their scientific applications.
               <br />
-              <em className="text-emerald-300">Discover the science behind each compound.</em>
+              <em className="text-brand-600">Discover the science behind each compound.</em>
             </p>
+          </div>
+
+          {/* Hero Image */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="relative rounded-lg overflow-hidden elegant-card">
+              <Image
+                src="/images/image-6.png"
+                alt="Research Peptides Laboratory"
+                width={800}
+                height={400}
+                className="w-full h-64 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <div className="absolute bottom-6 left-6 text-white">
+                <h3 className="text-2xl font-medium mb-2">Scientific Research</h3>
+                <p className="text-lg opacity-90">Advanced peptide research and development</p>
+              </div>
+            </div>
           </div>
 
           {/* Search */}
           <div className="max-w-2xl mx-auto mb-12">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#beb2a4] h-5 w-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-brand-600 h-5 w-5" />
               <Input
                 placeholder="Search peptides by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 py-4 text-lg elegant-input bg-[#2a2624] border-[#403c3a] text-[#ebe7e4]"
+                className="pl-12 py-4 text-lg elegant-input bg-brand-100 border-brand-300 text-brand-900 placeholder:text-brand-600"
               />
             </div>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="text-center p-6 elegant-card bg-gradient-to-br from-emerald-200/10 to-emerald-300/20 border border-emerald-300/20">
-              <div className="w-12 h-12 bg-emerald-200/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Beaker className="h-6 w-6 text-emerald-300" />
+            <div className="text-center p-6 elegant-card bg-gradient-to-br from-brand-50/60 to-brand-100/70 border border-brand-200/50">
+              <div className="w-12 h-12 bg-brand-400/60 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Beaker className="h-6 w-6 text-brand-700" />
               </div>
-              <div className="text-3xl font-bold text-emerald-300 mb-2">{filteredPeptides.length}</div>
-              <div className="text-[#beb2a4]">Research Peptides</div>
+              <div className="text-3xl font-bold text-brand-800 mb-2">{filteredPeptides.length}</div>
+              <div className="text-brand-700 font-medium">Research Peptides</div>
             </div>
 
-            <div className="text-center p-6 elegant-card bg-gradient-to-br from-sky-200/10 to-sky-300/20 border border-sky-300/20">
-              <div className="w-12 h-12 bg-sky-200/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="h-6 w-6 text-sky-300" />
+            <div className="text-center p-6 elegant-card bg-gradient-to-br from-rose-50/60 to-rose-100/70 border border-rose-200/50">
+              <div className="w-12 h-12 bg-rose-300/60 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="h-6 w-6 text-rose-700" />
               </div>
-              <div className="text-3xl font-bold text-sky-300 mb-2">100+</div>
-              <div className="text-[#beb2a4]">Research Studies</div>
+              <div className="text-3xl font-bold text-rose-800 mb-2">100+</div>
+              <div className="text-rose-700 font-medium">Research Studies</div>
             </div>
 
-            <div className="text-center p-6 elegant-card bg-gradient-to-br from-purple-200/10 to-purple-300/20 border border-purple-300/20">
-              <div className="w-12 h-12 bg-purple-200/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Microscope className="h-6 w-6 text-purple-300" />
+            <div className="text-center p-6 elegant-card bg-gradient-to-br from-lavender-50/60 to-lavender-100/70 border border-lavender-200/50">
+              <div className="w-12 h-12 bg-lavender-300/60 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Microscope className="h-6 w-6 text-lavender-700" />
               </div>
-              <div className="text-3xl font-bold text-purple-300 mb-2">6</div>
-              <div className="text-[#beb2a4]">Research Categories</div>
+              <div className="text-3xl font-bold text-lavender-800 mb-2">6</div>
+              <div className="text-lavender-700 font-medium">Research Categories</div>
             </div>
           </div>
         </div>
@@ -228,56 +261,93 @@ export default function ExplorePage() {
       <section className="py-20 content-section">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPeptides.map((peptide, index) => (
-              <Card key={peptide.Peptide} className="elegant-card elegant-hover bg-[#2a2624] border-[#403c3a]">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-medium text-[#ebe7e4] flex items-center justify-between">
-                    {peptide.Peptide}
-                    <div className="w-8 h-8 bg-gradient-to-br from-emerald-200/20 to-emerald-300/30 rounded-full flex items-center justify-center">
-                      <Beaker className="h-4 w-4 text-emerald-300" />
-                    </div>
-                  </CardTitle>
-                </CardHeader>
+            {filteredPeptides.map((peptide, index) => {
+              const isExpanded = expandedCard === peptide.Peptide
+              const matchingProducts = findMatchingProducts(peptide.Peptide)
+              
+              return (
+                <Card key={peptide.Peptide} className="elegant-card elegant-hover bg-brand-50 border-brand-200">
+                  <CardHeader 
+                    className="cursor-pointer" 
+                    onClick={() => toggleExpanded(peptide.Peptide)}
+                  >
+                    <CardTitle className="text-2xl font-medium text-brand-900 flex items-center justify-between">
+                      {peptide.Peptide}
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+                          <Beaker className="h-4 w-4 text-white" />
+                        </div>
+                        {isExpanded ? (
+                          <ChevronUp className="h-5 w-5 text-brand-600" />
+                        ) : (
+                          <ChevronDown className="h-5 w-5 text-brand-600" />
+                        )}
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
 
-                <CardContent className="space-y-4">
-                  <p className="text-[#beb2a4] leading-relaxed line-clamp-4">{peptide.Overview}</p>
+                  <CardContent className="space-y-4">
+                    <p className={`text-brand-700 leading-relaxed ${isExpanded ? '' : 'line-clamp-4'}`}>
+                      {peptide.Overview}
+                    </p>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-[#403c3a]">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      asChild
-                      className="border-[#403c3a] text-[#d2c6b8] hover:bg-[#403c3a] hover:text-[#ebe7e4] bg-transparent"
-                    >
-                      <a
-                        href={peptide["PubMed Link"]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2"
+                    {isExpanded && matchingProducts.length > 0 && (
+                      <div className="bg-brand-100 rounded-lg p-4 border border-brand-200">
+                        <h4 className="font-medium text-brand-900 mb-3">Available Products:</h4>
+                        <div className="space-y-2">
+                          {matchingProducts.map((product) => (
+                            <Link 
+                              key={product.id} 
+                              href={`/products/${product.id}`}
+                              className="block p-2 bg-white rounded border border-brand-200 hover:bg-brand-50 transition-colors"
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium text-brand-900">{product.name}</span>
+                                <span className="text-brand-600 font-medium">${product.price.toFixed(2)}</span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between pt-4 border-t border-brand-200">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="border-brand-300 text-brand-700 hover:bg-brand-100 hover:text-brand-900 bg-transparent"
                       >
-                        <ExternalLink className="h-4 w-4" />
-                        <span>PubMed</span>
-                      </a>
-                    </Button>
+                        <a
+                          href={peptide["PubMed Link"]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-2"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          <span>PubMed</span>
+                        </a>
+                      </Button>
 
-                    <Button size="sm" asChild className="bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a]">
-                      <a href="/shop">View Products</a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                      <Button size="sm" asChild className="bg-brand-600 hover:bg-brand-700 text-white">
+                        <Link href="/shop">View All Products</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
 
           {/* No Results */}
           {filteredPeptides.length === 0 && (
             <div className="text-center py-16">
-              <div className="w-16 h-16 bg-[#403c3a] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="h-8 w-8 text-[#beb2a4]" />
+              <div className="w-16 h-16 bg-brand-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="h-8 w-8 text-brand-600" />
               </div>
-              <h3 className="text-2xl font-medium text-[#ebe7e4] mb-4">No peptides found</h3>
-              <p className="text-[#beb2a4] mb-6">Try adjusting your search terms</p>
-              <Button onClick={() => setSearchTerm("")} className="bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a]">
+              <h3 className="text-2xl font-medium text-brand-900 mb-4">No peptides found</h3>
+              <p className="text-brand-700 mb-6">Try adjusting your search terms</p>
+              <Button onClick={() => setSearchTerm("")} className="bg-brand-600 hover:bg-brand-700 text-white">
                 Clear Search
               </Button>
             </div>
@@ -289,8 +359,8 @@ export default function ExplorePage() {
       <section className="py-20 content-section-alt">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl font-serif font-medium mb-6 text-[#ebe7e4]">Ready to Start Your Research?</h2>
-            <p className="text-xl text-[#beb2a4] mb-8 font-light">
+            <h2 className="text-4xl font-serif font-medium mb-6 text-brand-900">Ready to Start Your Research?</h2>
+            <p className="text-xl text-brand-700 mb-8 font-light">
               Explore our comprehensive catalog of research-grade peptides, each backed by scientific literature and
               quality assurance.
             </p>
@@ -298,14 +368,14 @@ export default function ExplorePage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-gradient-to-r from-[#d2c6b8] to-[#c4b8a4] hover:from-[#beb2a4] hover:to-[#b2a698] text-[#201c1a] font-medium px-8 py-6 text-lg"
+                className="bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-medium px-8 py-6 text-lg"
               >
                 <a href="/shop">Browse Products</a>
               </Button>
               <div className="text-center">
-                <p className="text-[#beb2a4] mb-2">Need research support?</p>
-                <a href="mailto:precisionpeptides@proton.me" className="text-[#d2c6b8] hover:text-[#ebe7e4] font-medium">
-                  precisionpeptides@proton.me
+                <p className="text-brand-700 mb-2">Need research support?</p>
+                <a href="mailto:aminorejuvenation@gmail.com" className="text-brand-600 hover:text-brand-800 font-medium">
+                  aminorejuvenation@gmail.com
                 </a>
               </div>
             </div>

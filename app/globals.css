@@ -4,55 +4,55 @@
 
 @layer base {
   :root {
-    /* Elegant taupe/beige color palette */
-    --background: 32 28 26; /* Dark background */
-    --foreground: 235 231 228; /* Light text */
-    --card: 44 40 38; /* Slightly lighter card background */
-    --card-foreground: 235 231 228;
-    --popover: 44 40 38;
-    --popover-foreground: 235 231 228;
-    --primary: 210 198 184; /* Taupe accent */
-    --primary-foreground: 32 28 26;
-    --secondary: 64 60 58; /* Darker accent */
-    --secondary-foreground: 235 231 228;
-    --muted: 64 60 58;
-    --muted-foreground: 190 186 183;
-    --accent: 210 198 184; /* Taupe accent */
-    --accent-foreground: 32 28 26;
+    /* Amino Rejuvenation brand color palette - Updated */
+    --background: 225 237 236; /* Light mint #E1EDEC */
+    --foreground: 124 90 102; /* Deep mauve #7C5A66 */
+    --card: 225 237 236; /* Light mint */
+    --card-foreground: 124 90 102; /* Deep mauve */
+    --popover: 225 237 236; /* Light mint */
+    --popover-foreground: 124 90 102; /* Deep mauve */
+    --primary: 151 157 153; /* Sage green #979D99 */
+    --primary-foreground: 255 255 255; /* White */
+    --secondary: 165 164 181; /* Lavender gray #A5A4B5 */
+    --secondary-foreground: 255 255 255; /* White */
+    --muted: 207 173 175; /* Dusty rose #CFADAF */
+    --muted-foreground: 124 90 102; /* Deep mauve */
+    --accent: 165 164 181; /* Lavender gray */
+    --accent-foreground: 255 255 255; /* White */
     --destructive: 220 38 38;
-    --destructive-foreground: 235 231 228;
-    --border: 64 60 58;
-    --input: 64 60 58;
-    --ring: 210 198 184;
+    --destructive-foreground: 255 255 255;
+    --border: 151 157 153; /* Sage green */
+    --input: 151 157 153; /* Sage green */
+    --ring: 124 90 102; /* Deep mauve */
     --radius: 0.5rem;
   }
 
   * {
-    border-color: rgb(64 60 58);
+    border-color: rgb(179 213 210);
   }
 
   body {
-    background-color: rgb(32 28 26);
-    color: rgb(235 231 228);
+    background-color: rgb(225 237 236); /* Light mint */
+    color: rgb(124 90 102); /* Deep mauve */
     font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
 @layer components {
   .elegant-gradient {
-    background: linear-gradient(135deg, rgb(44 40 38) 0%, rgb(32 28 26) 100%);
+    background: linear-gradient(135deg, rgb(225 237 236) 0%, rgb(211 229 227) 100%);
   }
 
   .elegant-card {
-    background: rgb(44 40 38);
-    border: 1px solid rgb(64 60 58);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    background: rgb(225 237 236);
+    border: 1px solid rgb(179 213 210);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     border-radius: 0.5rem;
   }
 
   .elegant-button {
-    background: rgb(210 198 184);
-    color: rgb(32 28 26);
+    background: rgb(151 157 153);
+    color: rgb(225 237 236);
     border-radius: 0.25rem;
     padding: 0.75rem 2rem;
     font-weight: 500;
@@ -61,15 +61,15 @@
   }
 
   .elegant-button:hover {
-    background: rgb(190 178 164);
+    background: rgb(122 138 124);
     transform: translateY(-1px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
 
   .elegant-button-outline {
     background: transparent;
-    color: rgb(210 198 184);
-    border: 1px solid rgb(210 198 184);
+    color: rgb(151 157 153);
+    border: 1px solid rgb(151 157 153);
     border-radius: 0.25rem;
     padding: 0.75rem 2rem;
     font-weight: 500;
@@ -77,32 +77,32 @@
   }
 
   .elegant-button-outline:hover {
-    background: rgb(210 198 184);
-    color: rgb(32 28 26);
+    background: rgb(151 157 153);
+    color: rgb(225 237 236);
     transform: translateY(-1px);
   }
 
   .hero-section {
-    background: linear-gradient(135deg, rgb(44 40 38) 0%, rgb(32 28 26) 100%);
+    background: linear-gradient(135deg, rgb(225 237 236) 0%, rgb(211 229 227) 100%);
     position: relative;
     overflow: hidden;
   }
 
   .elegant-text-gradient {
-    background: linear-gradient(135deg, rgb(235 231 228) 0%, rgb(210 198 184) 100%);
+    background: linear-gradient(135deg, rgb(58 66 59) 0%, rgb(151 157 153) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .content-section {
-    background: rgb(32 28 26);
-    border-top: 1px solid rgb(64 60 58);
+    background: rgb(225 237 236);
+    border-top: 1px solid rgb(179 213 210);
   }
 
   .content-section-alt {
-    background: rgb(44 40 38);
-    border-top: 1px solid rgb(64 60 58);
+    background: rgb(211 229 227);
+    border-top: 1px solid rgb(179 213 210);
   }
 
   .elegant-hover {
@@ -127,8 +127,8 @@
   }
 
   .elegant-badge {
-    background: rgb(210 198 184);
-    color: rgb(32 28 26);
+    background: rgb(151 157 153);
+    color: rgb(225 237 236);
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.75rem;
@@ -138,9 +138,9 @@
   }
 
   .elegant-input {
-    background: rgb(44 40 38);
-    border: 1px solid rgb(64 60 58);
-    color: rgb(235 231 228);
+    background: rgb(225 237 236);
+    border: 1px solid rgb(179 213 210);
+    color: rgb(58 66 59);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     transition: all 0.3s ease;
@@ -148,18 +148,18 @@
 
   .elegant-input:focus {
     outline: none;
-    border-color: rgb(210 198 184);
-    box-shadow: 0 0 0 3px rgba(210, 198, 184, 0.1);
+    border-color: rgb(151 157 153);
+    box-shadow: 0 0 0 3px rgba(151, 157, 153, 0.1);
   }
 
   .elegant-input::placeholder {
-    color: rgb(190 186 183);
+    color: rgb(151 157 153);
   }
 
   .elegant-select {
-    background: rgb(44 40 38);
-    border: 1px solid rgb(64 60 58);
-    color: rgb(235 231 228);
+    background: rgb(225 237 236);
+    border: 1px solid rgb(179 213 210);
+    color: rgb(58 66 59);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     transition: all 0.3s ease;
@@ -167,8 +167,8 @@
 
   .elegant-select:focus {
     outline: none;
-    border-color: rgb(210 198 184);
-    box-shadow: 0 0 0 3px rgba(210, 198, 184, 0.1);
+    border-color: rgb(151 157 153);
+    box-shadow: 0 0 0 3px rgba(151, 157, 153, 0.1);
   }
 
   .pastel-emerald {

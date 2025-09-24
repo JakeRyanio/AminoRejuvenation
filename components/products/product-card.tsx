@@ -6,24 +6,22 @@ import { Star, ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/components/cart/cart-context"
 import type { Product } from "@/lib/products-data"
+import { memo } from "react"
 
 interface ProductCardProps {
   product: Product
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart()
 
-  const handleAddToCart = (purchaseType: "one-time" | "subscription" = "one-time") => {
-    const price = purchaseType === "subscription" ? (product.subscriptionPrice || 0) : product.price
-    const name = purchaseType === "subscription" ? `${product.name} (Monthly)` : product.name
-
+  const handleAddToCart = () => {
     addItem({
       id: product.id,
-      name: name,
-      price: price,
+      name: product.name,
+      price: product.price,
       image: product.image,
-      purchaseType: purchaseType,
+      purchaseType: "one-time",
     })
   }
 
@@ -47,12 +45,12 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="p-6">
         <Link href={`/products/${product.id}`}>
-          <h3 className="text-xl font-medium mb-2 text-[#ebe7e4] hover:text-[#d2c6b8] transition-colors">
+          <h3 className="text-xl font-medium mb-2 text-brand-900 hover:text-brand-700 transition-colors">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-[#beb2a4] text-sm mb-4 line-clamp-2">{product.overview}</p>
+        <p className="text-brand-800 text-sm mb-4 line-clamp-2">{product.overview}</p>
 
         <div className="flex items-center mb-4">
           <div className="flex items-center">
@@ -60,51 +58,35 @@ export function ProductCard({ product }: ProductCardProps) {
               <Star
                 key={i}
                 className={`h-4 w-4 ${
-                  i < Math.floor(product.reviews.rating) ? "text-[#d2c6b8] fill-current" : "text-[#504c4a]"
+                  i < Math.floor(product.reviews.rating) ? "text-brand-500 fill-current" : "text-brand-300"
                 }`}
               />
             ))}
           </div>
-          <span className="text-sm text-[#beb2a4] ml-2">({product.reviews.count})</span>
+          <span className="text-sm text-brand-700 ml-2">({product.reviews.count})</span>
         </div>
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-2xl font-medium text-[#d2c6b8]">${product.price.toFixed(2)}</span>
-              {product.subscriptionPrice && (
-                <div className="text-sm text-emerald-400">
-                  ${product.subscriptionPrice.toFixed(2)}/mo with subscription
-                </div>
-              )}
-              {!product.subscriptionPrice && (
-                <div className="text-sm text-[#beb2a4]">
-                  One-time purchase only
-                </div>
-              )}
+              <span className="text-2xl font-medium text-brand-700">${product.price.toFixed(2)}</span>
+              <div className="text-sm text-brand-600">
+                One-time purchase
+              </div>
             </div>
           </div>
 
           <div className="flex space-x-2">
             <Button
-              onClick={() => handleAddToCart("one-time")}
-              className={`${product.subscriptionPrice ? 'flex-1' : 'w-full'} bg-[#d2c6b8] hover:bg-[#beb2a4] text-[#201c1a] font-medium rounded-md px-4 py-2 text-sm`}
+              onClick={handleAddToCart}
+              className="w-full bg-brand-500 hover:bg-brand-600 text-brand-50 font-medium rounded-md px-4 py-2 text-sm"
             >
               <ShoppingCart className="h-4 w-4 mr-1" />
-              {product.subscriptionPrice ? 'Buy Once' : 'Add to Cart'}
+              Add to Cart
             </Button>
-
-            {product.subscriptionPrice && (
-              <Button
-                onClick={() => handleAddToCart("subscription")}
-                className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-md px-4 py-2 text-sm"
-              >
-                Subscribe & Save
-              </Button>
-            )}
           </div>
         </div>
       </div>
     </div>
   )
-}
+})
