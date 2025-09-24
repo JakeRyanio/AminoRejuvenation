@@ -55,41 +55,69 @@ export default function FAQPage() {
   ]
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
-          <p className="text-xl text-gray-400">
-            Find answers to common questions about our research peptides and services
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-brand-100 to-lavender-50">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full mb-6">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-brand-800 to-rose-700 bg-clip-text text-transparent">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl text-brand-700 max-w-2xl mx-auto leading-relaxed">
+              Find answers to common questions about our research peptides and services
+            </p>
+          </div>
 
-        <Accordion type="single" collapsible className="space-y-4">
-          {faqs.map((faq, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="bg-gray-900/50 border border-gray-800 rounded-lg px-6"
-            >
-              <AccordionTrigger className="text-left hover:text-cyan-400 transition-colors">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-gray-300 leading-relaxed">{faq.answer}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+          {/* FAQ Accordion */}
+          <Accordion type="single" collapsible className="space-y-6">
+            {faqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="group"
+              >
+                <div className="bg-white/80 backdrop-blur-sm border border-brand-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:border-brand-300">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:bg-brand-50/50 transition-colors rounded-t-xl group-hover:text-brand-800">
+                    <span className="font-semibold text-brand-900 text-lg">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="pt-2 pb-4">
+                      <p className="text-brand-700 leading-relaxed text-base">{faq.answer}</p>
+                    </div>
+                  </AccordionContent>
+                </div>
+              </AccordionItem>
+            ))}
+          </Accordion>
 
-        <div className="mt-12 p-8 bg-gray-900/50 rounded-lg border border-gray-800 text-center">
-          <h3 className="text-2xl font-semibold mb-4">Still have questions?</h3>
-          <p className="text-gray-400 mb-6">
-            Our scientific support team is here to help with any technical questions about our products.
-          </p>
-          <p className="text-gray-400">
-            For support, email us at{" "}
-            <a href="mailto:aminorejuvenation@gmail.com" className="text-cyan-400 hover:text-cyan-300">
-              aminorejuvenation@gmail.com
-            </a>
-          </p>
+          {/* Contact Section */}
+          <div className="mt-16 p-8 bg-gradient-to-r from-brand-100 to-lavender-100 rounded-2xl border border-brand-200 shadow-lg">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-rose-400 to-rose-600 rounded-full mb-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-brand-900">Still have questions?</h3>
+              <p className="text-brand-700 mb-6 max-w-2xl mx-auto">
+                Our scientific support team is here to help with any technical questions about our products.
+              </p>
+              <div className="inline-flex items-center space-x-2 bg-white/60 px-6 py-3 rounded-full border border-brand-200">
+                <span className="text-brand-800 font-medium">Contact us at:</span>
+                <a 
+                  href="mailto:aminorejuvenation@gmail.com" 
+                  className="text-rose-600 hover:text-rose-700 font-semibold transition-colors"
+                >
+                  aminorejuvenation@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
