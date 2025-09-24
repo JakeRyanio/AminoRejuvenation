@@ -15,10 +15,10 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
         )}
         ref={ref}
         style={{
-          backgroundColor: 'rgb(225 237 236)',
-          color: 'rgb(58 66 59)',
-          WebkitBoxShadow: '0 0 0 1000px rgb(225 237 236) inset',
-          WebkitTextFillColor: 'rgb(58 66 59)',
+          backgroundColor: '#E1EDEC',
+          color: '#3A423B',
+          WebkitBoxShadow: '0 0 0 1000px #E1EDEC inset',
+          WebkitTextFillColor: '#3A423B',
         }}
         {...props}
       />

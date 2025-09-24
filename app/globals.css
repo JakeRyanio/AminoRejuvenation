@@ -281,54 +281,48 @@
     animation-play-state: paused;
   }
 
-  /* AGGRESSIVE Safari autofill fix - Mobile Safari specific */
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active,
-  select:-webkit-autofill,
-  select:-webkit-autofill:hover,
-  select:-webkit-autofill:focus,
-  select:-webkit-autofill:active,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover,
-  textarea:-webkit-autofill:focus,
-  textarea:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgb(225 237 236) inset !important;
-    -webkit-text-fill-color: rgb(58 66 59) !important;
-    background-color: rgb(225 237 236) !important;
-    background-image: none !important;
-    color: rgb(58 66 59) !important;
-    transition: background-color 5000s ease-in-out 0s !important;
-  }
-
-  /* Force all inputs to have consistent styling */
+  /* NUCLEAR OPTION: Complete Safari autofill override */
   input,
   select,
   textarea {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
-    background-color: rgb(225 237 236) !important;
-    color: rgb(58 66 59) !important;
   }
 
-  /* Specific input type overrides */
+  /* Override Safari's autofill with multiple techniques */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
+    background-image: none !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
+
+  /* Force all input types */
   input[type="text"],
   input[type="email"],
   input[type="tel"],
   input[type="password"],
   input[type="search"],
   input[type="url"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="date"],
+  input[type="time"] {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
-    background-color: rgb(225 237 236) !important;
-    color: rgb(58 66 59) !important;
   }
 
-  /* Search input specific fixes */
+  /* Search input specific */
   input[type="search"] {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
@@ -342,59 +336,46 @@
     -webkit-appearance: none !important;
   }
 
-  /* Force override for Input component */
+  /* Select elements */
+  select {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+  }
+
+  /* Textarea elements */
+  textarea {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+  }
+
+  /* Force override classes */
   .safari-autofill-fix,
+  .force-safari-styling {
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
+  }
+
   .safari-autofill-fix:-webkit-autofill,
   .safari-autofill-fix:-webkit-autofill:hover,
   .safari-autofill-fix:-webkit-autofill:focus,
-  .safari-autofill-fix:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgb(225 237 236) inset !important;
-    -webkit-text-fill-color: rgb(58 66 59) !important;
-    background-color: rgb(225 237 236) !important;
-    background-image: none !important;
-    color: rgb(58 66 59) !important;
-    transition: background-color 5000s ease-in-out 0s !important;
-  }
-
-  /* Force Safari styling class */
-  .force-safari-styling {
-    background-color: rgb(225 237 236) !important;
-    color: rgb(58 66 59) !important;
-    -webkit-box-shadow: 0 0 0 1000px rgb(225 237 236) inset !important;
-    -webkit-text-fill-color: rgb(58 66 59) !important;
-  }
-
+  .safari-autofill-fix:-webkit-autofill:active,
   .force-safari-styling:-webkit-autofill,
   .force-safari-styling:-webkit-autofill:hover,
   .force-safari-styling:-webkit-autofill:focus,
   .force-safari-styling:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgb(225 237 236) inset !important;
-    -webkit-text-fill-color: rgb(58 66 59) !important;
-    background-color: rgb(225 237 236) !important;
+    background-color: #E1EDEC !important;
+    color: #3A423B !important;
+    -webkit-box-shadow: 0 0 0 1000px #E1EDEC inset !important;
+    -webkit-text-fill-color: #3A423B !important;
     background-image: none !important;
-    color: rgb(58 66 59) !important;
     transition: background-color 5000s ease-in-out 0s !important;
-  }
-
-  /* Mobile Safari specific overrides */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    input,
-    select,
-    textarea {
-      background-color: rgb(225 237 236) !important;
-      color: rgb(58 66 59) !important;
-    }
-    
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-      -webkit-box-shadow: 0 0 0 1000px rgb(225 237 236) inset !important;
-      -webkit-text-fill-color: rgb(58 66 59) !important;
-      background-color: rgb(225 237 236) !important;
-      background-image: none !important;
-      color: rgb(58 66 59) !important;
-      transition: background-color 5000s ease-in-out 0s !important;
-    }
   }
 }
