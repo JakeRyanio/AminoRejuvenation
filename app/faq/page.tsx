@@ -30,7 +30,7 @@ export default function FAQPage() {
     {
       question: "Do you provide certificates of analysis?",
       answer:
-        "Yes, we provide detailed certificates of analysis (COA) with every order. These documents include purity analysis, molecular weight confirmation, and other relevant analytical data to support your research.",
+        "COA can be provided upon request after order is placed. Please email aminorejuvenation@gmail.com to request",
     },
     {
       question: "What payment methods do you accept?",
