@@ -103,15 +103,15 @@ export default function FAQPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-brand-900">Still have questions?</h3>
-              <p className="text-brand-700 mb-6 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold mb-4 text-[#0f172a]">Still have questions?</h3>
+              <p className="text-[#1f2937] mb-6 max-w-2xl mx-auto">
                 Our scientific support team is here to help with any technical questions about our products.
               </p>
-              <div className="inline-flex items-center space-x-2 bg-white/60 px-6 py-3 rounded-full border border-brand-200">
-                <span className="text-brand-800 font-medium">Contact us at:</span>
+              <div className="inline-flex items-center space-x-2 bg-white/80 px-6 py-3 rounded-full border border-brand-300">
+                <span className="text-[#0f172a] font-medium">Contact us at:</span>
                 <a 
                   href="mailto:aminorejuvenation@gmail.com" 
-                  className="text-rose-600 hover:text-rose-700 font-semibold transition-colors"
+                  className="text-rose-700 hover:text-rose-800 font-semibold transition-colors"
                 >
                   aminorejuvenation@gmail.com
                 </a>
