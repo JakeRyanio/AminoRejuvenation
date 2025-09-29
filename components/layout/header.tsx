@@ -17,7 +17,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-brand-50/95 backdrop-blur-sm border-b border-brand-200">
+      <header className="sticky top-0 z-50 bg-brand-50/95 backdrop-blur-sm border-b border-brand-200 dark:bg-brand-900/90 dark:border-brand-700">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -31,21 +31,21 @@ export function Header() {
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-serif font-medium text-brand-800">AMINO REJUVENATION</span>
+              <span className="text-xl font-serif font-medium text-brand-800 dark:text-brand-50">AMINO REJUVENATION</span>
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+              <Link href="/" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                 Home
               </Link>
-              <Link href="/shop" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+              <Link href="/shop" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                 Shop
               </Link>
-              <Link href="/explore" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+              <Link href="/explore" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                 Explore Products
               </Link>
-              <Link href="/faq" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+              <Link href="/faq" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                 FAQ
               </Link>
             </nav>
@@ -56,7 +56,7 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsCartOpen(true)}
-                className="relative hover:bg-brand-100 text-brand-700"
+                className="relative hover:bg-brand-100 text-brand-700 dark:hover:bg-brand-800 dark:text-brand-100"
               >
                 <ShoppingCart className="h-5 w-5" />
                 {totalItems > 0 && (
@@ -70,7 +70,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-brand-700 hover:bg-brand-100"
+                className="md:hidden text-brand-700 hover:bg-brand-100 dark:text-brand-100 dark:hover:bg-brand-800"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -80,18 +80,18 @@ export function Header() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-brand-200 pt-4">
+            <nav className="md:hidden mt-4 pb-4 border-t border-brand-200 pt-4 dark:border-brand-700">
               <div className="flex flex-col space-y-4">
-                <Link href="/" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                <Link href="/" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                   Home
                 </Link>
-                <Link href="/shop" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                <Link href="/shop" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                   Shop
                 </Link>
-                <Link href="/explore" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                <Link href="/explore" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                   Explore Products
                 </Link>
-                <Link href="/faq" className="text-brand-700 hover:text-brand-500 transition-colors font-medium">
+                <Link href="/faq" className="text-brand-700 hover:text-brand-500 dark:text-brand-200 dark:hover:text-brand-50 transition-colors font-medium">
                   FAQ
                 </Link>
               </div>

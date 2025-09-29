@@ -65,10 +65,10 @@ export default function FAQPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-brand-800 to-rose-700 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold mb-6 text-[#1f2937]">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-brand-700 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-[#374151] max-w-2xl mx-auto leading-relaxed">
               Find answers to common questions about our research peptides and services
             </p>
           </div>
@@ -81,13 +81,13 @@ export default function FAQPage() {
                 value={`item-${index}`}
                 className="group"
               >
-                <div className="bg-white/80 backdrop-blur-sm border border-brand-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:border-brand-300">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:bg-brand-50/50 transition-colors rounded-t-xl group-hover:text-brand-800">
-                    <span className="font-semibold text-brand-900 text-lg">{faq.question}</span>
+                <div className="bg-white backdrop-blur-sm border border-brand-300 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:border-brand-400 text-[#0f172a]">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:bg-brand-50/60 transition-colors rounded-t-xl text-[#0f172a]">
+                    <span className="font-semibold text-[#0f172a] text-lg">{faq.question}</span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
+                  <AccordionContent className="px-6 pb-4 text-[#1f2937]">
                     <div className="pt-2 pb-4">
-                      <p className="text-brand-700 leading-relaxed text-base">{faq.answer}</p>
+                      <p className="leading-relaxed text-base">{faq.answer}</p>
                     </div>
                   </AccordionContent>
                 </div>

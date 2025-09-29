@@ -45,12 +45,12 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
 
       <div className="p-6">
         <Link href={`/products/${product.id}`}>
-          <h3 className="text-xl font-medium mb-2 text-brand-900 hover:text-brand-700 transition-colors">
+          <h3 className="text-xl font-medium mb-2 text-brand-900 hover:text-brand-700 transition-colors dark:text-[#ebe7e4] dark:hover:text-white">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-brand-800 text-sm mb-4 line-clamp-2">{product.overview}</p>
+        <p className="text-brand-800 text-sm mb-4 line-clamp-2 dark:text-[#d3c8be]">{product.overview}</p>
 
         <div className="flex items-center mb-4">
           <div className="flex items-center">
@@ -69,8 +69,8 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-2xl font-medium text-brand-700">${product.price.toFixed(2)}</span>
-              <div className="text-sm text-brand-600">
+              <span className="text-2xl font-medium text-brand-700 dark:text-[#e7ddd2]">${product.price.toFixed(2)}</span>
+              <div className="text-sm text-brand-600 dark:text-[#c6b9ac]">
                 One-time purchase
               </div>
             </div>
@@ -79,7 +79,7 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
           <div className="flex space-x-2">
             <Button
               onClick={handleAddToCart}
-              className="w-full bg-brand-500 hover:bg-brand-600 text-brand-50 font-medium rounded-md px-4 py-2 text-sm"
+              className="w-full bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-md px-4 py-2 text-sm"
             >
               <ShoppingCart className="h-4 w-4 mr-1" />
               Add to Cart

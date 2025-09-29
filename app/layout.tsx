@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/cart/cart-context"
+import { ThemeProvider } from "@/components/theme-provider"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { CartPopupWrapper } from "@/components/cart/cart-popup-wrapper"
@@ -63,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Organization Schema */}
         <script
@@ -109,16 +110,18 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} bg-brand-50 text-brand-900 min-h-screen`}>
-        <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <CartPopupWrapper />
-          <SafariAutofillFix />
-        </CartProvider>
+      <body className={`${inter.className} min-h-screen bg-brand-50 text-brand-900 dark:bg-brand-900 dark:text-brand-50`}>
+        <ThemeProvider>
+          <CartProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <CartPopupWrapper />
+            <SafariAutofillFix />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -232,26 +232,26 @@ export default function ExplorePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="text-center p-6 elegant-card bg-gradient-to-br from-brand-50/60 to-brand-100/70 border border-brand-200/50">
               <div className="w-12 h-12 bg-brand-400/60 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Beaker className="h-6 w-6 text-brand-700" />
+                <Beaker className="h-6 w-6 text-brand-700 dark:text-emerald-300" />
               </div>
-              <div className="text-3xl font-bold text-brand-800 mb-2">{filteredPeptides.length}</div>
-              <div className="text-brand-700 font-medium">Research Peptides</div>
+              <div className="text-3xl font-bold text-brand-800 dark:text-[#f3efec] mb-2">{filteredPeptides.length}</div>
+              <div className="text-brand-700 font-medium dark:text-[#d6cdc3]">Research Peptides</div>
             </div>
 
             <div className="text-center p-6 elegant-card bg-gradient-to-br from-rose-50/60 to-rose-100/70 border border-rose-200/50">
               <div className="w-12 h-12 bg-rose-300/60 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="h-6 w-6 text-rose-700" />
+                <BookOpen className="h-6 w-6 text-rose-700 dark:text-rose-300" />
               </div>
-              <div className="text-3xl font-bold text-rose-800 mb-2">100+</div>
-              <div className="text-rose-700 font-medium">Research Studies</div>
+              <div className="text-3xl font-bold text-rose-800 dark:text-[#f3efec] mb-2">100+</div>
+              <div className="text-rose-700 font-medium dark:text-rose-200">Research Studies</div>
             </div>
 
             <div className="text-center p-6 elegant-card bg-gradient-to-br from-lavender-50/60 to-lavender-100/70 border border-lavender-200/50">
               <div className="w-12 h-12 bg-lavender-300/60 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Microscope className="h-6 w-6 text-lavender-700" />
+                <Microscope className="h-6 w-6 text-lavender-700 dark:text-lavender-300" />
               </div>
-              <div className="text-3xl font-bold text-lavender-800 mb-2">6</div>
-              <div className="text-lavender-700 font-medium">Research Categories</div>
+              <div className="text-3xl font-bold text-lavender-800 dark:text-[#f3efec] mb-2">6</div>
+              <div className="text-lavender-700 font-medium dark:text-lavender-200">Research Categories</div>
             </div>
           </div>
         </div>

@@ -46,8 +46,8 @@ export default function ShopPage() {
     <div className="container mx-auto px-4 py-8 bg-[#201c1a] min-h-screen">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-serif font-medium mb-4 text-[#ebe7e4]">Research Peptides</h1>
-        <p className="text-xl text-[#beb2a4] font-light">Premium quality peptides for advanced scientific research</p>
+        <h1 className="text-4xl font-serif font-medium mb-4 text-[#f3efec]">Research Peptides</h1>
+        <p className="text-xl text-[#d6cdc3] font-light">Premium quality peptides for advanced scientific research</p>
       </div>
 
       {/* Filters */}
@@ -55,7 +55,7 @@ export default function ShopPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#beb2a4] h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#d6cdc3] h-4 w-4" />
             <Input
               placeholder="Search products..."
               value={searchTerm}
@@ -79,7 +79,7 @@ export default function ShopPage() {
               window.history.pushState({}, "", url.toString())
             }}
           >
-            <SelectTrigger className="elegant-select">
+            <SelectTrigger className="elegant-select bg-[#2a2624] border-[#403c3a] text-[#ebe7e4]">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent className="bg-[#2a2624] border-[#403c3a]">
@@ -93,7 +93,7 @@ export default function ShopPage() {
 
           {/* Sort */}
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="elegant-select">
+            <SelectTrigger className="elegant-select bg-[#2a2624] border-[#403c3a] text-[#ebe7e4]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent className="bg-[#2a2624] border-[#403c3a]">
@@ -113,7 +113,7 @@ export default function ShopPage() {
           </Select>
 
           {/* Results Count */}
-          <div className="flex items-center text-[#beb2a4] font-medium">{filteredProducts.length} products found</div>
+          <div className="flex items-center text-[#d6cdc3] font-medium">{filteredProducts.length} products found</div>
         </div>
       </div>
 
