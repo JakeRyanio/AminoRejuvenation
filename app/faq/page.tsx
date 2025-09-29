@@ -35,7 +35,7 @@ export default function FAQPage() {
     {
       question: "What payment methods do you accept?",
       answer:
-        "We accept CashApp, Venmo, PayPal, major credit cards, bank transfers, and cryptocurrency payments. All transactions are processed securely through encrypted payment gateways.",
+        "We accept PayPal, CashApp, and Venmo payments. All transactions are processed securely through encrypted payment gateways.",
     },
     {
       question: "Can I return or exchange products?",
