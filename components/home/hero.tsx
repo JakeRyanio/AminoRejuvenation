@@ -22,8 +22,8 @@ export function Hero() {
               <Image
                 src="/images/transparent-logo.png"
                 alt="Amino Rejuvenation"
-                width={80}
-                height={80}
+                width={280}
+                height={280}
                 className="object-contain"
               />
             </div>
