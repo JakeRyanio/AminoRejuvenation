@@ -17,17 +17,6 @@ export function Hero() {
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            {/* Logo */}
-            <div className="mb-6">
-              <Image
-                src="/images/transparent-logo.png"
-                alt="Amino Rejuvenation"
-                width={280}
-                height={280}
-                className="object-contain"
-              />
-            </div>
-
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 leading-tight text-brand-deep-mauve dark:text-brand-50">
               AMINO
