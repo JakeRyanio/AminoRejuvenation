@@ -44,7 +44,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Fragment of growth hormone for targeted fat burning.",
     description: "Fragment of growth hormone for targeted fat burning.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Higher potency AOD9604 for enhanced fat burning results.",
     description: "Fragment of growth hormone for targeted fat burning.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -112,7 +112,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Body Protection Compound for enhanced recovery and healing.",
     description: "Body Protection Compound-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Research shows it accelerates muscle, tendon, and ligament healing, promotes gut repair (ulcers, IBS), reduces inflammation, and supports neuroprotection.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Accelerates muscle and tendon healing",
       "Promotes gut repair and healing",
@@ -145,7 +145,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Higher potency BPC-157 for enhanced recovery support.",
     description: "Body Protection Compound-157 is a synthetic peptide derived from a protective protein in gastric juice. It's known for healing injuries in muscles, tendons, and the digestive tract. Research shows it accelerates muscle, tendon, and ligament healing, promotes gut repair (ulcers, IBS), reduces inflammation, and supports neuroprotection.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Accelerates muscle and tendon healing",
       "Promotes gut repair and healing",
@@ -180,7 +180,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Novel amylin analog for advanced weight management.",
     description: "Cagrilintide is a novel amylin analog that works synergistically with GLP-1 agonists to provide enhanced weight management results through multiple pathways.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Enhanced weight management results",
       "Synergistic with GLP-1 agonists",
@@ -213,7 +213,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Higher potency Cagrilintide for maximum weight management results.",
     description: "Cagrilintide is a novel amylin analog that works synergistically with GLP-1 agonists to provide enhanced weight management results through multiple pathways.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Enhanced weight management results",
       "Synergistic with GLP-1 agonists",
@@ -248,7 +248,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Long-acting growth hormone releasing hormone for sustained results.",
     description: "CJC-1295 is a growth hormone-releasing hormone analog that increases GH and IGF-1 levels. Available with or without DAC (Drug Affinity Complex), it enhances muscle growth and fat loss, improves sleep and recovery, and supports tissue repair and anti-aging processes.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Increases growth hormone levels",
       "Enhances muscle growth and fat loss",
@@ -283,7 +283,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Short-acting growth hormone releasing hormone for immediate results.",
     description: "CJC-1295 is a growth hormone-releasing hormone analog that increases GH and IGF-1 levels. Available with or without DAC (Drug Affinity Complex), it enhances muscle growth and fat loss, improves sleep and recovery, and supports tissue repair and anti-aging processes.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Increases growth hormone levels",
       "Enhances muscle growth and fat loss",
@@ -318,7 +318,7 @@ export const products: Product[] = [
     category: "Sleep",
     overview: "Delta sleep-inducing peptide for enhanced sleep quality.",
     description: "Delta Sleep-Inducing Peptide (DSIP) is a neuropeptide that promotes deep sleep and relaxation. It may also aid in hormone regulation and has shown promise for treating sleep disorders. Research indicates potential benefits for improving sleep quality and duration, reducing stress and anxiety, supporting hormone regulation, and may improve recovery and mood.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Promotes deep sleep and relaxation",
       "Aids in hormone regulation",
@@ -353,7 +353,7 @@ export const products: Product[] = [
     category: "Skin & Beauty",
     overview: "Copper peptide for skin rejuvenation and anti-aging.",
     description: "GHK-CU is a copper peptide that has shown remarkable results in skin rejuvenation, wound healing, and anti-aging effects through collagen synthesis stimulation.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -386,7 +386,7 @@ export const products: Product[] = [
     category: "Skin & Beauty",
     overview: "Higher potency GHK-CU for enhanced skin rejuvenation.",
     description: "This (100mg) formulation provides increased potency for individuals requiring stronger skin rejuvenation and anti-aging support.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -421,7 +421,7 @@ export const products: Product[] = [
     category: "Skin & Beauty",
     overview: "Premium skin rejuvenation stack combining multiple peptides.",
     description: "Glycyl-L-histidyl-L-lysine-copper is a copper peptide complex with strong regenerative, anti-inflammatory, and anti-aging properties. It's commonly used in dermatological research and wound healing protocols. Benefits include accelerated wound healing, reduced inflammation, stimulated collagen and hair growth, and improved skin texture and firmness.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Accelerated wound healing",
       "Reduced inflammation",
@@ -456,7 +456,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Human chorionic gonadotropin for hormonal support.",
     description: "Human Chorionic Gonadotropin acts similarly to luteinizing hormone, prompting testosterone production. Often used in hormone replacement therapy research or fertility preservation. Benefits include maintained or restored testosterone levels, prevented testicular atrophy, supported fertility, and enhanced libido and mood.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Maintains or restores testosterone levels",
       "Prevents testicular atrophy",
@@ -491,7 +491,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Selective growth hormone releasing peptide for muscle growth.",
     description: "Ipamorelin is a selective growth hormone secretagogue known for stimulating GH release without significantly increasing cortisol or prolactin. It's highly regarded for its safety profile and promotes lean muscle growth, enhances recovery and repair, improves sleep quality, and supports fat metabolism.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Selective growth hormone stimulation",
       "No significant cortisol increase",
@@ -526,7 +526,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Anti-inflammatory peptide for enhanced recovery.",
     description: "KPV is a tripeptide with potent anti-inflammatory properties that supports recovery and immune function through inflammatory pathway modulation.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Potent anti-inflammatory properties",
       "Supports recovery and immune function",
@@ -561,7 +561,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Lipotropic compound for enhanced fat metabolism.",
     description: "Lipo-C is a lipotropic compound that supports fat metabolism and liver function, making it an excellent addition to weight management protocols.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Supports fat metabolism",
       "Enhances liver function",
@@ -596,7 +596,7 @@ export const products: Product[] = [
     category: "Longevity",
     overview: "Mitochondrial-derived peptide for cellular energy and longevity.",
     description: "Mots-C is a mitochondrial-derived peptide that enhances cellular energy production and may support longevity through mitochondrial function optimization.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -631,7 +631,7 @@ export const products: Product[] = [
     category: "Longevity",
     overview: "Nicotinamide Adenine Dinucleotide for cellular energy and anti-aging.",
     description: "Nicotinamide adenine dinucleotide is a crucial coenzyme involved in cellular energy metabolism and DNA repair processes. Extensively researched for aging, metabolic health, and cellular regeneration. Benefits include supported cellular energy production, enhanced DNA repair mechanisms, promoted healthy aging processes, and improved metabolic function.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Supported cellular energy production",
       "Enhanced DNA repair mechanisms",
@@ -666,7 +666,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Melanocortin receptor agonist for enhanced performance.",
     description: "PT-141 is a melanocortin receptor agonist used in sexual dysfunction research. Unlike PDE5 inhibitors, it acts on the nervous system to increase sexual desire and arousal. Benefits include improved libido in men and women, effectiveness for erectile dysfunction, enhanced sexual arousal, and CNS-based action.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved libido in men and women",
       "Effectiveness for erectile dysfunction",
@@ -701,7 +701,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Next-generation triple agonist for advanced weight management.",
     description: "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors under investigation for obesity, diabetes, and metabolic conditions. Benefits include accelerated weight loss, improved metabolic markers, potential for NAFLD treatment, and enhanced insulin sensitivity.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Accelerated weight loss",
       "Improved metabolic markers",
@@ -734,7 +734,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Higher potency Retatrutide for maximum weight management results.",
     description: "Retatrutide is a novel triple agonist targeting GIP, GLP-1, and glucagon receptors under investigation for obesity, diabetes, and metabolic conditions. Benefits include accelerated weight loss, improved metabolic markers, potential for NAFLD treatment, and enhanced insulin sensitivity.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Accelerated weight loss",
       "Improved metabolic markers",
@@ -769,7 +769,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Anxiolytic peptide for stress management and immune support.",
     description: "Selank is a synthetic peptide with anxiolytic properties that supports stress management and immune function through neuropeptide modulation.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -804,7 +804,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Nootropic peptide for cognitive enhancement and neuroprotection.",
     description: "Semax is a synthetic peptide that has shown benefits in cognitive function, neuroprotection, and stress resilience through neuropeptide modulation.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -839,7 +839,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Proven GLP-1 agonist for effective weight management.",
     description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Appetite suppression",
       "Substantial weight reduction",
@@ -872,7 +872,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Higher potency Semaglutide for enhanced weight management.",
     description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Appetite suppression",
       "Substantial weight reduction",
@@ -907,7 +907,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Growth hormone releasing hormone for muscle growth and recovery.",
     description: "Sermorelin is a GHRH analog that stimulates natural growth hormone release. It's used in research to promote recovery, energy, and lean mass. Benefits include increased natural growth hormone production, improved sleep quality, promoted lean muscle growth, and supported fat metabolism and energy.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Increased natural growth hormone production",
       "Improved sleep quality",
@@ -940,7 +940,7 @@ export const products: Product[] = [
     category: "Muscle",
     overview: "Higher potency Sermorelin for enhanced muscle growth and recovery.",
     description: "Sermorelin is a GHRH analog that stimulates natural growth hormone release. It's used in research to promote recovery, energy, and lean mass. Benefits include increased natural growth hormone production, improved sleep quality, promoted lean muscle growth, and supported fat metabolism and energy.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Increased natural growth hormone production",
       "Improved sleep quality",
@@ -975,7 +975,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Thymosin beta-4 for enhanced recovery and healing.",
     description: "Thymosin Beta-4 (TB-500) is a synthetic version that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Benefits include enhanced muscle recovery, promotion of new blood vessel growth, reduced scar tissue formation, and improved flexibility and mobility.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Enhanced muscle recovery",
       "Promotion of new blood vessel growth",
@@ -1008,7 +1008,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Higher potency TB-500 for enhanced recovery and healing.",
     description: "Thymosin Beta-4 (TB-500) is a synthetic version that enhances tissue repair, reduces inflammation, and promotes cellular migration essential for healing. Benefits include enhanced muscle recovery, promotion of new blood vessel growth, reduced scar tissue formation, and improved flexibility and mobility.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Enhanced muscle recovery",
       "Promotion of new blood vessel growth",
@@ -1043,7 +1043,7 @@ export const products: Product[] = [
     category: "Recovery/Immunity",
     overview: "Recovery stack combining TB-500 and BPC-157 for comprehensive healing.",
     description: "This stack combines TB-500 and BPC-157 for comprehensive recovery support, targeting both systemic healing and localized tissue repair.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -1078,7 +1078,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Growth hormone releasing hormone for metabolic support.",
     description: "Tesamorelin is a growth hormone-releasing hormone analog that stimulates pituitary GH secretion. FDA-approved for HIV-associated lipodystrophy research. Benefits include reduced visceral fat, improved lipid profile, enhanced IGF-1 levels, and supported cognitive function.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Reduced visceral fat",
       "Improved lipid profile",
@@ -1113,7 +1113,7 @@ export const products: Product[] = [
     category: "Immunity",
     overview: "Thymosin alpha-1 for immune system support and enhancement.",
     description: "Thymosin alpha-1 is a naturally occurring peptide that supports immune function and may enhance resistance to infections and immune-related conditions.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Targeted fat cell breakdown",
       "Preserves lean muscle mass",
@@ -1148,7 +1148,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Advanced GLP-1 agonist for weight management and metabolic support.",
     description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved glycemic control",
       "Significant weight loss promotion",
@@ -1181,7 +1181,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Higher potency Tirzepatide for enhanced weight management results.",
     description: "Semaglutide is a GLP-1 receptor agonist used for diabetes and chronic weight management research. It enhances insulin secretion and suppresses appetite. Research shows appetite suppression, substantial weight reduction, improved HbA1c levels, and cardiovascular risk reduction.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved glycemic control",
       "Significant weight loss promotion",
@@ -1214,7 +1214,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Maximum strength Tirzepatide for advanced weight management.",
     description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved glycemic control",
       "Significant weight loss promotion",
@@ -1247,7 +1247,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Ultra-high potency Tirzepatide for maximum metabolic support.",
     description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved glycemic control",
       "Significant weight loss promotion",
@@ -1280,7 +1280,7 @@ export const products: Product[] = [
     category: "Weight Loss",
     overview: "Maximum strength Tirzepatide for advanced weight management needs.",
     description: "Tirzepatide is a dual GIP and GLP-1 receptor agonist developed for diabetes and weight management research. It mimics incretin hormones, helping regulate blood sugar and appetite. Benefits include improved glycemic control, significant weight loss promotion, enhanced insulin sensitivity, and reduced cardiovascular risk markers.",
-    image: "/images/image-6.png",
+    image: "/images/image-5.png",
     benefits: [
       "Improved glycemic control",
       "Significant weight loss promotion",
